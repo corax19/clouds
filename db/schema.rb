@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_17_070154) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_18_125230) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_17_070154) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.string "image"
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
@@ -92,6 +93,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_17_070154) do
     t.string "setinterfacevar"
     t.index ["account_id"], name: "index_hotlines_on_account_id"
     t.index ["name"], name: "index_hotlines_on_name"
+  end
+
+  create_table "logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "event"
+    t.text "data"
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "url"
+    t.string "ipaddr"
+    t.index ["account_id"], name: "index_logs_on_account_id"
+    t.index ["created_at"], name: "index_logs_on_created_at"
+    t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
   create_table "moh_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -192,6 +207,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_17_070154) do
   add_foreign_key "extens", "accounts"
   add_foreign_key "extens", "sips"
   add_foreign_key "hotlines", "accounts"
+  add_foreign_key "logs", "accounts"
+  add_foreign_key "logs", "users"
   add_foreign_key "moh_entries", "accounts"
   add_foreign_key "moh_entries", "mohs"
   add_foreign_key "moh_entries", "sounds"

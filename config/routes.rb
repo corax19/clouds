@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+#  get 'log/index'
   resources :mohs
 #  resources :steps
   resources :routes
@@ -14,6 +15,12 @@ get "/accounts", to: "accounts#index"
 
 get "/cdr", to: "cdr#index"
 post "/cdr", to: "cdr#search", as: :search_cdr
+
+get "/logs", to: "log#index"
+post "/logs", to: "log#search", as: :search_logs
+
+get "/myaccount", to: "accounts#show", as: :myaccount
+post "/myaccount", to: "accounts#updatemyaccount", as: :update_myaccount
 
 root to: "accounts#index"
 

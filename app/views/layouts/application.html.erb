@@ -185,16 +185,22 @@ document.getElementById("myform1").action = myurl;
                           <span class="badge badge-pill badge-primary">24</span>
                         </a>
                       </li>
+
+<% if @userpermissionspages['permission_logs'] == 1 %>
                       <li>
-                        <a class="dropdown-link-item" href="user-activities.html">
-                          <i class="mdi mdi-diamond-stone"></i>
-                          <span class="nav-text">Activitise</span></a>
+                  <%= link_to logs_path do %>
+                  <i class="mdi mdi-diamond-stone"></i>
+                  <span class="nav-text">Logs</span>
+                  <% end %>
                       </li>
+<% end %>
+
                       <li>
-                        <a class="dropdown-link-item" href="user-account-settings.html">
-                          <i class="mdi mdi-settings"></i>
-                          <span class="nav-text">Account Setting</span>
-                        </a>
+
+                  <%= link_to myaccount_path do %>
+                  <i class="mdi mdi-settings"></i>
+                  <span class="nav-text">Account Setting</span>
+                  <% end %>
                       </li>
 
                       <li class="dropdown-footer">

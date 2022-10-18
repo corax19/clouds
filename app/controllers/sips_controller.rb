@@ -27,6 +27,7 @@ class SipsController < ApplicationController
     @sip.account = current_user.account
     respond_to do |format|
       if @sip.save
+        Log.create(account: current_user.account, user: current_user, event: "createsip", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to sips_path, notice: "Sip was successfully created." }
         format.json { render :show, status: :created, location: @sip }
       else
@@ -40,6 +41,7 @@ class SipsController < ApplicationController
   def update
     respond_to do |format|
       if @sip.update(sip_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatesip", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to sips_path, notice: "Sip was successfully updated." }
         format.json { render :show, status: :ok, location: @sip }
       else
@@ -52,7 +54,7 @@ class SipsController < ApplicationController
   # DELETE /sips/1 or /sips/1.json
   def destroy
     @sip.destroy
-
+    Log.create(account: current_user.account, user: current_user, event: "destroysip", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to sips_url, notice: "Sip was successfully destroyed." }
       format.json { head :no_content }

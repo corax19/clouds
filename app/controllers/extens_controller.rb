@@ -26,6 +26,7 @@ class ExtensController < ApplicationController
 @exten.account = current_user.account
     respond_to do |format|
       if @exten.save
+        Log.create(account: current_user.account, user: current_user, event: "createexten", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to extens_path, notice: "Exten was successfully created." }
         format.json { render :show, status: :created, location: @exten }
       else
@@ -39,6 +40,7 @@ class ExtensController < ApplicationController
   def update
     respond_to do |format|
       if @exten.update(exten_params)
+        Log.create(account: current_user.account, user: current_user, event: "updateexten", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to extens_path, notice: "Exten was successfully updated." }
         format.json { render :show, status: :ok, location: @exten }
       else
@@ -51,7 +53,7 @@ class ExtensController < ApplicationController
   # DELETE /extens/1 or /extens/1.json
   def destroy
     @exten.destroy
-
+        Log.create(account: current_user.account, user: current_user, event: "destroyexten", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to extens_url, notice: "Exten was successfully destroyed." }
       format.json { head :no_content }

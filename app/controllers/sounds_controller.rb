@@ -15,7 +15,7 @@ class SoundsController < ApplicationController
  @sound = Sound.new(sound_params)
  @sound.account = current_user.account
  if @sound.save
-puts @sound.id
+  Log.create(account: current_user.account, user: current_user, event: "createsound", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   redirect_to sounds_path
  else
   render :new, status: :unprocessable_entity
@@ -28,6 +28,8 @@ puts @sound.id
 
 @sound = Sound.find(params[:id])
 @sound.destroy
+Log.create(account: current_user.account, user: current_user, event: "destroysound", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+
 redirect_to sounds_path
 
 

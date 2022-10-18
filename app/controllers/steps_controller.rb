@@ -131,6 +131,7 @@ end
     respond_to do |format|
       if @step.save
         rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepplayback", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
         format.json { render :show, status: :created, location: @step }
       else
@@ -202,6 +203,7 @@ puts @step.data
     respond_to do |format|
       if @step.save
         rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepread", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
         format.json { render :show, status: :created, location: @step }
       else
@@ -227,6 +229,7 @@ end
     respond_to do |format|
       if @step.save
         rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepmenu", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
         format.json { render :show, status: :created, location: @step }
       else
@@ -269,6 +272,7 @@ stepdata.push(["exten_num", exten_num])
     respond_to do |format|
       if @step.save
         rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepdial", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
         format.json { render :show, status: :created, location: @step }
       else
@@ -305,6 +309,7 @@ stepdata.push(["hotline_name", hotline_name])
     respond_to do |format|
       if @step.save
         rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepqueue", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
         format.json { render :show, status: :created, location: @step }
       else
@@ -353,6 +358,7 @@ stepdata.push(["sipid", sipid])
     respond_to do |format|
       if @step.save
         rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepexternal", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
         format.json { render :show, status: :created, location: @step }
       else
@@ -389,6 +395,7 @@ stepdata.push(["exten_num", exten_num])
 
     respond_to do |format|
       if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepdial", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
         format.json { render :show, status: :ok, location: @step }
       else
@@ -424,6 +431,7 @@ stepdata.push(["hotline_name", hotline_name])
 
     respond_to do |format|
       if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepqueue", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
         format.json { render :show, status: :ok, location: @step }
       else
@@ -556,6 +564,7 @@ end
 
     respond_to do |format|
       if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepread", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
         format.json { render :show, status: :ok, location: @step }
       else
@@ -602,6 +611,7 @@ stepdata.push(["sipid", sipid])
 
     respond_to do |format|
       if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepexternal", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
         format.json { render :show, status: :ok, location: @step }
       else
@@ -619,7 +629,7 @@ end
 
 
 
-def updatemenu
+def updateplayback
 stepdata=Array.new
 params[:step].each do |id, value|
 if id == "sound_id"
@@ -631,6 +641,7 @@ end
 
     respond_to do |format|
       if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepplayback", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
         format.json { render :show, status: :ok, location: @step }
       else
@@ -652,6 +663,7 @@ end
 
     respond_to do |format|
       if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepmenu", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
         format.json { render :show, status: :ok, location: @step }
       else
@@ -701,6 +713,7 @@ end
   def destroy
     @step.destroy
     rearrange
+    Log.create(account: current_user.account, user: current_user, event: "destroystep", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to steps_url, notice: "Step was successfully destroyed." }
       format.json { head :no_content }

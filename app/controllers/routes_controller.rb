@@ -27,6 +27,7 @@ class RoutesController < ApplicationController
 @route.account = current_user.account
     respond_to do |format|
       if @route.save
+        Log.create(account: current_user.account, user: current_user, event: "createroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to routes_path, notice: "Route was successfully created." }
         format.json { render :show, status: :created, location: @route }
       else
@@ -40,6 +41,7 @@ class RoutesController < ApplicationController
   def update
     respond_to do |format|
       if @route.update(route_params)
+        Log.create(account: current_user.account, user: current_user, event: "updateroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to routes_path, notice: "Route was successfully updated." }
         format.json { render :show, status: :ok, location: @route }
       else
@@ -52,7 +54,7 @@ class RoutesController < ApplicationController
   # DELETE /routes/1 or /routes/1.json
   def destroy
     @route.destroy
-
+    Log.create(account: current_user.account, user: current_user, event: "destroyroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to routes_url, notice: "Route was successfully destroyed." }
       format.json { head :no_content }

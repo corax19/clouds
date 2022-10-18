@@ -1,0 +1,17 @@
+<table  id="productsTable01" class="table table-hover table-product" style="width:80%">
+    <tr>
+    <td>Created</td><td>User</td><td>IP</td><td>Event</td><td>URL</td>
+    </tr>
+
+
+  <% @logs.each do |log| %>
+    <tr>
+
+
+<td> <%= log.created_at.localtime.to_s[0..19] %></td><td><%= log.user.username %></td><td><%= log.ipaddr %></td><td><%= log.event %></td><td><%= log.url %></td>
+    </tr>
+  <% end %>
+
+
+
+</table>

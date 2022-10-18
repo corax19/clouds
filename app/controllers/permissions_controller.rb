@@ -26,6 +26,7 @@ def create
  @user = User.new(user_params)
  @user.account = current_user.account
  if @user.save
+    Log.create(account: current_user.account, user: current_user, event: "createuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   redirect_to users_path
  else
   render :new, status: :unprocessable_entity
@@ -59,6 +60,7 @@ end
 if(params.require(:user)[:password].blank?)
 
  if @user.update(user_params_update)
+    Log.create(account: current_user.account, user: current_user, event: "updateuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   flash[:notice] = 'User has been updated'
   redirect_to users_path
  else
@@ -67,9 +69,11 @@ if(params.require(:user)[:password].blank?)
 
  else
  if @user.update(user_params2)
+    Log.create(account: current_user.account, user: current_user, event: "updateuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   bypass_sign_in(@user)
   flash[:notice] = 'User has been updated'
   redirect_to users_path
+
  else
   render :edit, status: :unprocessable_entity
  end
@@ -83,6 +87,7 @@ end
 def destroy
 @user = User.find(params[:id])
 @user.destroy
+    Log.create(account: current_user.account, user: current_user, event: "destroyuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
 redirect_to users_path
 end
 

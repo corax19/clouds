@@ -24,6 +24,7 @@ class MohentriesController < ApplicationController
     @mohentry.moh_id = params[:mohid]
     respond_to do |format|
       if @mohentry.save
+        Log.create(account: current_user.account, user: current_user, event: "createmohentry", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to mohentries_path(@mohentry.moh_id), notice: "MOH ENtry was successfully created." }
         format.json { render :show, status: :created, location: @agent }
       else
@@ -37,7 +38,7 @@ class MohentriesController < ApplicationController
   # DELETE /agents/1 or /agents/1.json
   def destroy
     @mohentry.destroy
-
+    Log.create(account: current_user.account, user: current_user, event: "destroymohentry", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to mohentries_path(params[:mohid]), notice: "MOH Entry was successfully destroyed." }
       format.json { head :no_content }

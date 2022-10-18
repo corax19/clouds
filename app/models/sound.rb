@@ -4,7 +4,7 @@ class Sound < ApplicationRecord
 
 belongs_to :account
 
-has_many :mohentries, dependent: :destroy
+#has_many :mohentries, dependent: :destroy
 
 mount_uploader :audio, AudioUploader
 

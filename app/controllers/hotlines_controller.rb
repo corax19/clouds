@@ -28,6 +28,7 @@ class HotlinesController < ApplicationController
     @hotline.name="#{@hotline.account.id}-#{@hotline.title}"
     respond_to do |format|
       if @hotline.save
+        Log.create(account: current_user.account, user: current_user, event: "createqueue", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to hotlines_path, notice: "Hotline was successfully created." }
         format.json { render :show, status: :created, location: @hotline }
       else
@@ -42,6 +43,7 @@ class HotlinesController < ApplicationController
   @hotline.name="#{@hotline.account.id}_#{@hotline.title}"
     respond_to do |format|
       if @hotline.update(hotline_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatequeue", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to hotlines_path, notice: "Hotline was successfully updated." }
         format.json { render :show, status: :ok, location: @hotline }
       else
@@ -54,7 +56,7 @@ class HotlinesController < ApplicationController
   # DELETE /hotlines/1 or /hotlines/1.json
   def destroy
     @hotline.destroy
-
+        Log.create(account: current_user.account, user: current_user, event: "destroyqueue", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to hotlines_url, notice: "Hotline was successfully destroyed." }
       format.json { head :no_content }

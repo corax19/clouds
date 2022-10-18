@@ -8,4 +8,7 @@ has_many :routes, dependent: :destroy
 has_many :steps, dependent: :destroy
 has_many :mohs, dependent: :destroy
 
+
+mount_uploader :image, SoundUploader
+
 end

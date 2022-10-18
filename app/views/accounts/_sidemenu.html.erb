@@ -3,8 +3,9 @@
             <!-- Aplication Brand -->
             <div class="app-brand">
               <a href="/index.html">
-                <%= image_tag "logo.png" %>
-                <span class="brand-name">Sasha PBX</span>
+<%= image_tag(current_user.account.image.thumb.url, alt: 'Image' , class:"user-image rounded-circle") if current_user.account.image? %>
+<%= image_tag "logo.png" if !current_user.account.image? %>
+                <span class="brand-name"><%= current_user.account.name %></span>
               </a>
             </div>
             <!-- begin sidebar scrollbar -->
@@ -174,9 +175,20 @@
               <div class="sidebar-footer-content">
                 <ul class="d-flex">
                   <li>
-                <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a></li>
+<%= link_to edit_user_registration_path  do %>
+<span data-toggle="tooltip" title="Profile Settings">
+           <i class="mdi mdi-account-outline"></i>
+</span>
+<% end %>
+</li>
                   <li>
-                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
+
+<%= link_to myaccount_path  do %>
+<span data-toggle="tooltip" title="Account Settings">
+           <i class="mdi mdi-settings"></i>
+</span>
+<% end %>
+
                   </li>
                 </ul>
               </div>

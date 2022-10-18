@@ -32,6 +32,7 @@ class AgentsController < ApplicationController
 @agent.hotline_id = params[:queueid]
     respond_to do |format|
       if @agent.save
+        Log.create(account: current_user.account, user: current_user, event: "createagent", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to agents_path(@agent.hotline_id), notice: "Agent was successfully created." }
         format.json { render :show, status: :created, location: @agent }
       else
@@ -45,6 +46,7 @@ class AgentsController < ApplicationController
   def update
     respond_to do |format|
       if @agent.update(agent_params)
+        Log.create(account: current_user.account, user: current_user, event: "updateagent", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to agents_path(@agent.hotline_id), notice: "Agent was successfully updated." }
         format.json { render :show, status: :ok, location: @agent }
       else
@@ -57,7 +59,7 @@ class AgentsController < ApplicationController
   # DELETE /agents/1 or /agents/1.json
   def destroy
     @agent.destroy
-
+        Log.create(account: current_user.account, user: current_user, event: "destroyagent", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to agents_url, notice: "Agent was successfully destroyed." }
       format.json { head :no_content }

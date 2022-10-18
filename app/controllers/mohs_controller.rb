@@ -27,6 +27,7 @@ class MohsController < ApplicationController
     @moh.account = current_user.account
     respond_to do |format|
       if @moh.save
+        Log.create(account: current_user.account, user: current_user, event: "createmoh", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to mohs_path, notice: "Moh was successfully created." }
         format.json { render :show, status: :created, location: @moh }
       else
@@ -40,6 +41,7 @@ class MohsController < ApplicationController
   def update
     respond_to do |format|
       if @moh.update(moh_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatemoh", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to mohs_path, notice: "Moh was successfully updated." }
         format.json { render :show, status: :ok, location: @moh }
       else
@@ -52,7 +54,7 @@ class MohsController < ApplicationController
   # DELETE /mohs/1 or /mohs/1.json
   def destroy
     @moh.destroy
-
+    Log.create(account: current_user.account, user: current_user, event: "destroymoh", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to mohs_url, notice: "Moh was successfully destroyed." }
       format.json { head :no_content }
