@@ -1,0 +1,356 @@
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Mono - Responsive Admin & Dashboard Template</title>
+
+     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <!-- GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
+
+<%= stylesheet_link_tag "plugins/material/css/materialdesignicons.min" %>
+
+<%= stylesheet_link_tag "plugins/simplebar/simplebar.css" %>
+
+
+  <!-- PLUGINS CSS STYLE -->
+<%= stylesheet_link_tag "plugins/nprogress/nprogress.css" %>
+
+
+<%= stylesheet_link_tag "plugins/prism/prism.css" %>
+  
+  
+  <!-- MONO CSS -->
+<%= stylesheet_link_tag "style.css" %>
+  
+<%= stylesheet_link_tag "plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css" %>
+
+
+<script>
+function confirmDestroy(message) {
+$('#delModal').modal('show');
+<!--  if (!confirm(message)) {    return false;  }-->
+}
+
+
+function setDelUser(userID) {
+myurl='../users/'+userID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSound(soundID) {
+myurl='../sounds/'+soundID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSIP(SIPID) {
+myurl='../sips/'+SIPID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelExt(extID) {
+myurl='../extens/'+extID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelHotline(hotlineID) {
+myurl='../hotlines/'+hotlineID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelAgent(queueID,agentID) {
+myurl='../'+queueID+'/agents/'+agentID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelRoute(routeID) {
+myurl='../routes/'+routeID;
+document.getElementById("myform1").action = myurl;
+}
+
+
+function setDelStep(routeID,stepID) {
+myurl='../'+routeID+'/steps/'+stepID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelMOH(mohID) {
+myurl='../mohs/'+mohID;
+document.getElementById("myform1").action = myurl;
+}
+
+
+function setDelMohEntry(mohID,mohentryID) {
+myurl='../'+mohID+'/mohentries/'+mohentryID;
+document.getElementById("myform1").action = myurl;
+}
+
+
+</script>
+
+
+  <!-- FAVICON -->
+  <link href="images/favicon.png" rel="shortcut icon" />
+
+  <!--
+    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+  -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+<%= javascript_include_tag "plugins/nprogress/nprogress" %>
+
+
+</head>
+
+
+  <body class="navbar-fixed sidebar-fixed" id="body">
+    <script>
+      NProgress.configure({ showSpinner: false });
+      NProgress.start();
+    </script>
+
+    
+
+    <!-- ====================================
+    ——— WRAPPER
+    ===================================== -->
+    <div class="wrapper">
+      
+      
+        <!-- ====================================
+          ——— LEFT SIDEBAR WITH OUT FOOTER
+        ===================================== -->
+<%= render "accounts/sidemenu" %>
+
+      
+
+      <!-- ====================================
+      ——— PAGE WRAPPER
+      ===================================== -->
+      <div class="page-wrapper">
+        
+          <!-- Header -->
+          <header class="main-header" id="header">
+            <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
+              <!-- Sidebar toggle button -->
+              <button id="sidebar-toggler" class="sidebar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+              </button>
+
+              <span class="page-title"></span>
+
+              <div class="navbar-right ">
+
+                <!-- search form -->
+                <ul class="nav navbar-nav">
+                  <!-- Offcanvas -->
+                  <li class="custom-dropdown">
+                  </li>
+                  <!-- User Account -->
+                  <li class="dropdown user-menu">
+                    <button class="dropdown-toggle nav-link" data-toggle="dropdown">
+                      <%= image_tag(current_user.image.thumb.url, alt: 'Image' , class:"user-image rounded-circle") if current_user.image?  %>
+                      <span class="d-none d-lg-inline-block"><strong><%= current_user.firstname %> <%= current_user.lastname %>
+</strong>
+</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+
+                  <li>
+                  <%= link_to edit_user_registration_path do %>
+                  <i class="mdi mdi-account-outline"></i>
+                  <span class="nav-text">My Profile</span>
+                  <% end %>
+                  </li>
+
+
+                      <li>
+                        <a class="dropdown-link-item" href="email-inbox.html">
+                          <i class="mdi mdi-email-outline"></i>
+                          <span class="nav-text">Message</span>
+                          <span class="badge badge-pill badge-primary">24</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-link-item" href="user-activities.html">
+                          <i class="mdi mdi-diamond-stone"></i>
+                          <span class="nav-text">Activitise</span></a>
+                      </li>
+                      <li>
+                        <a class="dropdown-link-item" href="user-account-settings.html">
+                          <i class="mdi mdi-settings"></i>
+                          <span class="nav-text">Account Setting</span>
+                        </a>
+                      </li>
+
+                      <li class="dropdown-footer">
+                        <a class="dropdown-link-item" href="#">
+ <i class="mdi mdi-logout"></i>
+ <%= button_to(
+  "Log Out",
+  destroy_user_session_path,
+  method: :delete
+) %>
+</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+
+
+          </header>
+
+        <!-- ====================================
+        ——— CONTENT WRAPPER
+        ===================================== -->
+        <div class="content-wrapper">
+          <div class="content"><!-- For Components documentaion -->
+
+<div class="row">
+
+  <div class="col-xl-12">
+    <!-- Default Button -->
+    <div class="card card-default">
+
+
+
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
+
+
+
+
+</p>
+<%= yield %>
+
+  </div>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you really want to remove it?
+      </div>
+      <div class="modal-footer">
+<form class="button_to" action="" method="post" name="myform1" id="myform1">
+<input type="hidden" name="_method" value="delete" autocomplete="off" />
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+<button type="button" class="btn btn-danger btn-pill" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-success btn-pill btn-ok">Delete</button>
+</form>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+          <!-- Footer -->
+          <footer class="footer mt-auto">
+            <div class="copyright bg-white">
+              <p>
+                &copy; <span id="copy-year"></span> Copyright by Me
+              </p>
+            </div>
+            <script>
+                var d = new Date();
+                var year = d.getFullYear();
+                document.getElementById("copy-year").innerHTML = year;
+            </script>
+          </footer>
+
+      </div>
+    </div>
+    
+                    <!-- Card Offcanvas -->
+
+
+    
+                    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+                    
+<%= javascript_include_tag "plugins/jquery/jquery.min" %>
+<%= javascript_include_tag "plugins/bootstrap/js/bootstrap.bundle.min" %>
+<%= javascript_include_tag "plugins/simplebar/simplebar.min" %>
+<%= javascript_include_tag "plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min" %>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+
+<script>
+$('#delModal').on('show.bs.modal', function(e) {
+    $(this).find('.btn-success').attr('href', $(e.relatedTarget).data('href'));
+});
+
+</script>
+
+
+
+    <script>
+        $('#delModal').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    </script>
+
+
+
+
+
+<%= javascript_include_tag "plugins/prism/prism" %>
+                    
+                    <%= javascript_include_tag "mono" %>
+                    <%= javascript_include_tag "chart" %>
+                    <%= javascript_include_tag "map" %>
+                    <%= javascript_include_tag "custom" %>
+
+                    
+
+
+                    <!--  -->
+
+
+  </body>
+</html>
+
+
+

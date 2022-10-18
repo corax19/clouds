@@ -1,0 +1,34 @@
+<h3>New User</h3>
+
+<%= form_with url: add_user_path, method: :post, model: @user do |form| %>
+
+  <div>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :username %><br>
+    <%= form.text_field :username %>
+  </div>
+
+  <div>
+    <%= form.label :firstname %><br>
+    <%= form.text_field :firstname %>
+  </div>
+
+  <div>
+    <%= form.label :lastname %><br>
+    <%= form.text_field :lastname %>
+  </div>
+
+  <div>
+    <%= form.label :password %><br />
+    <%= form.password_field :password %>
+  </div>
+
+
+  <div>
+    <br><%= form.submit 'Add User', :class => 'btn btn-sm btn-success btn-pill' %>
+  </div>
+<% end %>

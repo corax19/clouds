@@ -1,0 +1,61 @@
+<%= form_with(model: exten) do |form| %>
+  <% if exten.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(exten.errors.count, "error") %> prohibited this exten from being saved:</h2>
+
+      <ul>
+        <% exten.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :exten, style: "display: block" %>
+    <%= form.text_field :exten, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :secret, style: "display: block" %>
+    <%= form.text_field :secret, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+
+  <div>
+    <%= form.label :record, style: "display: block" %>
+    <%= form.select :record, ['Yes', 'No'] , {prompt: "Record Call or No?"} , {class: "col-2 form-control rounded-pill"}%>
+  </div>
+
+
+  <div>
+    <%= form.label :calllimit, style: "display: block" %>
+    <%= form.text_field :calllimit, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+
+
+
+  <div>
+    <%= form.label :decription, style: "display: block" %>
+    <%= form.text_field :decription, class: "col-6 form-control rounded-pill" %>
+  </div>
+
+
+  <div>
+    <%= form.label :sip_id, style: "display: block" %>
+    <%= form.collection_select :sip_id, Sip.all.where(account_id: current_user.account.id), :id, :number , {prompt: "Select Outbound Peer"} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+    <br><%= form.submit btitle, :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+
+
+
+<% end %>

@@ -1,0 +1,49 @@
+<h3>Edit User</h3>
+<%= form_with url: update_user_path, method: :put,  model: @user do |form| %>
+
+  <div>
+    <%= form.label :email %><br>
+    <%= form.text_field :email, value:@user.email %>
+  </div>
+
+  <div>
+    <%= form.label :username %><br>
+    <%= form.text_field :username, value:@user.username %>
+  </div>
+
+  <div>
+    <%= form.label :firstname %><br>
+    <%= form.text_field :firstname, value:@user.firstname %>
+  </div>
+
+  <div>
+    <%= form.label :lastname %><br>
+    <%= form.text_field :lastname, value:@user.lastname %>
+  </div>
+
+  <div>
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :password %><br />
+    <%= form.password_field :password %>
+  </div>
+
+
+<hr>
+<h4>Permissions</h4><br>
+<table cellspacing=15 cellpadding=15 width=200>
+  <% @userpermissions.each do |item| %>
+<tr>
+    <td> <%= form.label item[0][11..] %></td>
+    <td> <%= form.select item[0], @select_list, selected: item[1]== 1 ? "Yes" : "No" %></td>
+</tr>
+  <%end%>
+</table>
+
+  <div>
+    <br><%= form.submit 'Save User', :class => 'btn btn-info btn-pill' %>
+  </div>
+<% end %>

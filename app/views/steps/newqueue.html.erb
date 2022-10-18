@@ -1,0 +1,9 @@
+<h1>New Queue step</h1>
+
+<%= render "formqueue", step: @step , locals: {:btitle => "Add Queue Step", :formmethod => :post, :url => add_stepqueue_path(@step.route_id)} %>
+
+<br>
+
+<div>
+  <%= link_to "Back to steps", steps_path %>
+</div>

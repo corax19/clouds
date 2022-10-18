@@ -1,0 +1,58 @@
+ <%= form_with(url: locals[:url], method: locals[:formmethod] , model: step) do |form| %>
+
+
+<% exten_id = 0 %>
+<% dialoptions= {:number => "", :sip_id => 0,:dialoptions => "Tt", :dialtimeout => 40} %>
+<% if locals[:btitle] == "Update External Dial Step" %>
+<% dialoptions=getStepDialExternal(@step) %>
+<% end %>
+
+
+  <% if step.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+
+      <ul>
+        <% step.errors.each do |error| %>Tt
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :event, style: "display: block" %>
+    <%= form.select :event, ['ExternalDial'] ,  {prompt: "Select Event", :selected => 'ExternalDial'} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+
+  <div>
+    <%= form.label :number, style: "display: block" %>
+    <%= form.text_field :number, class: "col-2 form-control rounded-pill", value: dialoptions[:number] %>
+  </div>
+
+
+  <div>
+    <%= form.label :sip, style: "display: block" %>
+    <%= form.collection_select :sip_id,  Sip.all.where(account_id: current_user.account.id), :id, :number,  {prompt: "Select Line", selected: dialoptions[:sip_id]}, {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+
+  <div>
+    <%= form.label :timeout, style: "display: block" %>
+    <%= form.text_field :timeout, class: "col-2 form-control rounded-pill", value: dialoptions[:dialtimeout] %>
+  </div>
+
+  <div>
+    <%= form.label :options, style: "display: block" %>
+    <%= form.text_field :options, class: "col-2 form-control rounded-pill", value: dialoptions[:dialoptions] %>
+  </div>
+
+
+  <div>
+<br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
+
+
+

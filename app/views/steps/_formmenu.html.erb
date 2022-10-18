@@ -1,0 +1,41 @@
+ <%= form_with(url: locals[:url], method: locals[:formmethod] , model: step) do |form| %>
+
+
+<% exten_id = 0 %>
+<% dialoptions= {:exten_id => 0,:dialoptions => "Tt", :dialtimeout => 40} %>
+<% if locals[:btitle] == "Update Dial Step" %>
+<% menuid=getStepMenu(@step) %>
+<% end %>
+
+
+  <% if step.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+
+      <ul>
+        <% step.errors.each do |error| %>Tt
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :event, style: "display: block" %>
+    <%= form.select :event, ['Menu'] ,  {prompt: "Select Event", :selected => 'Menu'} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+    <%= form.label :menu, style: "display: block" %>
+    <%= form.collection_select :menu_id,  Route.all.where(account_id: current_user.account.id,sip_id: step.route.sip_id).where.not(name: ''), :id, :name,  {prompt: "Select Extention", selected: menuid}, {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+
+
+  <div>
+<br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
+
+
+

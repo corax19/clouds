@@ -1,0 +1,81 @@
+<h4>Steps Here</h2>
+
+<table  id="productsTable01" class="table table-hover table-product" style="width:80%">
+    <tr>
+    <td colspan=2>Step</td>
+    <td>Event</td>
+    <td>Payload</td>
+    <td style="width:55px" align="left">
+
+<div class="btn-group mb-1 col-1">
+          <button type="button" class="btn btn-success">New</button>
+          <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+          <%= link_to "Playback", new_stepplayback_path(@route), class: 'dropdown-item' %>
+          <%= link_to "Read", new_stepread_path(@route), class: 'dropdown-item' %>
+          <%= link_to "Dial", new_stepdial_path(@route), class: 'dropdown-item' %>
+          <%= link_to "Queue", new_stepqueue_path(@route), class: 'dropdown-item' %>
+          <%= link_to "ExternalDial", new_stepdialexternal_path(@route), class: 'dropdown-item' %>
+          <%= link_to "Menu", new_stepmenu_path(@route), class: 'dropdown-item' %>
+          </div>
+</div>
+
+</td>
+
+
+    </tr>
+
+
+<% @steps.each do |step| %>
+<% stepdata="" %>
+<% stepdata1="" %>
+<% stepdata=Sound.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Playback" %>
+<% stepdata=Route.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Menu" %>
+<% stepdata=Exten.find_by(id: JSON.parse(step.data)[0][1]).exten + " , " + JSON.parse(step.data)[1][1] + " , " + JSON.parse(step.data)[2][1]  if valid_json?(step.data) && step.event == "Dial" %>
+<% stepdata=JSON.parse(step.data)[0][1] + "@" + Sip.find_by(id: JSON.parse(step.data)[1][1]).sipid + " , " + JSON.parse(step.data)[2][1] + " , " + JSON.parse(step.data)[3][1]  if valid_json?(step.data) && step.event == "ExternalDial" %>
+
+<% stepdata=Hotline.find_by(id: JSON.parse(step.data)[0][1]).title + " , " + JSON.parse(step.data)[1][1]   if valid_json?(step.data) && step.event == "Queue" %>
+
+<% editlink=edit_stepplayback_path(@route,step) %>
+<% editlink=edit_stepdial_path(@route,step) if step.event == "Dial" %>
+<% editlink=edit_stepdialexternal_path(@route,step) if step.event == "ExternalDial" %>
+<% editlink=edit_stepmenu_path(@route,step) if step.event == "Menu" %>
+<% editlink=edit_stepqueue_path(@route,step) if step.event == "Queue" %>
+<% editlink=edit_stepread_path(@route,step) if step.event == "Read" %>
+
+    <tr>
+
+<td style="width:20px">
+<%= button_to "<i class=\"fa fa-caret-square-o-up\" aria-hidden=\"true\"></i> </button>".html_safe, stepup_path(@route,step), class: 'btn-sm btn-outline-warning btn-pill', :method => :post %>
+<%= button_to "<i class=\"fa fa-caret-square-o-down\" aria-hidden=\"true\"></i> </button>".html_safe, stepdown_path(@route,step), class: 'btn-sm btn-outline-warning btn-pill', :method => :post %>
+</td>
+<td style="width:10px"> <%= step.stepnum %></td>
+
+<td> <%= step.event %></td><td><%= stepdata %></td>
+          <td style="width:50px" align="right">
+            <div class="dropdown" style="width:50px">
+              <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= step.id %>"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= step.id %>" style="width:50px">
+            <%= button_to "<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</button>".html_safe, editlink, class: 'btn btn-info btn-pill', :method => :get %>
+            <button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../steps/<%= step.id %>"  onClick="setDelStep(<%= step.route.id %>,<%= step.id %>)">Delete</button>
+              </div>
+            </div>
+          </td>
+
+    </tr>
+  <% end %>
+
+
+
+</table>
+<br>
+<div>
+  <%= link_to "Back to routes", routes_path %>
+</div>
+
+
+

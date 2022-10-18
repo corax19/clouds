@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @moh %>
+
+<div>
+  <%= link_to "Edit this moh", edit_moh_path(@moh) %> |
+  <%= link_to "Back to mohs", mohs_path %>
+
+  <%= button_to "Destroy this moh", @moh, method: :delete %>
+</div>

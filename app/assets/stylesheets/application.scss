@@ -1,0 +1,49 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+*= require style.css
+
+*= require _404.scss
+*= require _calendar.scss
+*= require _coming-soon.scss
+*= require _email.scss
+*= require _inputs.scss
+*= require _media.scss
+*= require _owl-carousel.scss
+*= require _rtl.scss
+*= require _toasts.scss
+*= require _alert.scss
+*= require _card.scss
+*= require _data-tables.scss
+*= require _footer.scss
+*= require _lada-button.scss
+*= require _modal.scss
+*= require _pagination.scss
+*= require _sidebar.scss
+*= require _todo.scss
+*= require _badge.scss
+*= require _chart.scss
+*= require _date-range.scss
+*= require _forms.scss
+*= require _list-group.scss
+*= require _navbar.scss
+*= require _popover.scss
+*= require _spinkit.scss
+*= require _variables.scss
+*= require _breadcrumb.scss
+*= require _chat.scss
+*= require _dropdown.scss
+*= require _grid.scss
+*= require _map.scss
+*= require _navs.scss
+*= require _progress.scss
+*= require _switches.scss
+*= require _buttons.scss
+*= require _code.scss
+*= require _editor.scss
+*= require _icon.scss
+*= require _material-icon.scss
+*= require _offcanvas.scss
+*= require _reboot.scss
+*= require _tables.scss

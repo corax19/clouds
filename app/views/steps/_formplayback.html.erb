@@ -1,0 +1,38 @@
+ <%= form_with(url: locals[:url], method: locals[:formmethod] , model: step) do |form| %>
+
+
+<% sound_id = 0 %>
+<% if locals[:btitle] == "Update Playback Step" %>
+<% sound_id=getStepSound(@step) %>
+<% end %>
+
+
+  <% if step.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+
+      <ul>
+        <% step.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :event, style: "display: block" %>
+    <%= form.select :event, ['Playback'] ,  {prompt: "Select Event", :selected => 'Playback'} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+    <%= form.label :sound, style: "display: block" %>
+    <%= form.collection_select :sound_id,  Sound.all.where(account_id: current_user.account.id), :id, :name,  {prompt: "Select Sound", selected: sound_id}, {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+<br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
+
+
+

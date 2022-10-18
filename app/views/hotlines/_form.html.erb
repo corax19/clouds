@@ -1,0 +1,48 @@
+<%= form_with(model: hotline) do |form| %>
+  <% if hotline.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(hotline.errors.count, "error") %> prohibited this hotline from being saved:</h2>
+
+      <ul>
+        <% hotline.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :title, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+
+  <div>
+    <%= form.label :strategy, style: "display: block" %>
+<%= form.select :strategy, ['rrmemory', 'roundrobin','ringall','random','leastrecent','fewestcalls'] , {prompt: "Select Strategy"} , {class: "col-2 form-control rounded-pill"}%>
+  </div>
+
+  <div>
+    <%= form.label :timeout, style: "display: block" %>
+    <%= form.number_field :timeout, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :retry, style: "display: block" %>
+    <%= form.number_field :retry, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :wrapuptime, style: "display: block" %>
+    <%= form.number_field :wrapuptime, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :maxlen, style: "display: block" %>
+    <%= form.number_field :maxlen, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+  <br><%= form.submit btitle, :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<h1>Edit Read step</h1>
+
+<%= render "formread", step: @step , locals: {:btitle => "Update Read Step", :formmethod => :put, :url => update_stepread_path(@step.route_id,@step.id)} %>
+
+<br>
+
+<div>
+  <%= link_to "Back to steps", steps_path %>
+</div>

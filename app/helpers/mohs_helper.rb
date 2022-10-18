@@ -1,0 +1,2 @@
+module MohsHelper
+end

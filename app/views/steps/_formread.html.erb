@@ -1,0 +1,84 @@
+ <%= form_with(url: locals[:url], method: locals[:formmethod] , model: step) do |form| %>
+
+
+<% readoptions= {:sound_id => "0", :sound_id => 0,:timeout => 10, :maxlen => 3} %>
+
+<% sound_id = 0 %>
+<% accountid = current_user.account.id.to_s %>
+<% if locals[:btitle] == "Update Read Step" %>
+<% readoptions=getStepRead(@step) %>
+<% end %>
+
+
+  <% if step.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+
+      <ul>
+        <% step.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :event, style: "display: block" %>
+    <%= form.select :event, ['Read'] ,  {prompt: "Select Event", :selected => 'Read'} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+
+  <div>
+    <%= form.label :sound, style: "display: block" %>
+    <%= form.collection_select :sound_id,  Sound.all.where(account_id: current_user.account.id), :id, :name,  {prompt: "Select Sound", selected: readoptions[:sound_id]}, {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+
+  <div>
+    <%= form.label :maxlen, style: "display: block" %>
+    <%= form.text_field :maxlen, class: "col-4 form-control rounded-pill", value: readoptions[:maxlen] %>
+  </div>
+
+</div>
+</div>
+    <div class="col-sm-6">
+      <div class="form-group">
+
+
+
+  <div>
+    <%= form.label :timeout, style: "display: block" %>
+    <%= form.text_field :timeout, class: "col-4 form-control rounded-pill", value: readoptions[:timeout] %>
+  </div>
+
+</div>
+</div>
+</div>
+
+
+  <div class="row">
+
+<% for ind in 0..9 do %>
+    <div class="col-sm-6">
+      <div class="form-group">
+      <%= form.label "Read "+ind.to_s, style: "display: block" %>
+      <%= form.collection_select "read"+ind.to_s,  Exten.select('0,"0" as type,"None" as name, "Nothing" as myitem from dual union all select id,"3" as type,name,concat("Menu_",name) as myitem from routes where day is null and sip_id='+@step.route_id.to_s+' and account_id='+accountid+' and name !=""  union select all id,"3" as type, title as name,concat("Queue_",title) as myitem from hotlines where account_id='+accountid+' union all select id,"1"
+      as type,exten as name,concat("Exten_",exten) as myitem').where(account_id: current_user.account.id).order(:type), :myitem, :myitem,  {prompt: "Select Sound", selected: readoptions["read"+ind.to_s]}, {class: "col-6 form-control rounded-pill"} %>
+      </div>
+    </div>
+
+
+<% end %>
+
+  </div>
+
+  <div>
+<br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
+
+
+

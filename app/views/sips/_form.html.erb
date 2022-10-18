@@ -1,0 +1,42 @@
+<%= form_with(model: sip) do |form| %>
+  <% if sip.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(sip.errors.count, "error") %> prohibited this sip from being saved:</h2>
+
+      <ul>
+        <% sip.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :sipid, style: "display: block" %>
+    <%= form.text_field :sipid, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :secret, style: "display: block" %>
+    <%= form.text_field :secret, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :host, style: "display: block" %>
+    <%= form.text_field :host, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :number, style: "display: block" %>
+    <%= form.text_field :number, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :decription, style: "display: block" %>
+    <%= form.text_field :decription, class: "col-6 form-control rounded-pill" %>
+  </div>
+
+  <div>
+   <br><%= form.submit btitle, :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>

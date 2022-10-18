@@ -1,0 +1,11 @@
+<h1>Editing step</h1>
+<% sound_id=getStepSound(@step) %>
+
+<%= render "form", step: @step, btitle: "Update Step", formmethod: :put %>
+
+<br>
+
+<div>
+  <%= link_to "Show this step", @step %> |
+  <%= link_to "Back to steps", steps_path %>
+</div>

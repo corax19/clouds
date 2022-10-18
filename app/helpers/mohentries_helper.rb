@@ -1,0 +1,2 @@
+module MohentriesHelper
+end

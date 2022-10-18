@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @sip %>
+
+<div>
+  <%= link_to "Edit this sip", edit_sip_path(@sip) %> |
+  <%= link_to "Back to sips", sips_path %>
+
+  <%= button_to "Destroy this sip", @sip, method: :delete %>
+</div>

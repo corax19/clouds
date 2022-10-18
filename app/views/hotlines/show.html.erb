@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @hotline %>
+
+<div>
+  <%= link_to "Edit this hotline", edit_hotline_path(@hotline) %> |
+  <%= link_to "Back to hotlines", hotlines_path %>
+
+  <%= button_to "Destroy this hotline", @hotline, method: :delete %>
+</div>

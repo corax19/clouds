@@ -1,0 +1,9 @@
+<h1>New Menu step</h1>
+
+<%= render "formmenu", step: @step , locals: {:btitle => "Add Menu Step", :formmethod => :post, :url => add_stepmenu_path(@step.route_id)} %>
+
+<br>
+
+<div>
+  <%= link_to "Back to steps", steps_path %>
+</div>

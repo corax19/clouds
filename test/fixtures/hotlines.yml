@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  title: MyString
+  strategy: MyText
+  timeout: 1
+  retry: 1
+  wrapuptime: 1
+  maxlen: 1
+
+two:
+  name: MyString
+  title: MyString
+  strategy: MyText
+  timeout: 1
+  retry: 1
+  wrapuptime: 1
+  maxlen: 1

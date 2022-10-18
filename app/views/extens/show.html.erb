@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @exten %>
+
+<div>
+  <%= link_to "Edit this exten", edit_exten_path(@exten) %> |
+  <%= link_to "Back to extens", extens_path %>
+
+  <%= button_to "Destroy this exten", @exten, method: :delete %>
+</div>

@@ -1,0 +1,19 @@
+
+<h3>New Sound</h3>
+<%= form_with url: add_sound_path, method: :post,  model: @sound do |form| %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name, value:@sound.name %>
+  </div>
+
+
+  <div>
+    <%= form.label :audio %>
+    <%= form.file_field :audio %>
+  </div>
+
+  <div>
+    <br><%= form.submit 'Add Sound', :class => 'btn btn-info btn-pill' %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+module HotlinesHelper
+end

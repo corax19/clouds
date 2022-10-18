@@ -1,0 +1,69 @@
+<%= form_with(url: search_cdr_path, method: :post) do |form| %>
+  <div class="row">
+    <div class="col-sm-2">
+     <div class="form-group">
+
+
+  <div>
+    <%= form.label :startdate, style: "display: block" %>
+    <%= form.date_field :startdate, class: "col-9 form-control rounded-pill", value: locals[:startdate] %>
+  </div>
+
+
+</div>
+</div>
+<div class="col-sm-2">
+<div class="form-group">
+
+  <div>
+    <%= form.label :stopdate, style: "display: block" %>
+    <%= form.date_field :stopdate, class: "col-9 form-control rounded-pill", value: locals[:stopdate] %>
+  </div>
+
+</div>
+</div>
+<div class="col-sm-2">
+<div class="form-group">
+
+
+  <div>
+    <%= form.label :caller, style: "display: block" %>
+    <%= form.text_field :caller, class: "col-9 form-control rounded-pill", value: locals[:caller] %>
+  </div>
+
+</div>
+</div>
+<div class="col-sm-2">
+<div class="form-group">
+
+
+  <div>
+    <%= form.label :called, style: "display: block" %>
+    <%= form.text_field :called, class: "col-9 form-control rounded-pill", value: locals[:called] %>
+  </div>
+
+
+
+</div>
+</div>
+<div class="col-sm-2">
+<div class="form-group">
+
+
+
+  <div>
+    <%= form.label :direction, style: "display: block" %>
+    <%= form.select :direction, ['Both','Inbound', 'Outbound'] , {prompt: "Choose call direction", selected: locals[:direction]} , {class: "col-9 form-control rounded-pill"} %>
+  </div>
+
+
+</div>
+</div>
+</div>
+
+
+
+  <div>
+   <br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>

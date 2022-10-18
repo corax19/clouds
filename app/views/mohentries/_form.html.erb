@@ -1,0 +1,31 @@
+<%= form_with(url: mohentries_path(mohentry.moh),model: mohentry) do |form| %>
+  <% if mohentry.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(mohentry.errors.count, "error") %> prohibited this MOH entry from being saved:</h2>
+
+      <ul>
+        <% mohentry.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div>
+    <%= form.label :moh_id, style: "display: block" %>
+    <%= form.collection_select :moh_id, Moh.all.where(account_id: current_user.account.id), :id, :name , {prompt: "Select MOH"} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+    <%= form.label :sound_id, style: "display: block" %>
+    <%= form.collection_select :sound_id, Sound.all.where(account_id: current_user.account.id), :id, :name , {prompt: "Select Sound"} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+
+
+
+  <div>
+<br><%= form.submit btitle, :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>

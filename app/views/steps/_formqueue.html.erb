@@ -1,0 +1,46 @@
+ <%= form_with(url: locals[:url], method: locals[:formmethod] , model: step) do |form| %>
+
+
+<% exten_id = 0 %>
+<% dialoptions= {:hotline_id => 0,:dialoptions => "Tt"} %>
+<% if locals[:btitle] == "Update Queue Step" %>
+<% dialoptions=getStepQueue(@step) %>
+<% end %>
+
+
+  <% if step.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+
+      <ul>
+        <% step.errors.each do |error| %>Tt
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :event, style: "display: block" %>
+    <%= form.select :event, ['Queue'] ,  {prompt: "Select Event", :selected => 'Queue'} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+    <%= form.label :queue, style: "display: block" %>
+    <%= form.collection_select :hotline,  Hotline.all.where(account_id: current_user.account.id), :id, :title,  {prompt: "Select Queue", selected: dialoptions[:queue_id]}, {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+
+  <div>
+    <%= form.label :options, style: "display: block" %>
+    <%= form.text_field :options, class: "col-2 form-control rounded-pill", value: dialoptions[:dialoptions] %>
+  </div>
+
+
+  <div>
+<br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
+
+
+

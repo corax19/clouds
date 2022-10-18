@@ -1,0 +1,36 @@
+
+<h4>Sips Here</h2>
+
+<table  id="productsTable01" class="table table-hover table-product" style="width:80%">
+    <tr>
+    <td>SIP ID</td><td>Secret</td><td>Host</td><td>Number</td><td>Description</td>
+    <td style="width:55px" align="right"><a class="dropdown-item" href="../sips/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>New</button></a></td>
+
+
+    </tr>
+
+
+  <% @sips.each do |sip| %>
+    <tr>
+
+
+<td> <%= sip.sipid %></td><td><%= sip.secret %></td><td><%= sip.host %></td><td><%= sip.number %></td><td><%= sip.decription %></td>
+          <td style="width:50px" align="right">
+            <div class="dropdown" style="width:50px">
+              <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= sip.id %>"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= sip.id %>" style="width:50px">
+
+            <%= button_to "<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</button>".html_safe, edit_sip_path(sip), class: 'btn btn-info btn-pill', :method => :get %>
+<button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../sips/<%= sip.id %>"  onClick="setDelSIP(<%= sip.id %>)">Delete</button>
+              </div>
+            </div>
+          </td>
+
+    </tr>
+  <% end %>
+
+
+
+</table>

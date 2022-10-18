@@ -1,0 +1,30 @@
+<%= form_with(model: step) do |form| %>
+  <% if step.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(step.errors.count, "error") %> prohibited this step from being saved:</h2>
+
+      <ul>
+        <% step.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :event, style: "display: block" %>
+    <%= form.select :event, ['Playback', 'Read','Dial','Queue','DialExternal','Menu'] , {prompt: "Select Event"} , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+    <%= form.label :data, style: "display: block" %>
+    <%= form.text_area :data  , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+  <div>
+<br><%= form.submit btitle, :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
+
+
+

@@ -1,0 +1,37 @@
+<h4>Sounds here</h4>
+
+<br>
+<table  id="productsTable01" class="table table-hover table-product" style="width:80%">
+    <tr>
+    <td>Sound Name</td><td></td>
+    <td style="width:55px" align="right"><a class="dropdown-item" href="../sounds/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>New</button></a></td>
+
+
+    </tr>
+
+  <% @sounds.each do |sound| %>
+    <tr>
+
+<td style="width:70%"><%= sound.name %></td>
+<td>
+<audio controls>
+  <source src="<%= request.base_url+sound.audio.url if sound.audio? %>" type="audio/mpeg" >
+</audio>
+</td>
+
+
+          <td style="width:50px" align="right">
+            <div class="dropdown" style="width:50px">
+              <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= sound.id %>"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= sound.id %>" style="width:50px">
+<button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../sounds/<%= sound.id %>"  onClick="setDelSound(<%= sound.id %>)">Delete</button>
+              </div>
+            </div>
+          </td>
+
+
+    </tr>
+  <% end %>
+</table>
