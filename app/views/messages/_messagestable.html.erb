@@ -1,0 +1,17 @@
+<table  id="productsTable01" class="table table-hover table-product" style="width:80%">
+    <tr>
+    <td>Created</td><td>From</td><td>Type</td><td>Text</td><td>Is Read</td>
+    </tr>
+
+
+  <% @messages.each do |message| %>
+    <tr>
+
+
+<td> <%= message.created_at.localtime.to_s[0..19] %></td><td><%= message.from %></td><td><%= message.messagetype %></td><td><%= message.message %></td><td><%= message.read %></td>
+    </tr>
+  <% end %>
+
+
+
+</table>

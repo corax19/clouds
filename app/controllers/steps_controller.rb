@@ -2,8 +2,8 @@ class StepsController < ApplicationController
  before_action :getPermissions
  before_action :checkPermissions
 
-  before_action :set_step, only: %i[ show edit editplayback editdial editdialexternal editmenu editqueue editread updatedial updatemenu updatequeue updatedialexternal updateplayback updateread update destroy stepup stepdown]
-  before_action :set_newstep, only: %i[ new newplayback newread newdial newqueue newdialexternal newmenu]
+  before_action :set_step, only: %i[ show edit editplayback editdial editdialexternal editmenu editqueue editread editvoicemail editringgroup updateringgroup updatevoicemail updatedial updatemenu updatequeue updatedialexternal updateplayback updateread update destroy stepup stepdown]
+  before_action :set_newstep, only: %i[ new newplayback newread newdial newqueue newdialexternal newmenu newvoicemail newringgroup]
   # GET /steps or /steps.json
   def index
     @steps = Step.all.where(account_id: current_user.account.id,route: params[:routeid]).order(:stepnum,:id)
@@ -74,6 +74,12 @@ class StepsController < ApplicationController
   def newdial
   end
 
+  def newringgroup
+  end
+
+  def newvoicemail
+  end
+
 
   def newmenu
   end
@@ -93,6 +99,12 @@ class StepsController < ApplicationController
   end
 
   def editdial
+  end
+
+  def editvoicemail
+  end
+
+  def editringgroup
   end
 
 
@@ -283,6 +295,95 @@ stepdata.push(["exten_num", exten_num])
 end
 
 
+def createringgroup
+@step = Step.new(step_params)
+@step.account = current_user.account
+@step.route_id = params[:routeid]
+exten_num = ""
+stepdata={}
+
+params[:step].each do |id, value|
+if id == "extens"
+stepdata["extens"] = value
+end
+
+if id == "timeout"
+puts value
+stepdata["timeout"] = value
+end
+
+if id == "options"
+puts value
+stepdata["options"] = value
+end
+
+
+if id == "moh_id"
+if value != ""
+stepdata["moh_id"] = value
+mymoh = Moh.find_by(id: value)
+stepdata["mohclass"] = mymoh.account_id.to_s + "_" + mymoh.id.to_s
+else
+stepdata["moh_id"] = ""
+stepdata["mohclass"] = ""
+end
+end
+
+
+end
+
+
+@step.data = stepdata.to_json
+    respond_to do |format|
+      if @step.save
+        rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepringgroup", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+        format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
+        format.json { render :show, status: :created, location: @step }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @step.errors, status: :unprocessable_entity }
+      end
+    end
+end
+
+
+
+def createvoicemail
+@step = Step.new(step_params)
+@step.account = current_user.account
+@step.route_id = params[:routeid]
+exten_num = ""
+stepdata={}
+params[:step].each do |id, value|
+if id == "exten_id"
+stepdata["exten_id"] = value
+exten_num = Exten.find_by(id: value).exten
+stepdata["exten_num"] = exten_num
+end
+
+if id == "options"
+stepdata["options"] = value
+end
+
+end
+
+
+@step.data = stepdata.to_json
+    respond_to do |format|
+      if @step.save
+        rearrange
+        Log.create(account: current_user.account, user: current_user, event: "createstepvm", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+        format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully created." }
+        format.json { render :show, status: :created, location: @step }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @step.errors, status: :unprocessable_entity }
+      end
+    end
+end
+
+
 
 
 def createqueue
@@ -404,6 +505,90 @@ stepdata.push(["exten_num", exten_num])
       end
     end
 end
+
+def updatevoicemail
+
+exten_num = ""
+stepdata={}
+params[:step].each do |id, value|
+if id == "exten_id"
+stepdata["exten_id"] = value
+myexten = Exten.find_by(id: value)
+exten_num = myexten.exten
+stepdata["exten_num"] = exten_num
+stepdata["vmbox"] = myexten.voicemail.mailbox.to_s + "@" + myexten.voicemail.context
+end
+
+
+if id == "options"
+stepdata["options"] = value
+end
+
+end
+
+@step.data = stepdata.to_json
+
+
+    respond_to do |format|
+      if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepringgroup", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+        format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
+        format.json { render :show, status: :ok, location: @step }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @step.errors, status: :unprocessable_entity }
+      end
+    end
+end
+
+def updateringgroup
+
+stepdata={}
+
+params[:step].each do |id, value|
+if id == "extens"
+stepdata["extens"] = value
+end
+
+if id == "timeout"
+puts value
+stepdata["timeout"] = value
+end
+
+if id == "options"
+puts value
+stepdata["options"] = value
+end
+
+if id == "moh_id"
+if value != ""
+stepdata["moh_id"] = value
+mymoh = Moh.find_by(id: value)
+stepdata["mohclass"] = mymoh.account_id.to_s + "_" + mymoh.id.to_s
+else
+stepdata["moh_id"] = ""
+stepdata["mohclass"] = ""
+end
+end
+
+
+end
+
+
+@step.data = stepdata.to_json
+
+    respond_to do |format|
+      if @step.update(step_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatestepvm", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+        format.html { redirect_to steps_path(@step.route_id), notice: "Step was successfully updated." }
+        format.json { render :show, status: :ok, location: @step }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @step.errors, status: :unprocessable_entity }
+      end
+    end
+end
+
 
 
 def updatequeue

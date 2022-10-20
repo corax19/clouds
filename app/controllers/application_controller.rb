@@ -38,7 +38,8 @@ def loadpermissions
   "permission_steps" => 0,
   "permission_mohs" => 0,
   "permission_logs" => 0,
-  "permission_sounds" => 0
+  "permission_sounds" => 0,
+  "permission_messages" => 0
 }
 
 @userpermissionspages=@@userpermissions

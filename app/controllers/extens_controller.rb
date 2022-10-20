@@ -26,6 +26,12 @@ class ExtensController < ApplicationController
 @exten.account = current_user.account
     respond_to do |format|
       if @exten.save
+
+if params[:exten]["voicemail"] == "Yes"
+  @exten.voicemail=Voicemail.create(context: "default", mailbox: current_user.account_id.to_s+@exten.exten.to_s, password: params[:exten]["vmsecret"], email: params[:exten]["vmemail"], attach: "yes", exten: @exten)
+end
+
+
         Log.create(account: current_user.account, user: current_user, event: "createexten", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to extens_path, notice: "Exten was successfully created." }
         format.json { render :show, status: :created, location: @exten }
@@ -40,6 +46,25 @@ class ExtensController < ApplicationController
   def update
     respond_to do |format|
       if @exten.update(exten_params)
+
+
+if params[:exten]["voicemail"] == "Yes"
+ if @exten.voicemail == nil
+  @exten.voicemail=Voicemail.create(context: "default", mailbox: current_user.account_id.to_s+@exten.exten.to_s, password: params[:exten]["vmsecret"], email: params[:exten]["vmemail"], attach: "yes", exten: @exten)
+ else
+  @exten.voicemail.update(password: params[:exten]["vmsecret"], email: params[:exten]["vmemail"])
+ end
+else
+
+ if @exten.voicemail != nil
+  @exten.voicemail.destroy
+ end
+
+end
+
+
+
+
         Log.create(account: current_user.account, user: current_user, event: "updateexten", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to extens_path, notice: "Exten was successfully updated." }
         format.json { render :show, status: :ok, location: @exten }

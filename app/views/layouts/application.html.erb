@@ -178,13 +178,20 @@ document.getElementById("myform1").action = myurl;
                   </li>
 
 
+<% if @userpermissionspages['permission_messages'] == 1 %>
+ <% messagesNum = Message.where(account_id: current_user.account.id,read: 0).count %>
                       <li>
-                        <a class="dropdown-link-item" href="email-inbox.html">
-                          <i class="mdi mdi-email-outline"></i>
-                          <span class="nav-text">Message</span>
-                          <span class="badge badge-pill badge-primary">24</span>
-                        </a>
+                  <%= link_to messages_path do %>
+                  <i class="mdi mdi-email-outline"></i>
+                  <span class="nav-text">Messages</span>
+<% if messagesNum > 0 %>
+<span class="badge badge-pill badge-primary"><%= messagesNum %></span>
+<% end %>
+
+                  <% end %>
                       </li>
+<% end %>
+
 
 <% if @userpermissionspages['permission_logs'] == 1 %>
                       <li>

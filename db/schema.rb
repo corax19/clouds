@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_18_125230) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -91,7 +91,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_125230) do
     t.integer "periodic_announce_frequency"
     t.integer "ringinuse"
     t.string "setinterfacevar"
+    t.bigint "moh_id"
     t.index ["account_id"], name: "index_hotlines_on_account_id"
+    t.index ["moh_id"], name: "index_hotlines_on_moh_id"
     t.index ["name"], name: "index_hotlines_on_name"
   end
 
@@ -107,6 +109,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_125230) do
     t.index ["account_id"], name: "index_logs_on_account_id"
     t.index ["created_at"], name: "index_logs_on_created_at"
     t.index ["user_id"], name: "index_logs_on_user_id"
+  end
+
+  create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "from", default: "System"
+    t.text "message"
+    t.integer "read", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id", null: false
+    t.string "messagetype", default: "Info"
+    t.index ["account_id"], name: "index_messages_on_account_id"
   end
 
   create_table "moh_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -200,6 +213,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_125230) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "voicemails", primary_key: "uniqueid", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "context", default: ""
+    t.integer "mailbox", default: 0
+    t.string "password", default: "9999"
+    t.string "fullname", default: "0"
+    t.string "email", default: ""
+    t.string "pager", default: ""
+    t.datetime "stamp"
+    t.string "attach", default: "No"
+    t.string "saycid", default: "Yes"
+    t.string "hidefromdir", default: "No"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "exten_id", null: false
+    t.index ["exten_id"], name: "index_voicemails_on_exten_id"
+  end
+
   add_foreign_key "accounts", "users"
   add_foreign_key "agents", "accounts"
   add_foreign_key "agents", "extens"
@@ -209,6 +239,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_125230) do
   add_foreign_key "hotlines", "accounts"
   add_foreign_key "logs", "accounts"
   add_foreign_key "logs", "users"
+  add_foreign_key "messages", "accounts"
   add_foreign_key "moh_entries", "accounts"
   add_foreign_key "moh_entries", "mohs"
   add_foreign_key "moh_entries", "sounds"
@@ -220,4 +251,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_18_125230) do
   add_foreign_key "steps", "accounts"
   add_foreign_key "steps", "routes"
   add_foreign_key "users", "accounts"
+  add_foreign_key "voicemails", "extens"
 end

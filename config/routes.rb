@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+#  resources :messages
 #  get 'log/index'
   resources :mohs
 #  resources :steps
@@ -18,6 +19,9 @@ post "/cdr", to: "cdr#search", as: :search_cdr
 
 get "/logs", to: "log#index"
 post "/logs", to: "log#search", as: :search_logs
+
+get "/messages", to: "messages#index"
+post "/messages", to: "messages#search", as: :search_messages
 
 get "/myaccount", to: "accounts#show", as: :myaccount
 post "/myaccount", to: "accounts#updatemyaccount", as: :update_myaccount
@@ -89,6 +93,19 @@ scope '/routes/:routeid/' do
   post "/steps/read", to: "steps#createread", as: :add_stepread
   get "/steps/:id/read/edit", to: "steps#editread", as: :edit_stepread
   put "/steps/:id/read", to: "steps#updateread", as: :update_stepread
+
+
+#CRUD Ringgroup
+  get "/steps/ringgroup/new", to: "steps#newringgroup", as: :new_stepringgroup
+  post "/steps/ringgroup", to: "steps#createringgroup", as: :add_stepringgroup
+  get "/steps/:id/ringgroup/edit", to: "steps#editringgroup", as: :edit_stepringgroup
+  put "/steps/:id/ringgroup", to: "steps#updateringgroup", as: :update_stepringgroup
+
+#CRUD Voicemail
+  get "/steps/voicemail/new", to: "steps#newvoicemail", as: :new_stepvoicemail
+  post "/steps/voicemail", to: "steps#createvoicemail", as: :add_stepvoicemail
+  get "/steps/:id/voicemail/edit", to: "steps#editvoicemail", as: :edit_stepvoicemail
+  put "/steps/:id/voicemail", to: "steps#updatevoicemail", as: :update_stepvoicemail
 
 
 

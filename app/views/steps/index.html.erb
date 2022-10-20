@@ -16,8 +16,10 @@
           <%= link_to "Playback", new_stepplayback_path(@route), class: 'dropdown-item' %>
           <%= link_to "Read", new_stepread_path(@route), class: 'dropdown-item' %>
           <%= link_to "Dial", new_stepdial_path(@route), class: 'dropdown-item' %>
+          <%= link_to "Ring Group", new_stepringgroup_path(@route), class: 'dropdown-item' %>
           <%= link_to "Queue", new_stepqueue_path(@route), class: 'dropdown-item' %>
           <%= link_to "ExternalDial", new_stepdialexternal_path(@route), class: 'dropdown-item' %>
+          <%= link_to "Voicemail", new_stepvoicemail_path(@route), class: 'dropdown-item' %>
           <%= link_to "Menu", new_stepmenu_path(@route), class: 'dropdown-item' %>
           </div>
 </div>
@@ -32,6 +34,8 @@
 <% stepdata="" %>
 <% stepdata1="" %>
 <% stepdata=Sound.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Playback" %>
+<% stepdata=Exten.find_by(id: JSON.parse(step.data)["exten_id"]).exten if valid_json?(step.data) && step.event == "Voicemail" %>
+<% stepdata=JSON.parse(step.data)["extens"] if valid_json?(step.data) && step.event == "RingGroup" %>
 <% stepdata=Route.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Menu" %>
 <% stepdata=Exten.find_by(id: JSON.parse(step.data)[0][1]).exten + " , " + JSON.parse(step.data)[1][1] + " , " + JSON.parse(step.data)[2][1]  if valid_json?(step.data) && step.event == "Dial" %>
 <% stepdata=JSON.parse(step.data)[0][1] + "@" + Sip.find_by(id: JSON.parse(step.data)[1][1]).sipid + " , " + JSON.parse(step.data)[2][1] + " , " + JSON.parse(step.data)[3][1]  if valid_json?(step.data) && step.event == "ExternalDial" %>
@@ -44,6 +48,8 @@
 <% editlink=edit_stepmenu_path(@route,step) if step.event == "Menu" %>
 <% editlink=edit_stepqueue_path(@route,step) if step.event == "Queue" %>
 <% editlink=edit_stepread_path(@route,step) if step.event == "Read" %>
+<% editlink=edit_stepvoicemail_path(@route,step) if step.event == "Voicemail" %>
+<% editlink=edit_stepringgroup_path(@route,step) if step.event == "RingGroup" %>
 
     <tr>
 

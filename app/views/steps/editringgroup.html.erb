@@ -1,0 +1,9 @@
+<h1>Edit Ring Group step</h1>
+
+<%= render "formringgroup", step: @step , locals: {:btitle => "Update Ring Group Step", :formmethod => :put, :url => update_stepringgroup_path(@step.route_id,@step.id)} %>
+
+<br>
+
+<div>
+  <%= link_to "Back to steps", steps_path %>
+</div>

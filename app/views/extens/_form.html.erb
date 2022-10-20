@@ -11,33 +11,64 @@
     </div>
   <% end %>
 
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+
+
   <div>
     <%= form.label :exten, style: "display: block" %>
-    <%= form.text_field :exten, class: "col-2 form-control rounded-pill" %>
+    <%= form.text_field :exten, class: "col-6 form-control rounded-pill" %>
   </div>
+
+</div>
+</div>
+
+
+<div class="col-sm-4">
+<div class="form-group">
+
 
   <div>
     <%= form.label :secret, style: "display: block" %>
-    <%= form.text_field :secret, class: "col-2 form-control rounded-pill" %>
+    <%= form.text_field :secret, class: "col-6 form-control rounded-pill" %>
   </div>
+
+</div>
+</div>
+</div>
 
   <div>
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name, class: "col-2 form-control rounded-pill" %>
   </div>
 
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
 
   <div>
     <%= form.label :record, style: "display: block" %>
-    <%= form.select :record, ['Yes', 'No'] , {prompt: "Record Call or No?"} , {class: "col-2 form-control rounded-pill"}%>
+    <%= form.select :record, ['Yes', 'No'] , {prompt: "Record Call or No?"} , {class: "col-6 form-control rounded-pill"}%>
   </div>
+
+
+</div>
+</div>
+
+
+<div class="col-sm-4">
+<div class="form-group">
 
 
   <div>
     <%= form.label :calllimit, style: "display: block" %>
-    <%= form.text_field :calllimit, class: "col-2 form-control rounded-pill" %>
+    <%= form.text_field :calllimit, class: "col-6 form-control rounded-pill" %>
   </div>
 
+</div>
+</div>
+</div>
 
 
 
@@ -46,11 +77,53 @@
     <%= form.text_field :decription, class: "col-6 form-control rounded-pill" %>
   </div>
 
-
   <div>
     <%= form.label :sip_id, style: "display: block" %>
     <%= form.collection_select :sip_id, Sip.all.where(account_id: current_user.account.id), :id, :number , {prompt: "Select Outbound Peer"} , {class: "col-2 form-control rounded-pill"} %>
   </div>
+
+
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="form-group">
+
+  <div>
+    <%= form.label :voice_mail, style: "display: block" %>
+    <%= form.select :voicemail, ['Yes', 'No'] , {prompt: "Has Voicemail?"} , {class: "col-8 form-control rounded-pill"}%>
+  </div>
+
+
+</div>
+</div>
+
+
+<div class="col-sm-2">
+<div class="form-group">
+
+
+  <div>
+    <%= form.label :vm_secret, style: "display: block" %>
+    <%= form.text_field :vmsecret, class: "col-8 form-control rounded-pill", value: exten.voicemail.password %>
+  </div>
+
+</div>
+</div>
+
+
+<div class="col-sm-2">
+<div class="form-group">
+
+
+  <div>
+    <%= form.label :vm_email, style: "display: block" %>
+    <%= form.text_field :vmemail, class: "col-12 form-control rounded-pill", value: exten.voicemail.email %>
+  </div>
+
+</div>
+</div>
+</div>
+
+
 
   <div>
     <br><%= form.submit btitle, :class => 'btn btn-sm btn-success btn-pill'%>

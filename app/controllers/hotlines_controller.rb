@@ -26,6 +26,11 @@ class HotlinesController < ApplicationController
     @hotline = Hotline.new(hotline_params)
     @hotline.account = current_user.account
     @hotline.name="#{@hotline.account.id}-#{@hotline.title}"
+    if params[:hotline]["moh_id"] == nil || params[:hotline]["moh_id"] == ""
+     @hotline.musiconhold = "default"
+    else
+     @hotline.musiconhold="#{@hotline.account.id}_#{params[:hotline]["moh_id"]}"
+    end
     respond_to do |format|
       if @hotline.save
         Log.create(account: current_user.account, user: current_user, event: "createqueue", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
@@ -41,6 +46,13 @@ class HotlinesController < ApplicationController
   # PATCH/PUT /hotlines/1 or /hotlines/1.json
   def update
   @hotline.name="#{@hotline.account.id}_#{@hotline.title}"
+    if params[:hotline]["moh_id"] == nil || params[:hotline]["moh_id"] == ""
+     @hotline.musiconhold = "default"
+    else
+     @hotline.musiconhold="#{@hotline.account.id}_#{params[:hotline]["moh_id"]}"
+    end
+
+
     respond_to do |format|
       if @hotline.update(hotline_params)
         Log.create(account: current_user.account, user: current_user, event: "updatequeue", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
@@ -71,7 +83,7 @@ class HotlinesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def hotline_params
-      params.require(:hotline).permit(:name, :title, :strategy, :timeout, :retry, :wrapuptime, :maxlen)
+      params.require(:hotline).permit(:name, :title, :strategy, :timeout, :retry, :wrapuptime, :maxlen, :moh_id, :musiconhold)
     end
 
 

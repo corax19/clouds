@@ -91,6 +91,34 @@ dialoptions
 end
 
 
+def getStepVoicemail(mystep)
+dialoptions = {}
+puts mystep.data
+if valid_json?(mystep.data)
+vmID = Exten.find_by(id: JSON.parse(mystep.data)["exten_id"]).id
+puts vmID
+dialoptions = JSON.parse(mystep.data)["options"]
+puts dialoptions
+dialoptions= {:exten_id => vmID,:dialoptions => dialoptions}
+end
+dialoptions
+end
+
+def getStepRingGroup(mystep)
+dialoptions = {}
+puts mystep.data
+if valid_json?(mystep.data)
+dialoptions = JSON.parse(mystep.data)["options"]
+timeout = JSON.parse(mystep.data)["timeout"]
+extens = JSON.parse(mystep.data)["extens"]
+moh_id = JSON.parse(mystep.data)["moh_id"]
+puts dialoptions
+dialoptions= {:extens => extens,:dialoptions => dialoptions,:dialtimeout => timeout,:moh_id => moh_id}
+end
+dialoptions
+end
+
+
 
 
 

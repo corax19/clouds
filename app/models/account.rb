@@ -7,6 +7,7 @@ has_many :hotlines, dependent: :destroy
 has_many :routes, dependent: :destroy
 has_many :steps, dependent: :destroy
 has_many :mohs, dependent: :destroy
+has_many :messages, dependent: :destroy
 
 
 mount_uploader :image, SoundUploader
