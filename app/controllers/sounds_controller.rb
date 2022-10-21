@@ -1,4 +1,5 @@
 class SoundsController < ApplicationController
+before_action :authenticate_user!
  before_action :getPermissions
  before_action :checkPermissions
 
@@ -18,6 +19,7 @@ class SoundsController < ApplicationController
   Log.create(account: current_user.account, user: current_user, event: "createsound", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   redirect_to sounds_path
  else
+flash[:alert] = 'Sound not added'
   render :new, status: :unprocessable_entity
  end
 

@@ -1,0 +1,9 @@
+<h1>Edit Account</h1>
+
+<%= render "form", account: @account, locals: {:btitle => "Update Account", :formmethod => :put, :url => update_account_path(@account)} %>
+
+<br>
+
+<div>
+  <%= link_to "Back to accounts", accounts_path %>
+</div>

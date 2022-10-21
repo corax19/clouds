@@ -1,7 +1,9 @@
 class ExtensController < ApplicationController
+before_action :authenticate_user!
+ before_action :getPermissions
+ before_action :checkPermissions
+
   before_action :set_exten, only: %i[ show edit update destroy ]
-  before_action :getPermissions
-  before_action :checkPermissions
   # GET /extens or /extens.json
   def index
     @extens = Exten.all.where(account_id: current_user.account.id)

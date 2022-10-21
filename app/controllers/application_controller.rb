@@ -41,15 +41,17 @@ def loadpermissions
   "permission_sounds" => 0,
   "permission_messages" => 0
 }
-
 @userpermissionspages=@@userpermissions
-userpermissions = JSON.parse(current_user.permission)
-userpermissions.each do |id, value|
-if value == "Yes"
-@userpermissionspages[id]= 1
-else
-@userpermissionspages[id]= 0
+if current_user != nil
+ userpermissions = JSON.parse(current_user.permission)
+ userpermissions.each do |id, value|
+ if value == "Yes"
+ @userpermissionspages[id]= 1
+ else
+ @userpermissionspages[id]= 0
+ end
 end
+
 end
 
 end

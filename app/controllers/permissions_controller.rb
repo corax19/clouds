@@ -25,6 +25,29 @@ end
 def create
  @user = User.new(user_params)
  @user.account = current_user.account
+
+allpermissions = {
+  "permission_accounts" => "No",
+  "permission_users" => "No",
+  "permission_sips" => "No",
+  "permission_extensions" => "No",
+  "permission_queues" => "No",
+  "permission_agents" => "No",
+  "permission_routes" => "No",
+  "permission_steps" => "No",
+  "permission_mohs" => "No",
+  "permission_logs" => "No",
+  "permission_sounds" => "No",
+  "permission_messages" => "No"
+}
+
+userpermissions=Array.new
+allpermissions.each do |id, value|
+ userpermissions.push([id, value])
+end
+
+@user.permission = userpermissions.to_json
+
  if @user.save
     Log.create(account: current_user.account, user: current_user, event: "createuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   redirect_to users_path
@@ -35,9 +58,8 @@ end
 
 
 def edit
- @userpermissions=@@userpermissions
- @select_list = [ 'Yes', 'No' ]
  @user = User.find(params[:id])
+setuserpermissions
 end
 
 def show
@@ -64,13 +86,20 @@ if(params.require(:user)[:password].blank?)
   flash[:notice] = 'User has been updated'
   redirect_to users_path
  else
+
+
+setuserpermissions
+flash[:alert] = 'User not updated'
+
   render :edit, status: :unprocessable_entity
  end
 
  else
  if @user.update(user_params2)
     Log.create(account: current_user.account, user: current_user, event: "updateuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+if @user == current_user
   bypass_sign_in(@user)
+end
   flash[:notice] = 'User has been updated'
   redirect_to users_path
 
@@ -115,7 +144,7 @@ userpermissions = JSON.parse(current_user.permission)
 userpermissions.each do |id, value|
 if value == "Yes"
 @userpermissions[id]= 1
-else 
+else
 @userpermissions[id]= 0
 end
 end
@@ -125,6 +154,34 @@ def checkPermissions
 unless @userpermissions['permission_users'] == 1
 render :file => "#{Rails.root}/public/errors/404.html",  :status => 404
 end
+end
+
+def setuserpermissions
+@select_list = [ 'Yes', 'No' ]
+allpermissions = {
+  "permission_accounts" => "No",
+  "permission_users" => "No",
+  "permission_sips" => "No",
+  "permission_extensions" => "No",
+  "permission_queues" => "No",
+  "permission_agents" => "No",
+  "permission_routes" => "No",
+  "permission_steps" => "No",
+  "permission_mohs" => "No",
+  "permission_logs" => "No",
+  "permission_sounds" => "No",
+  "permission_messages" => "No"
+}
+@edituserpermission = allpermissions
+edituserpermissions = JSON.parse(@user.permission)
+edituserpermissions.each do |id, value|
+if value == "Yes"
+@edituserpermission[id]= 1
+else
+@edituserpermission[id]= 0
+end
+end
+
 end
 
 end

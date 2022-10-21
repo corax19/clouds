@@ -1,4 +1,45 @@
-<h2>ABC</h2>
-<h4>Hi Accounts</h4>
+<h4>Accounts here</h4>
+
+
+<table  id="accountsTable" class="table table-hover table-product" style="width:80%">
+    <tr><td></td>
+    <td>ID</td><td>NAME</td><td>Created</td><td>Phone</td><td>Address</td><td>Description</td>
+    <td style="width:55px" align="right"><a class="dropdown-item" href="../accounts/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>New</button></a></td>
+
+
+    </tr>
+
+
+  <% @accounts.each do |account| %>
+    <tr>
+
+      <td><%= image_tag(account.image.thumb.url, alt: 'Image') if account.image? %></td>
+
+<td> <%= account.id %></td><td><%= account.name %></td><td><%= account.created_at.localtime.to_s[0..10] %></td>
+<td><%= account.phone %></td>
+<td><%= account.address %></td>
+<td><%= account.description %></td>
+
+          <td style="width:50px" align="right">
+            <div class="dropdown" style="width:50px">
+              <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= account.id %>"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= account.id %>" style="width:50px">
+
+            <%= button_to "<i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i> Enter</button>".html_safe, enter_account_path(account), class: 'btn btn-primary btn-pill', :method => :post %>
+
+            <%= button_to "<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</button>".html_safe, edit_account_path(account), class: 'btn btn-info btn-pill', :method => :get %>
+<button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../accounts/<%= account.id %>"  onClick="setDelAcct(<%= account.id %>)">Delete</button>
+              </div>
+            </div>
+          </td>
+
+    </tr>
+  <% end %>
+
+
+
+</table>
 
 

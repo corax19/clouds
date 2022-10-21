@@ -100,10 +100,16 @@
 <div class="col-sm-2">
 <div class="form-group">
 
+<% vmpassword = "" %>
+<% vmemail = "" %>
+<% if exten.voicemail != nil %>
+<% vmpassword = exten.voicemail.password %>
+<% vmemail = exten.voicemail.email %>
+<% end %>
 
   <div>
     <%= form.label :vm_secret, style: "display: block" %>
-    <%= form.text_field :vmsecret, class: "col-8 form-control rounded-pill", value: exten.voicemail.password %>
+    <%= form.text_field :vmsecret, class: "col-8 form-control rounded-pill", value: vmpassword %>
   </div>
 
 </div>
@@ -116,7 +122,7 @@
 
   <div>
     <%= form.label :vm_email, style: "display: block" %>
-    <%= form.text_field :vmemail, class: "col-12 form-control rounded-pill", value: exten.voicemail.email %>
+    <%= form.text_field :vmemail, class: "col-12 form-control rounded-pill", value: vmpassword %>
   </div>
 
 </div>

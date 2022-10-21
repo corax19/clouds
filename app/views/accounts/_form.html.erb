@@ -1,0 +1,67 @@
+<%= form_with(url: locals[:url], method: locals[:formmethod] , model: account) do |form| %>
+  <% if account.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(account.errors.count, "error") %> prohibited this account from being saved:</h2>
+
+      <ul>
+        <% account.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :phone, style: "display: block" %>
+    <%= form.text_field :phone, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :address, style: "display: block" %>
+    <%= form.text_field :address, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="form-group">
+
+  <div>
+    <%= form.label :sip_ips, style: "display: block" %>
+    <%= form.text_area :sipips, size: "20x12", class: "col-6 form-control pill" %>
+  </div>
+
+</div>
+</div>
+    <div class="col-sm-5
+">
+      <div class="form-group">
+
+  <div>
+    <%= form.label :web_ips, style: "display: block" %>
+    <%= form.text_area :webips, size: "20x12", class: "col-6 form-control pill" %>
+  </div>
+
+</div>
+</div>
+</div>
+
+
+
+  <div>
+   <br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+
+
+<% end %>

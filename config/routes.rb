@@ -13,6 +13,19 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 get "/accounts", to: "accounts#index"
+  get "/accounts/new", to: "accounts#new", as: :new_account
+  post "/accounts", to: "accounts#create", as: :create_account
+
+  get "/accounts/:id/edit", to: "accounts#edit", as: :edit_account
+  put "/accounts/:id/update", to: "accounts#update", as: :update_account
+
+  post "/accounts/:id/enter", to: "accounts#enter", as: :enter_account
+
+  post "/superuser/:id/enter", to: "accounts#entersuperuser", as: :enter_superuser
+
+
+delete "/accounts/:id", to: "accounts#destroy", as: :del_account
+
 
 get "/cdr", to: "cdr#index"
 post "/cdr", to: "cdr#search", as: :search_cdr
@@ -26,7 +39,7 @@ post "/messages", to: "messages#search", as: :search_messages
 get "/myaccount", to: "accounts#show", as: :myaccount
 post "/myaccount", to: "accounts#updatemyaccount", as: :update_myaccount
 
-root to: "accounts#index"
+root to: "messages#index"
 
 get "/users", to: "permissions#index"
 get "/users/new", to: "permissions#new"

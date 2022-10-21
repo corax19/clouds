@@ -1,6 +1,8 @@
 class MohsController < ApplicationController
+before_action :authenticate_user!
  before_action :getPermissions
  before_action :checkPermissions
+
  before_action :set_moh, only: %i[ show edit update destroy ]
 
   # GET /mohs or /mohs.json

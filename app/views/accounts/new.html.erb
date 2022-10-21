@@ -1,0 +1,8 @@
+<h1>New Account</h1>
+
+<%= render "form", account: @account, locals: {:btitle => "Add Account", :formmethod => :post, :url => accounts_path} %>
+<br>
+
+<div>
+  <%= link_to "Back to accounts", accounts_path %>
+</div>

@@ -35,7 +35,7 @@
 <hr>
 <h4>Permissions</h4><br>
 <table cellspacing=15 cellpadding=15 width=200>
-  <% @userpermissions.each do |item| %>
+  <% @edituserpermission.each do |item| %>
 <tr>
     <td> <%= form.label item[0][11..] %></td>
     <td> <%= form.select item[0], @select_list, selected: item[1]== 1 ? "Yes" : "No" %></td>

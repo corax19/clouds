@@ -94,6 +94,11 @@ myurl='../'+mohID+'/mohentries/'+mohentryID;
 document.getElementById("myform1").action = myurl;
 }
 
+function setDelAcct(accountID) {
+myurl='../accounts/'+accountID;
+document.getElementById("myform1").action = myurl;
+}
+
 
 </script>
 
@@ -209,6 +214,22 @@ document.getElementById("myform1").action = myurl;
                   <span class="nav-text">Account Setting</span>
                   <% end %>
                       </li>
+
+
+<% if session[:super_admin_mode] == true %>
+                      <li>
+
+                        <a class="dropdown-link-item" href="#">
+ <i class="fa fa-arrow-circle-o-left"></i>
+ <%= button_to(
+  "Return to Super User",
+  enter_superuser_path(session[:super_admin_user_id]),
+  method: :post
+) %>
+</a>
+                      </li>
+<% end %>
+
 
                       <li class="dropdown-footer">
                         <a class="dropdown-link-item" href="#">

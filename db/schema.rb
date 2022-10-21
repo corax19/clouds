@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_21_112250) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -18,9 +18,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
     t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
     t.string "image"
-    t.index ["user_id"], name: "index_accounts_on_user_id"
+    t.text "sipips"
+    t.text "webips"
   end
 
   create_table "agents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -46,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
     t.datetime "updated_at", null: false
     t.integer "calllimit", default: 1
     t.string "record", default: "No"
+    t.index ["account_id", "exten"], name: "index_extens_on_account_id_and_exten", unique: true
     t.index ["account_id"], name: "index_extens_on_account_id"
     t.index ["sip_id"], name: "index_extens_on_sip_id"
   end
@@ -92,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
     t.integer "ringinuse"
     t.string "setinterfacevar"
     t.bigint "moh_id"
+    t.index ["account_id", "title"], name: "index_hotlines_on_account_id_and_title", unique: true
     t.index ["account_id"], name: "index_hotlines_on_account_id"
     t.index ["moh_id"], name: "index_hotlines_on_moh_id"
     t.index ["name"], name: "index_hotlines_on_name"
@@ -139,6 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
+    t.index ["account_id", "name"], name: "index_mohs_on_account_id_and_name", unique: true
     t.index ["account_id"], name: "index_mohs_on_account_id"
   end
 
@@ -167,6 +170,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
+    t.index ["account_id", "number"], name: "index_sips_on_account_id_and_number", unique: true
+    t.index ["account_id", "sipid"], name: "index_sips_on_account_id_and_sipid", unique: true
     t.index ["account_id"], name: "index_sips_on_account_id"
   end
 
@@ -177,6 +182,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "converted", default: 0
+    t.index ["account_id", "name"], name: "index_sounds_on_account_id_and_name", unique: true
     t.index ["account_id"], name: "index_sounds_on_account_id"
   end
 
@@ -230,7 +236,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_084735) do
     t.index ["exten_id"], name: "index_voicemails_on_exten_id"
   end
 
-  add_foreign_key "accounts", "users"
   add_foreign_key "agents", "accounts"
   add_foreign_key "agents", "extens"
   add_foreign_key "agents", "hotlines"

@@ -1,4 +1,5 @@
 class HotlinesController < ApplicationController
+before_action :authenticate_user!
  before_action :getPermissions
  before_action :checkPermissions
  before_action :set_hotline, only: %i[ show edit update destroy ]
@@ -25,7 +26,7 @@ class HotlinesController < ApplicationController
   def create
     @hotline = Hotline.new(hotline_params)
     @hotline.account = current_user.account
-    @hotline.name="#{@hotline.account.id}-#{@hotline.title}"
+    @hotline.name="#{@hotline.account.id}_#{@hotline.title}"
     if params[:hotline]["moh_id"] == nil || params[:hotline]["moh_id"] == ""
      @hotline.musiconhold = "default"
     else

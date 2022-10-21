@@ -1,9 +1,13 @@
 class MessagesController < ApplicationController
+before_action :authenticate_user!
  before_action :getPermissions
  before_action :checkPermissions
 
 
   def index
+#puts session[:super_admin_mode]
+#puts session[:super_admin_user_id]
+
   @startdate = Date.today.to_s + " 00:00:00"
   @stopdate = Date.today.to_s + " 23:59:59"
 

@@ -1,11 +1,13 @@
 class MohentriesController < ApplicationController
+before_action :authenticate_user!
  before_action :getPermissions
  before_action :checkPermissions
+
  before_action :set_mohentry, only: %i[ destroy ]
 
   # GET /agents or /agents.json
   def index
-    @mohentries = MohEntry.all.where(account_id: current_user.account.id,moh: params[:mohid])
+    @mohentries = MohEntry.all.where(account_id: current_user.account.id,moh_id: params[:mohid])
     @moh = Moh.find(params[:mohid])
   end
 

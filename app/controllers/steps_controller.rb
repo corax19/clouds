@@ -1,4 +1,5 @@
 class StepsController < ApplicationController
+before_action :authenticate_user!
  before_action :getPermissions
  before_action :checkPermissions
 
