@@ -9,6 +9,12 @@ before_action :authenticate_user!
     @routes = Route.all.where(account_id: current_user.account.id)
   end
 
+
+  def siproutes
+    @routes = Route.all.where(account_id: current_user.account.id,sip_id: params[:sipid])
+    @sipid = params[:sipid]
+  end
+
   # GET /routes/1 or /routes/1.json
   def show
   end
@@ -16,10 +22,12 @@ before_action :authenticate_user!
   # GET /routes/new
   def new
     @route = Route.new
+    @sipid = params[:format]
   end
 
   # GET /routes/1/edit
   def edit
+  @sipid = params[:format]
   end
 
   # POST /routes or /routes.json
@@ -29,7 +37,13 @@ before_action :authenticate_user!
     respond_to do |format|
       if @route.save
         Log.create(account: current_user.account, user: current_user, event: "createroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+
+if params[:route][:route_sip_id] != nil
+        format.html { redirect_to siproutes_path(params[:route][:route_sip_id]), notice: "Route was successfully created." }
+else
         format.html { redirect_to routes_path, notice: "Route was successfully created." }
+end
+
         format.json { render :show, status: :created, location: @route }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +57,11 @@ before_action :authenticate_user!
     respond_to do |format|
       if @route.update(route_params)
         Log.create(account: current_user.account, user: current_user, event: "updateroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+if params[:route][:route_sip_id] != nil
+        format.html { redirect_to siproutes_path(params[:route][:route_sip_id]), notice: "Route was successfully updated." }
+else
         format.html { redirect_to routes_path, notice: "Route was successfully updated." }
+end
         format.json { render :show, status: :ok, location: @route }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,7 +75,11 @@ before_action :authenticate_user!
     @route.destroy
     Log.create(account: current_user.account, user: current_user, event: "destroyroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
+if params[:routesipid] != nil
+        format.html { redirect_to siproutes_path(params[:routesipid]), notice: "Route was successfully destroyed." }
+else
       format.html { redirect_to routes_url, notice: "Route was successfully destroyed." }
+end
       format.json { head :no_content }
     end
   end

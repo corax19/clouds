@@ -43,6 +43,11 @@
   </div>
 
   <div>
+    <%= form.label :maxtime, style: "display: block" %>
+    <%= form.number_field :maxtime, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
     <%= form.label :moh_id, style: "display: block" %>
     <%= form.collection_select :moh_id, Moh.all.where(account_id: current_user.account.id), :id, :name ,{include_blank: true} , {class: "col-2 form-control rounded-pill"} %>
   </div>

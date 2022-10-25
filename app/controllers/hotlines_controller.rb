@@ -84,7 +84,7 @@ before_action :authenticate_user!
 
     # Only allow a list of trusted parameters through.
     def hotline_params
-      params.require(:hotline).permit(:name, :title, :strategy, :timeout, :retry, :wrapuptime, :maxlen, :moh_id, :musiconhold)
+      params.require(:hotline).permit(:name, :title, :strategy, :timeout, :retry, :wrapuptime, :maxlen, :moh_id, :musiconhold, :maxtime)
     end
 
 

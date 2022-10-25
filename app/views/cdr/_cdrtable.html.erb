@@ -1,0 +1,17 @@
+<table  id="productsTable01" class="table table-hover table-product" style="width:80%">
+    <tr>
+    <td>Created</td><td>Caller</td><td>Called</td><td>Direction</td><td>Duration</td>
+    </tr>
+
+
+  <% @cdrs.each do |cdr| %>
+    <tr>
+
+
+<td> <%= cdr.created_at.localtime.to_s[0..19] %></td><td><%= cdr.src %></td><td><%= cdr.dst %></td><td><%= cdr.dcontext %></td><td><%= cdr.billsec %></td>
+    </tr>
+  <% end %>
+
+
+
+</table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_21_112250) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_25_113439) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -33,6 +33,35 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_112250) do
     t.index ["account_id"], name: "index_agents_on_account_id"
     t.index ["exten_id"], name: "index_agents_on_exten_id"
     t.index ["hotline_id"], name: "index_agents_on_hotline_id"
+  end
+
+  create_table "cdrs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "accountcode"
+    t.string "src"
+    t.string "dst"
+    t.string "dcontext"
+    t.string "clid"
+    t.string "channel"
+    t.string "dstchannel"
+    t.string "lastapp"
+    t.string "lastdata"
+    t.datetime "start"
+    t.datetime "answer"
+    t.datetime "end"
+    t.integer "duration"
+    t.integer "billsec"
+    t.string "disposition"
+    t.string "amaflags"
+    t.string "userfield"
+    t.string "uniqueid"
+    t.string "linkedid"
+    t.string "peeraccount"
+    t.integer "sequence"
+    t.index ["accountcode", "created_at"], name: "index_cdrs_on_accountcode_and_created_at"
+    t.index ["accountcode"], name: "index_cdrs_on_accountcode"
+    t.index ["created_at"], name: "index_cdrs_on_created_at"
   end
 
   create_table "extens", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -93,6 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_21_112250) do
     t.integer "ringinuse"
     t.string "setinterfacevar"
     t.bigint "moh_id"
+    t.integer "maxtime", default: 0
     t.index ["account_id", "title"], name: "index_hotlines_on_account_id_and_title", unique: true
     t.index ["account_id"], name: "index_hotlines_on_account_id"
     t.index ["moh_id"], name: "index_hotlines_on_moh_id"

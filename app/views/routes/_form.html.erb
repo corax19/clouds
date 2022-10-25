@@ -11,6 +11,9 @@
     </div>
   <% end %>
 
+    <%= form.hidden_field :route_sip_id, value: @sipid %>
+
+
   <div>
     <%= form.label :sip_id, style: "display: block" %>
     <%= form.collection_select :sip_id, Sip.all.where(account_id: current_user.account.id), :id, :number , {prompt: "Select Number"} , {class: "col-2 form-control rounded-pill"} %>

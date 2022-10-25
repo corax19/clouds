@@ -9,13 +9,14 @@ before_action :authenticate_user!
   def index
     @steps = Step.all.where(account_id: current_user.account.id,route: params[:routeid]).order(:stepnum,:id)
     @route = Route.find(params[:routeid])
-
+    @sipid=Sip.find_by(id: @route.sip)
 
   end
 
   # GET /steps/1 or /steps/1.json
   def show
     @route = Route.find(params[:routeid])
+    @sipid=Sip.find(@route.sip)
   end
 
 

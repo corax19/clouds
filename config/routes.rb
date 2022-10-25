@@ -134,4 +134,19 @@ scope '/mohs/:mohid/' do
 resources :mohentries
 end
 
+
+
+
+
+
+
+
+
+
+
+scope '/sips/:sipid/' do
+get "/siproutes", to: "routes#siproutes", as: :siproutes
+end
+
+
 end
