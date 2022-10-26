@@ -40,6 +40,12 @@
                 
 
                 
+                
+
+                
+
+                
+
 <% if @userpermissionspages['permission_routes'] == 1 %>
                   <li
                    >
@@ -50,18 +56,19 @@
                   <% end %>
                   </li>
 <% end %>
-                
 
-                
 
-                
-                  <li>
-                    <a class="sidenav-item-link" href="../active/">
-                      <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
-                      <span class="nav-text">Active</span>
-                    </a>
+<% if @userpermissionspages['permission_active'] == 1 %>
+                  <li
+                   >
+
+                  <%= link_to active_path do %>
+                  <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
+                  <span class="nav-text">Active</span> <span class="badge badge-pill badge-primary"></span>
+                  <% end %>
                   </li>
-                
+<% end %>
+
 
                 
 

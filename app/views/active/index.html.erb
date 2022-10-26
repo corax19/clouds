@@ -1,0 +1,34 @@
+<h1>Active Calls</h1>
+
+<table  id="accountsTable" class="table table-hover table-product" style="width:80%">
+    <tr><td></td>
+    <td>Caller</td><td>Called</td><td>Started</td><td>Direction</td><td>Duration</td><td>App</td><td>Status</td>
+
+    </tr>
+
+
+  <% @siponlines.each do |online| %>
+    <tr>
+<td>
+<% if online["direction"] == :out  %>
+<span class="mdi mdi-name text-success"><i class="fa fa-share" aria-hidden="true"></i></span>
+<% else %>
+<span class="mdi mdi-name text-info"><i class="fa fa-reply-all" aria-hidden="true"></i></span>
+<% end %>
+</td>
+<td><%= online["caller"] %></td>
+<td><%= online["called"] %></td>
+<td><%= online["started"].to_s[0..19] %></td>
+
+<td><%= online["direction"] %></td>
+<td><%= online["duration"] %></td>
+<td><%= online["appname"] %></td>
+<td><%= online["status"] %></td>
+
+
+    </tr>
+  <% end %>
+
+
+
+</table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_25_113439) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_25_224900) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -30,14 +30,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_25_113439) do
     t.integer "priority"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "membername"
+    t.string "queue_name"
+    t.string "interface"
+    t.integer "paused", default: 0
+    t.integer "uniqueid"
     t.index ["account_id"], name: "index_agents_on_account_id"
     t.index ["exten_id"], name: "index_agents_on_exten_id"
     t.index ["hotline_id"], name: "index_agents_on_hotline_id"
   end
 
   create_table "cdrs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "accountcode"
     t.string "src"
     t.string "dst"

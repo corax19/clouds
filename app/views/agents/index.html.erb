@@ -2,7 +2,7 @@
 
 <table  id="productsTable01" class="table table-hover table-product" style="width:80%">
     <tr>
-    <td>Queue</td><td>Extension</td><td>Priority</td>
+    <td colspan=2 align=center>Queue</td><td>Extension</td><td>Priority</td>
     <td style="width:55px" align="right">
 
 <%= link_to "<button type=\"button\" class=\"mb-1 btn btn-success\"><i class=\"fa fa-plus-circle\" aria-hidden=\"true\"></i> New</button>".html_safe, new_agent_path(@hotline), class: 'dropdown-item', :method => :get %>
@@ -15,6 +15,20 @@
 
   <% @agents.each do |agent| %>
     <tr>
+
+<td>
+
+<% extstatus="" %>
+<% extstatus =  @sipsonline[agent.exten.account_id.to_s + agent.exten.exten ] if @sipsonline[agent.exten.account_id.to_s + agent.exten.exten ] != nil  %>
+
+<% if extstatus == "online" %>
+<span class="mdi mdi-name text-success"><i class="fa fa-circle" aria-hidden="true"></i></span>
+<% else %>
+<span class="mdi mdi-name text-muted"><i class="fa fa-circle-o" aria-hidden="true"></i></span>
+<% end %>
+
+</div>
+</td>
 
 
 <td> <%= agent.hotline.title %></td><td><%= agent.exten.exten %></td><td><%= agent.priority %></td>

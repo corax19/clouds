@@ -12,6 +12,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+
+get "/active", to: "active#index"
+
+
 get "/accounts", to: "accounts#index"
   get "/accounts/new", to: "accounts#new", as: :new_account
   post "/accounts", to: "accounts#create", as: :create_account

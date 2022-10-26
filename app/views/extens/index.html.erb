@@ -4,7 +4,7 @@
 
 <table  id="extenTable" class="table table-hover table-product" style="width:80%">
     <tr>
-    <td>Exten</td><td>UserID</td><td>Secret</td><td>Name</td><td>SIP Peer</td><td>Record</td><td>Call limit</td><td>Description</td>
+    <td colspan=2 align=center>Exten</td><td>UserID</td><td>Secret</td><td>Name</td><td>SIP Peer</td><td>Record</td><td>Call limit</td><td>Description</td>
     <td style="width:55px" align="right"><a class="dropdown-item" href="../extens/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>New</button></a></td>
 
 
@@ -14,7 +14,19 @@
   <% @extens.each do |exten| %>
     <tr>
 
+<td>
 
+<% extstatus="" %>
+<% extstatus =  @sipsonline[exten.account_id.to_s + exten.exten ] if @sipsonline[exten.account_id.to_s + exten.exten ] != nil  %>
+
+<% if extstatus != "online" %>
+<span class="mdi mdi-name text-muted"><i class="fa fa-circle-o" aria-hidden="true"></i></span>
+<% else %>
+<span class="mdi mdi-name text-success"><i class="fa fa-circle" aria-hidden="true"></i></span>
+<% end %>
+
+</div>
+</td>
 <td> <%= exten.exten %></td><td style="border: 1px solid;border-color: red"><%= exten.account_id %><%= exten.exten %></td><td style="border: 1px solid;border-color: red"><%= exten.secret %></td><td><%= exten.name %></td><td><%= exten.sip.number %></td><td><%= exten.record %></td><td><%= exten.calllimit %></td><td><%= exten.decription %></td>
           <td style="width:50px" align="right">
             <div class="dropdown" style="width:50px">
