@@ -1,0 +1,41 @@
+<h4>Queue Operators</h4>
+<table  id="accountsTable" class="table table-hover table-product" style="width:80%">
+<tr>
+<td>Agent</td>
+<td>Name</td>
+<td class="table-primary">All IN</td>
+<td class="table-primary">Answered</td>
+<td class="table-primary">Missed</td>
+<td class="table-primary">Duration</td>
+<td class="table-primary">Average</td>
+
+<td class="table-success">All OUT</td>
+<td class="table-success">Answered</td>
+<td class="table-success">Missed</td>
+<td class="table-success">Duration</td>
+<td class="table-success">Average</td>
+
+
+
+
+<% locals[:agentrowdata].each do |myagent| %>
+<tr>
+<td class="table-info"><%= myagent["agent"] %></td>
+<td class="table-info"><%= myagent["agentname"] %></td>
+<td class="table-primary"><%= myagent["success"] %></td>
+<td class="table-primary"><%= myagent["all"] %></td>
+<td class="table-primary"><%= myagent["missed"] %></td>
+<td class="table-primary"><%= myagent["duration"] %></td>
+<td class="table-primary"><%= myagent["avgduration"] %></td>
+
+<td class="table-success"></td>
+<td class="table-success"></td>
+<td class="table-success"></td>
+<td class="table-success"></td>
+<td class="table-success"></td>
+
+</tr>
+<% end %>
+
+
+</table>

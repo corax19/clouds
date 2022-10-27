@@ -35,6 +35,9 @@ delete "/accounts/:id", to: "accounts#destroy", as: :del_account
 get "/cdr", to: "cdr#index"
 post "/cdr", to: "cdr#search", as: :search_cdr
 
+get "/stats", to: "queuelog#index"
+post "/stats", to: "queuelog#search", as: :search_stats
+
 get "/logs", to: "log#index"
 post "/logs", to: "log#search", as: :search_logs
 

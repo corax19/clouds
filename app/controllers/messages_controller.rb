@@ -13,7 +13,7 @@ before_action :authenticate_user!
 
   @event = ""
 
-  @messages = Message.all.where(account_id: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate])
+  @messages = Message.all.where(account_id: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate]).order(created_at: :desc)
 Message.where(account_id: current_user.account.id).where(['`read`=0 and created_at >= ? and created_at < ?',@startdate,@stopdate]).update_all(read: 1)
 
   @startdate = Date.today
@@ -26,7 +26,7 @@ Message.where(account_id: current_user.account.id).where(['`read`=0 and created_
   def search
   @startdate = params[:startdate] + " 00:00:00"
   @stopdate = params[:stopdate] + " 23:59:59"
-  @messages = Message.all.where(account_id: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate])
+  @messages = Message.all.where(account_id: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate]).order(created_at: :desc)
 Message.where(account_id: current_user.account.id).where(['`read`=0 and created_at >= ? and created_at < ?',@startdate,@stopdate]).update_all(read: 1)
 
   @startdate = params[:startdate]

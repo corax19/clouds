@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_25_224900) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_27_084419) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -179,6 +179,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_25_224900) do
     t.bigint "account_id", null: false
     t.index ["account_id", "name"], name: "index_mohs_on_account_id_and_name", unique: true
     t.index ["account_id"], name: "index_mohs_on_account_id"
+  end
+
+  create_table "queuelogs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "time"
+    t.string "callid"
+    t.string "queuename"
+    t.string "agent"
+    t.string "event"
+    t.string "data"
+    t.string "data1"
+    t.string "data2"
+    t.string "data3"
+    t.string "data4"
+    t.string "data5"
+    t.integer "created", default: 1666857261
+    t.index ["time", "agent"], name: "index_queuelogs_on_time_and_agent"
+    t.index ["time", "queuename"], name: "index_queuelogs_on_time_and_queuename"
+    t.index ["time"], name: "index_queuelogs_on_time"
   end
 
   create_table "routes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

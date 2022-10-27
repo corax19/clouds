@@ -1,0 +1,2 @@
+module QueuelogHelper
+end

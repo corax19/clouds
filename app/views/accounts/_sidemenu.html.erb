@@ -124,11 +124,19 @@
                               <% end %>
                             </li>
 <% end %>
-                            <li >
-                              <a class="sidenav-item-link" href="../stats/">
-                                <span class="nav-text">Statistics</span>
-                              </a>
-                            </li>
+
+
+<% if @userpermissionspages['permission_queues'] == 1 %>
+                  <li
+                   >
+
+                  <%= link_to stats_path do %>
+                  <span class="nav-text">Statistics</span> 
+                  <% end %>
+                  </li>
+<% end %>
+
+
                             <li >
                               <a class="sidenav-item-link" href="../monitor/">
                                 <span class="nav-text">Monitor</span>

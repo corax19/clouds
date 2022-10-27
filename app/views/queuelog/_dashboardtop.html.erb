@@ -1,0 +1,64 @@
+<table style="width:60%">
+<tr>
+<td>
+
+<div class="card-body col-xl-14" style="position: relative;">
+<div class="bg-primary col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
+<div class="d-flex flex-column">
+<span class="h3 text-white"><%= locals[:allcalls] %></span>
+<span>All calls</span>
+</div>
+</div>
+</div>
+</td>
+<td>
+<div class="card-body col-xl-14" style="position: relative;">
+<div class="bg-success col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
+<div class="d-flex flex-column">
+<span class="h3 text-white"><%= locals[:successcalls] %></span>
+<span>Answered</span>
+</div>
+</div>
+</div>
+</td>
+
+
+
+<td>
+<div class="card-body col-xl-14" style="position: relative;">
+<div class="bg-danger col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
+<div class="d-flex flex-column">
+<span class="h3 text-white"><%= locals[:missedcalls] %></span>
+<span>Missed</span>
+</div>
+</div>
+</div>
+</td>
+
+
+<td>
+<div class="card-body col-xl-14" style="position: relative;">
+<div class="bg-info col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
+<div class="d-flex flex-column">
+<span class="h3 text-white"><%= locals[:duration] %></span>
+<span>Total time</span>
+</div>
+</div>
+</div>
+</td>
+
+
+<td>
+<div class="card-body col-xl-14" style="position: relative;">
+<div class="bg-warning col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
+<div class="d-flex flex-column">
+<span class="h3 text-white"><%= locals[:avgduration] %></span>
+<span>Avg. Time</span>
+</div>
+</div>
+</div>
+</td>
+
+</tr>
+</table>
+

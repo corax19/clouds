@@ -1,0 +1,8 @@
+<h4>Queue Statistics</h4>
+
+<%= render "search", locals: {:btitle => "Get Queue Statistics", :startdate => @startdate, :stopdate => @stopdate, :queue_id => @queue_id}  %>
+
+<%= render "dashboardtop", locals: {:allcalls => @allcalls , :successcalls => @successcalls, :missedcalls => @missedcalls, :duration => @duration, :avgduration => @avgduration}  %>
+
+
+<%= render "agents", locals: {:agentrowdata => @agentrowdata}  %>

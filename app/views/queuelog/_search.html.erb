@@ -1,0 +1,57 @@
+<%= form_with(url: stats_path, method: :post) do |form| %>
+  <div class="row">
+    <div class="col-sm-2">
+     <div class="form-group">
+
+
+  <div>
+    <%= form.label :startdate, style: "display: block" %>
+    <%= form.date_field :startdate, class: "col-9 form-control rounded-pill", value: locals[:startdate] %>
+  </div>
+
+
+</div>
+</div>
+<div class="col-sm-2">
+<div class="form-group">
+
+  <div>
+    <%= form.label :stopdate, style: "display: block" %>
+    <%= form.date_field :stopdate, class: "col-9 form-control rounded-pill", value: locals[:stopdate] %>
+  </div>
+
+</div>
+</div>
+
+
+<div class="col-sm-2">
+<div class="form-group">
+
+
+
+  <div>
+    <%= form.label :queue, style: "display: block" %>
+    <%= form.collection_select :hotline,  Hotline.all.where(account_id: current_user.account.id), :id, :title,  {prompt: "Select Queue", selected: locals[:queue_id]}, {class: "col-12 form-control rounded-pill"} %>
+  </div>
+
+
+</div>
+</div>
+
+<div class="col-sm-2">
+<div class="form-group">
+
+  <div>
+   <br><%= form.submit locals[:btitle], :class => 'btn btn btn-success btn-pill'%>
+  </div>
+
+
+</div>
+</div>
+
+
+</div>
+
+
+
+<% end %>
