@@ -15,11 +15,15 @@ class ApplicationController < ActionController::Base
 
   protected
 
-
-
   def layout_by_resource
+
+
     if devise_controller? and controller_path != "devise/registrations"
       "application2"
+    elsif controller_path == "queuelog" and action_name == "showcalls"
+      "application3"
+    elsif controller_path == "monitor" and action_name == "livemonitor"
+      "application4"
     else
       "application"
     end
@@ -35,6 +39,7 @@ def loadpermissions
   "permission_extensions" => 0,
   "permission_queues" => 0,
   "permission_agents" => 0,
+  "permission_monitor" => 0,
   "permission_routes" => 0,
   "permission_steps" => 0,
   "permission_mohs" => 0,

@@ -14,7 +14,7 @@ sipsonline={}
 #@sipsonline[value["resource"]] = value["state"]
 state = value["state"]
 start = value["creationtime"]
-starttime = a = Time.parse(start)
+starttime = Time.parse(start)
 caller = value["caller"]["number"]
 called = value["connected"]["number"]
 context = value["dialplan"]["context"]

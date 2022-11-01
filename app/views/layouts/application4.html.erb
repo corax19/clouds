@@ -1,0 +1,224 @@
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="refresh" content="<%= session[:livemonitor_timeout] %>">
+  <title>New Virtual PBX</title>
+
+     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<%= javascript_include_tag :application %>
+
+  <!-- GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
+
+<%= stylesheet_link_tag "plugins/material/css/materialdesignicons.min" %>
+
+<%= stylesheet_link_tag "plugins/simplebar/simplebar.css" %>
+
+
+  <!-- PLUGINS CSS STYLE -->
+<%= stylesheet_link_tag "plugins/nprogress/nprogress.css" %>
+
+
+<%= stylesheet_link_tag "plugins/prism/prism.css" %>
+  
+  
+  <!-- MONO CSS -->
+<%= stylesheet_link_tag "style.css" %>
+  
+<%= stylesheet_link_tag "plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css" %>
+
+
+<script>
+function confirmDestroy(message) {
+$('#delModal').modal('show');
+<!--  if (!confirm(message)) {    return false;  }-->
+}
+
+
+function setDelUser(userID) {
+myurl='../users/'+userID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSound(soundID) {
+myurl='../sounds/'+soundID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSIP(SIPID) {
+myurl='../sips/'+SIPID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelExt(extID) {
+myurl='../extens/'+extID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelHotline(hotlineID) {
+myurl='../hotlines/'+hotlineID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelAgent(queueID,agentID) {
+myurl='../'+queueID+'/agents/'+agentID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelRoute(routeID) {
+myurl='../routes/'+routeID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSipRoute(routeID,sipID) {
+myurl='../../routes/'+routeID+'?routesipid='+sipID;
+document.getElementById("myform1").action = myurl;
+}
+
+
+function setDelStep(routeID,stepID) {
+myurl='../'+routeID+'/steps/'+stepID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelMOH(mohID) {
+myurl='../mohs/'+mohID;
+document.getElementById("myform1").action = myurl;
+}
+
+
+function setDelMohEntry(mohID,mohentryID) {
+myurl='../'+mohID+'/mohentries/'+mohentryID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelAcct(accountID) {
+myurl='../accounts/'+accountID;
+document.getElementById("myform1").action = myurl;
+}
+
+function getCalls(tupe,hot,exst,vard1,vard2){
+var url1;
+url1='/stats/calls/'+tupe+'/'+hot+'/'+exst+'/'+vard1+'/'+vard2+'';
+document.getElementById('callrows').innerHTML=url1;
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateGetCalls;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateGetCalls;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+}
+function StateGetCalls(){
+if (request.readyState == 4){
+document.getElementById('callrows').innerHTML=request.responseText;
+document.getElementById("collapseBorderTwo").className = "collapse show";
+document.getElementById("collapseBorderOne").className = "collapse";
+updateOnline2();
+}
+}
+
+
+
+</script>
+
+
+  <!-- FAVICON -->
+  <link href="images/favicon.png" rel="shortcut icon" />
+
+  <!--
+    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+  -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+<%= javascript_include_tag "plugins/nprogress/nprogress" %>
+
+
+</head>
+
+
+  <body class="navbar-fixed sidebar-fixed" id="body">
+    <script>
+      NProgress.configure({ showSpinner: false });
+      NProgress.start();
+    </script>
+
+    
+
+    <!-- ====================================
+    ——— WRAPPER
+    ===================================== -->
+<%= yield %>
+    
+                    <!-- Card Offcanvas -->
+
+
+    
+                    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+                    
+<%= javascript_include_tag "plugins/jquery/jquery.min" %>
+<%= javascript_include_tag "plugins/bootstrap/js/bootstrap.bundle.min" %>
+<%= javascript_include_tag "plugins/simplebar/simplebar.min" %>
+<%= javascript_include_tag "plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min" %>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+
+<script>
+$('#delModal').on('show.bs.modal', function(e) {
+    $(this).find('.btn-success').attr('href', $(e.relatedTarget).data('href'));
+});
+
+</script>
+
+
+
+    <script>
+        $('#delModal').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    </script>
+
+
+
+
+
+<%= javascript_include_tag "plugins/prism/prism" %>
+                    
+                    <%= javascript_include_tag "mono" %>
+                    <%= javascript_include_tag "chart" %>
+                    <%= javascript_include_tag "map" %>
+                    <%= javascript_include_tag "custom" %>
+
+                    
+
+
+                    <!--  -->
+
+
+  </body>
+</html>
+
+
+

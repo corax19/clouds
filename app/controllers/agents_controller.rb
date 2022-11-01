@@ -18,11 +18,7 @@ res = http.request(request)
 sips =  JSON.parse(res.body)
 @sipsonline={}
 sips.each do |value|
-if value["resource"] == "1001110"
-@sipsonline[value["resource"]] = "online"
-else
 @sipsonline[value["resource"]] = value["state"]
-end
 end
 
 

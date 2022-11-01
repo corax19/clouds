@@ -1,0 +1,142 @@
+<table border=0>
+<tr>
+<td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-secondary">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-exclamation text-secondary"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @missedcalls %></span>
+              <p class="text-white">Missed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</td><td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-success">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-check-circle text-success"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @successcalls %></span>
+              <p class="text-white">Answered</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</td><td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-primary">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-clock-o text-primary"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @duration %></span>
+              <p class="text-white">Total Time</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</td><td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-info">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-tty text-info"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @avgduration %></span>
+              <p class="text-white">Avg. Hold</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</td><td>
+
+      <div class="col-12 col-12">
+        <div class="card card-default bg-dark">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-pie-chart text-success"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @sla %></span>
+              <p class="text-white">SLA (%)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</td><td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-success">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-headphones text-dark"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @agentsonline %></span>
+              <p class="text-white">Agents Online</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</td><td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-secondary">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-headphones text-dark"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @agentsoffline %></span>
+              <p class="text-white">Agents Offline</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</td><td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-success">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-mobile text-gray"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @callsonline%></span>
+              <p class="text-white">Calls Online</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</td><td>
+      <div class="col-12 col-12">
+        <div class="card card-default bg-warning">
+          <div class="d-flex p-1 align-items-center flex-column">
+            <div class="icon-sm bg-white rounded-circle mb-0">
+              <i class="fa fa-mobile text-gray"></i>
+            </div>
+            <div class="text-center">
+              <span class="h5 d-block text-white"><%= @callswaiting %></span>
+              <p class="text-white">Calls Waiting</p>
+            </div>
+          </div>
+        </div>
+      </div>
+</td>
+</tr>
+</table>

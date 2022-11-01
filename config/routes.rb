@@ -37,6 +37,14 @@ post "/cdr", to: "cdr#search", as: :search_cdr
 
 get "/stats", to: "queuelog#index"
 post "/stats", to: "queuelog#search", as: :search_stats
+get "/stats/ajaxtest", to: "queuelog#ajaxtest", as: :ajaxtest
+get "/stats/calls/:pageid/:queueid/:extenid/:datestart/:dateend", to: "queuelog#showcalls", as: :stats_showcalls
+
+
+get "/monitor", to: "monitor#index"
+post "/livemonitor", to: "monitor#search", as: :search_monitor
+get "/livemonitor", to: "monitor#livemonitor", as: :livemonitor
+
 
 get "/logs", to: "log#index"
 post "/logs", to: "log#search", as: :search_logs

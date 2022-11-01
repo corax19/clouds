@@ -2,7 +2,54 @@
 
 <%= render "search", locals: {:btitle => "Get Queue Statistics", :startdate => @startdate, :stopdate => @stopdate, :queue_id => @queue_id}  %>
 
-<%= render "dashboardtop", locals: {:allcalls => @allcalls , :successcalls => @successcalls, :missedcalls => @missedcalls, :duration => @duration, :avgduration => @avgduration}  %>
+<%= render "dashboardtop", locals: {:allcalls => @allcalls , :successcalls => @successcalls, :missedcalls => @missedcalls, :duration => @duration, :avgduration => @avgduration, :queueid => @queue_id, :datestart => @datestart, :dateend => @dateend}  %>
 
 
-<%= render "agents", locals: {:agentrowdata => @agentrowdata}  %>
+<div class="accordion" id="accordionTwo">
+  <div class="card">
+    <div class="card-header" id="headingBorderOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBorderOne"
+          aria-expanded="true" aria-controls="collapseBorderOne">
+          Agent Statistics
+        </button>
+      </h2>
+    </div>
+    <div id="collapseBorderOne" class="collapse show" aria-labelledby="headingBorderOne" data-parent="#accordionTwo">
+      <div class="card-body">
+
+
+<%= render "agents", locals: {:agentrowdata => @agentrowdata, :queueid => @queue_id, :datestart => @datestart, :dateend => @dateend}  %>
+
+     </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingBorderTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseBorderTwo"
+          aria-expanded="false" aria-controls="collapseBorderTwo">
+          Detailed Calls
+        </button>
+      </h2>
+    </div>
+    <div id="collapseBorderTwo" class="collapse" aria-labelledby="headingBorderTwo" data-parent="#accordionTwo">
+      <div class="card-body">
+
+
+<br>
+<div id="callrows" style="margi-left: 0px; left: 0; float:right; height: 350px; width:98%; overflow-y: scroll;">
+Blank yet
+</div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+
+

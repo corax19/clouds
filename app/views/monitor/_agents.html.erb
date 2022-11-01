@@ -1,0 +1,50 @@
+<h4>Queue Operators</h4>
+<table  id="accountsTable" class="table table-hover table-product" style="width:97%">
+<tr>
+<td>Agent</td>
+<td>Name</td>
+<td>State</td>
+<td>Number</td>
+<td>On Time</td>
+<td class="table-primary">All IN</td>
+<td class="table-primary">Answered</td>
+<td class="table-primary">Missed</td>
+<td class="table-primary">Time</td>
+<td class="table-primary">Average</td>
+
+<td class="table-success">All OUT</td>
+<td class="table-success">Answered</td>
+<td class="table-success">Missed</td>
+<td class="table-success">Time</td>
+<td class="table-success">Average</td>
+
+
+
+
+<% locals[:agentrowdata].each do |myagent| %>
+<tr>
+<td class="table-info"><%= myagent["agent"] %></td>
+<td class="table-info" style="font-size: 12px"><%= myagent["agentname"] %></td>
+
+<td class="table-warning <%= "text-success" if myagent[:state] == "online" %><%= "text-dark" if myagent[:state] == "offline" %><%= "text-info" if myagent[:state] == "Ringing" %><%= "text-danger" if myagent[:state] == "Up" %>" style="font-size: 12px"><%= myagent[:state] %></td>
+<td class="table-warning" style="font-size: 12px"><%= myagent[:number] %></td>
+<td class="table-warning" style="font-size: 12px"><%= myagent[:duration] %></td>
+
+
+<td class="table-primary"><%= myagent["all"] %></td>
+<td class="table-primary"><%= myagent["success"] %></td>
+<td class="table-primary"><%= myagent["missed"] %></td>
+<td class="table-primary"><%= myagent["duration"] %></td>
+<td class="table-primary" style="font-size: 12px"><%= myagent["avgduration"] %></td>
+
+<td class="table-success"><%= myagent["cdrall"] %></td>
+<td class="table-success"><%= myagent["cdrsuccess"] %></td>
+<td class="table-success"><%= myagent["cdrmissed"] %></td>
+<td class="table-success"><%= myagent["cdrduration"] %></td>
+<td class="table-success" style="font-size: 12px"><%= myagent["cdravgduration"] %></td>
+
+</tr>
+<% end %>
+
+
+</table>

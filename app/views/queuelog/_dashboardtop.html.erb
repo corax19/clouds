@@ -5,7 +5,7 @@
 <div class="card-body col-xl-14" style="position: relative;">
 <div class="bg-primary col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
-<span class="h3 text-white"><%= locals[:allcalls] %></span>
+<span class="h3 text-white" style="cursor: pointer" onClick="getCalls('123','<%= locals[:queueid] %>','0','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= locals[:allcalls] %></span>
 <span>All calls</span>
 </div>
 </div>
@@ -15,7 +15,7 @@
 <div class="card-body col-xl-14" style="position: relative;">
 <div class="bg-success col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
-<span class="h3 text-white"><%= locals[:successcalls] %></span>
+<span class="h3 text-white" style="cursor: pointer" onClick="getCalls('256','<%= locals[:queueid] %>','0','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= locals[:successcalls] %></span>
 <span>Answered</span>
 </div>
 </div>
@@ -28,7 +28,7 @@
 <div class="card-body col-xl-14" style="position: relative;">
 <div class="bg-danger col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
-<span class="h3 text-white"><%= locals[:missedcalls] %></span>
+<span class="h3 text-white" style="cursor: pointer" onClick="getCalls('342','<%= locals[:queueid] %>','0','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= locals[:missedcalls] %></span>
 <span>Missed</span>
 </div>
 </div>

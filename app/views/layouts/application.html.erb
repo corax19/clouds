@@ -13,6 +13,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<%= javascript_include_tag :application %>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -103,6 +104,35 @@ function setDelAcct(accountID) {
 myurl='../accounts/'+accountID;
 document.getElementById("myform1").action = myurl;
 }
+
+function getCalls(tupe,hot,exst,vard1,vard2){
+var url1;
+url1='/stats/calls/'+tupe+'/'+hot+'/'+exst+'/'+vard1+'/'+vard2+'';
+document.getElementById('callrows').innerHTML=url1;
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateGetCalls;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateGetCalls;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+}
+function StateGetCalls(){
+if (request.readyState == 4){
+document.getElementById('callrows').innerHTML=request.responseText;
+document.getElementById("collapseBorderTwo").className = "collapse show";
+document.getElementById("collapseBorderOne").className = "collapse";
+updateOnline2();
+}
+}
+
 
 
 </script>

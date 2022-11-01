@@ -1,0 +1,24 @@
+<h5>All Outbound Calls of <%= exten %></h5>
+<table  id="productsTable01" class="table table-hover table-product" style="width:95%">
+    <tr>
+    <td>Caller</td>
+    <td>Called</td>
+    <td>Start time</td>
+    <td>Duration</td>
+    <td>Event</td>
+
+
+    </tr>
+
+  <% @queuecalls.each do |queuecall| %>
+    <tr>
+
+    <td style="width:15%"><%= queuecall.src %></td>
+    <td style="width:20%"><%= queuecall.dst %></td>
+    <td style="width:30%"><%= queuecall.start.to_s[0,19] %></td>
+    <td style="width:15%"><%= queuecall.billsec %></td>
+    <td style="width:30%"><%= queuecall.disposition %></td>
+
+    </tr>
+  <% end %>
+</table>

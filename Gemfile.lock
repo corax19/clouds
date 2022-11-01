@@ -184,6 +184,8 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
+    rails-ujs (0.1.0)
+      railties (>= 3.1)
     railties (7.0.4)
       actionpack (= 7.0.4)
       activesupport (= 7.0.4)
@@ -256,17 +258,18 @@ DEPENDENCIES
   debug
   devise
   jbuilder
-  jquery-rails
+  jquery-rails (>= 1.0.3)
   jsbundling-rails
   json
   mini_magick
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
+  rails-ujs
   selenium-webdriver
   sprockets-rails
   stimulus-rails
-  turbo-rails
+  turbo-rails (~> 1.0)
   tzinfo-data
   web-console
   webdrivers

@@ -1,0 +1,73 @@
+<h4>General<h4>
+<%= render "head" %>
+<table style="width: 90%" border=0>
+<tr>
+<td>
+<%= render "agents", locals: {:agentrowdata => @agentrowdata, :queueid => @queue_id, :datestart => @datestart, :dateend => @dateend}  %>
+</td>
+<td align="left" valign="top">
+<table border=0 style="width: 97%" class="table table-hover table-product">
+<tr>
+<td colspan=4 align="center">Callers</td>
+</tr>
+
+<tr>
+<td>Caller</td>
+<td>Started</td>
+<td>Agent</td>
+<td>Time</td>
+</tr>
+
+<% @callerres.each do |callerrow| %>
+<tr class="table-warning <%= "text-success" if callerrow["myagent"] != "" %>">
+<td><%= callerrow["data2"] %></td>
+<td><%= callerrow["time"].to_s[11..19] %></td>
+<td><%= callerrow["myagent"] %></td>
+<td><%= callerrow["mytime"] %></td>
+</tr>
+<% end %>
+
+
+</table>
+</td>
+
+
+
+
+
+
+
+
+<td align="left" valign="top" style="margin-left:40px" >
+<table border=0 style="width: 70%" class="table table-hover table-product">
+
+<tr>
+<td colspan=4 align="center">Missed Calls</td>
+</tr>
+
+<tr>
+<td>Caller</td>
+<td>Time</td>
+<td>Callback</td>
+<td>Agent</td>
+</tr>
+
+<% @callerres.each do |callerrow| %>
+<tr class="table-secondary <%= "text-success" if callerrow["myagent"] != "" %>">
+<td><%= callerrow["data2"] %></td>
+<td><%= callerrow["time"].to_s[11..19] %></td>
+<td><%= callerrow["mytime"] %></td>
+<td><%= callerrow["myagent"] %></td>
+
+</tr>
+<% end %>
+
+
+</table>
+</td>
+
+
+
+
+</tr>
+</table>

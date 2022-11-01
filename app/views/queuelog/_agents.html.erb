@@ -22,17 +22,17 @@
 <tr>
 <td class="table-info"><%= myagent["agent"] %></td>
 <td class="table-info"><%= myagent["agentname"] %></td>
-<td class="table-primary"><%= myagent["success"] %></td>
-<td class="table-primary"><%= myagent["all"] %></td>
-<td class="table-primary"><%= myagent["missed"] %></td>
+<td class="table-primary" style="cursor: pointer" onClick="getCalls('473','<%= locals[:queueid] %>','<%= myagent["agent"] %>','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= myagent["all"] %></td>
+<td class="table-primary" style="cursor: pointer" onClick="getCalls('507','<%= locals[:queueid] %>','<%= myagent["agent"] %>','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= myagent["success"] %></td>
+<td class="table-primary" style="cursor: pointer" onClick="getCalls('683','<%= locals[:queueid] %>','<%= myagent["agent"] %>','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= myagent["missed"] %></td>
 <td class="table-primary"><%= myagent["duration"] %></td>
 <td class="table-primary"><%= myagent["avgduration"] %></td>
 
-<td class="table-success"></td>
-<td class="table-success"></td>
-<td class="table-success"></td>
-<td class="table-success"></td>
-<td class="table-success"></td>
+<td class="table-success" style="cursor: pointer" onClick="getCalls('7472','<%= locals[:queueid] %>','<%= myagent["agent"] %>','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= myagent["cdrall"] %></td>
+<td class="table-success" style="cursor: pointer" onClick="getCalls('2573','<%= locals[:queueid] %>','<%= myagent["agent"] %>','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= myagent["cdrsuccess"] %></td>
+<td class="table-success" style="cursor: pointer" onClick="getCalls('8379','<%= locals[:queueid] %>','<%= myagent["agent"] %>','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= myagent["cdrmissed"] %></td>
+<td class="table-success"><%= myagent["cdrduration"] %></td>
+<td class="table-success"><%= myagent["cdravgduration"] %></td>
 
 </tr>
 <% end %>

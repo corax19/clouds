@@ -1,0 +1,22 @@
+<h5>Missed Calls of <%= exten %></h5>
+<table  id="productsTable01" class="table table-hover table-product" style="width:95%">
+    <tr>
+    <td>Caller</td>
+    <td>Start time</td>
+    <td>Duration</td>
+    <td>Event</td>
+
+
+    </tr>
+
+  <% @queuecalls.each do |queuecall| %>
+    <tr>
+
+    <td style="width:20%"><%= queuecall.data1 %></td>
+    <td style="width:40%"><%= queuecall.time.to_s[0,19] %></td>
+    <td style="width:20%"><%= queuecall.data2.to_i %></td>
+    <td style="width:20%"><%= queuecall.data3 %></td>
+
+    </tr>
+  <% end %>
+</table>

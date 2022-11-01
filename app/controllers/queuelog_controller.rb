@@ -1,5 +1,52 @@
 class QueuelogController < ApplicationController
 
+def showcalls
+@pageid =  params[:pageid]
+@queue_id =  params[:queueid]
+@exten =  params[:extenid]
+
+@startdate = params[:datestart]
+@stopdate = params[:dateend]
+@queuename = Hotline.find_by(id: @queue_id).name
+if @pageid == "123"
+@queuecalls = Queuelog.select("time,data2 as data1,(select time from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data2,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3").where(['event="ENTERQUEUE" and time >= ? and time < adddate(?,interval 1 day) and queuename =?',@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "256"
+@queuecalls = Queuelog.select("time,(select b.data2 from queuelogs b where b.callid=queuelogs.callid and event='ENTERQUEUE' order by id asc limit 1) as data1,substring(agent,9) as  data2,(select if(c.event in('COMPLETEAGENT','COMPLETECALLER'),c.data2,if(c.event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),c.data4,0))  from queuelogs c where c.callid=queuelogs.callid and event in ('COMPLETEAGENT','COMPLETECALLER','ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER') order by id asc limit 1) as data3,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data4").where(['event="CONNECT" and time >= ? and time < adddate(?,interval 1 day) and queuename =?',@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "342"
+@queuecalls = Queuelog.select("time,data2 as data1,(select time from queuelogs c where c.callid=queuelogs.callid order by id desc limit 1) as data2,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3").where(['event="ENTERQUEUE" and time >= ? and time < adddate(?,interval 1 day) and queuename =? and callid not in (select callid from queuelogs where event="CONNECT" and time >= ? and time < adddate(?,interval 1 day) and queuename =?)',@startdate,@stopdate,@queuename,@startdate,@stopdate,@queuename])
+end
+
+
+if @pageid == "473"
+@queuecalls = Queuelog.select("time,(select time from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data2,event as data3,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1").where(['event in("CONNECT","RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "507"
+@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,(select sec_to_time(if(event in('COMPLETEAGENT','COMPLETECALLER'),data2,if(event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),data4,0))) from queuelogs d where d.callid=queuelogs.callid order by id desc limit 1) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1").where(['event in("CONNECT") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "683"
+@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,round(data1/1000) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1").where(['event in("RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "7472"
+  @queuecalls = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < adddate(?,interval 1 day) and src = ? and dcontext = "pbxout"',@startdate,@stopdate,@exten]).order(created_at: :desc)
+end
+
+if @pageid == "2573"
+  @queuecalls = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < adddate(?,interval 1 day) and src = ? and dcontext = "pbxout" and billsec>0',@startdate,@stopdate,@exten]).order(created_at: :desc)
+end
+
+if @pageid == "8379"
+  @queuecalls = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < adddate(?,interval 1 day) and src = ? and dcontext = "pbxout" and billsec=0',@startdate,@stopdate,@exten]).order(created_at: :desc)
+end
+
+end
+
   def index
 
   @startdate = Date.today.to_s + " 00:00:00"
@@ -9,8 +56,10 @@ class QueuelogController < ApplicationController
 @queuename= Hotline.first.name
 getstats
 @startdate = Date.today
- @stopdate = Date.today
+@stopdate = Date.today
 
+@datestart=@startdate.strftime('%Y%m%d')
+@dateend=@stopdate.strftime('%Y%m%d')
 
   end
 
@@ -28,6 +77,11 @@ getstats
   @startdate = params[:startdate]
   @stopdate = params[:stopdate]
 
+@datestart=@startdate.to_date.strftime('%Y%m%d')
+@dateend=@stopdate.to_date.strftime('%Y%m%d')
+
+puts @datestart
+puts @dateend
 
 
 
@@ -45,6 +99,7 @@ logresult = Queuelog.select("sum(if(event='ENTERQUEUE',1,0)) as data1,sum(if(eve
 @avgduration = logresult[0].data4.to_s[11,8]
 #.to_d.strftime('%H:%M:%S')
 @missedcalls = @allcalls - @successcalls
+
 
 agentsresult = Queuelog.group(:agent).select("agent,sum(if(event='RINGNOANSWER',1,0)) as data1,sum(if(event='CONNECT',1,0)) as data2,sec_to_time(sum(if(event in('COMPLETEAGENT','COMPLETECALLER'),data2,if(event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),data4,0)))) as data3,sec_to_time(sum(if(event in('COMPLETEAGENT','COMPLETECALLER'),data2,if(event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),data4,0))) /sum(if(event ='CONNECT',1,0))) as data4").where(['time >= ? and time < ? and queuename =?',@startdate,@stopdate,@queuename])
 
@@ -65,7 +120,23 @@ agentrow["avgduration"] = agent.data4.to_s[11,8]
 end
 end
 
-puts @agentdata
+puts "CDR"
+@agentdatacdr={}
+agentscdrresult = Cdr.group(:src).select("src,count(*) as data1,sum(if(billsec>0,1,0)) as data2,sec_to_time(sum(billsec)) as data3,sec_to_time(sum(billsec) /sum(if(billsec>0,1,0))) as data4").where(['dcontext = "pbxout" and accountcode = ?  and created_at >= ? and created_at < ?',current_user.account.id.to_s,@startdate,@stopdate])
+agentscdrresult.each do |agentcdr|
+agentrow={}
+agentid= agentcdr.src
+agentrow["cdrall"] = agentcdr.data1
+agentrow["cdrsuccess"] = agentcdr.data2
+agentrow["cdrmissed"] = agentcdr.data1.to_i - agentcdr.data2.to_i
+agentrow["cdrduration"] = agentcdr.data3.to_s[11,8]
+agentrow["cdravgduration"] = agentcdr.data4.to_s[11,8]
+@agentdatacdr[agentid]=agentrow
+
+end
+
+
+puts @agentdatacdr
 
 @allagents=Agent.where(hotline_id: @queue_id).all
 @agentrowdata=Array.new
@@ -88,12 +159,29 @@ agentrow["missed"] = @agentdata[agentnum]["missed"]
 agentrow["all"] = @agentdata[agentnum]["missed"].to_i + @agentdata[agentnum]["success"].to_i
 agentrow["duration"] = @agentdata[agentnum]["duration"]
 agentrow["avgduration"] = @agentdata[agentnum]["avgduration"]
-
 end
+puts agentnum
+if @agentdatacdr[agentnum] == nil
+agentrow["cdrsuccess"] = 0
+agentrow["cdrmisssed"] = 0
+agentrow["cdrall"] = 0
+agentrow["cdrduration"] = "00:00:00"
+agentrow["cdravgduration"] = "00:00:00"
+
+else
+agentrow["cdrsuccess"] = @agentdatacdr[agentnum]["cdrsuccess"]
+agentrow["cdrmissed"] = @agentdatacdr[agentnum]["cdrmissed"]
+agentrow["cdrall"] = @agentdatacdr[agentnum]["cdrall"]
+agentrow["cdrduration"] = @agentdatacdr[agentnum]["cdrduration"]
+agentrow["cdravgduration"] = @agentdatacdr[agentnum]["cdravgduration"]
+end
+
 @agentrowdata.push(agentrow)
 end
 
 
 end
+
+puts @agentrowdata
 
 end

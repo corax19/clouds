@@ -19,7 +19,12 @@ gem "puma", "~> 5.0"
 gem "jsbundling-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
+#gem "turbo-rails"
+gem "turbo-rails", "~> 1.0"
+
+gem 'jquery-rails', '>= 1.0.3'
+
+gem 'rails-ujs'
 
 
 gem 'devise'
@@ -37,7 +42,7 @@ gem "jbuilder"
 
 
 #gem 'carrierwave', '~> 2.0'
-gem 'jquery-rails'
+#gem 'jquery-rails'
 
 #gem 'mini_magick', '~> 4.3'
 

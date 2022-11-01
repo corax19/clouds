@@ -1,0 +1,102 @@
+<%= form_with(url: search_monitor_path, method: :post) do |form| %>
+  <div class="row">
+    <div class="col-2">
+     <div class="form-group">
+
+
+  <div>
+    <%= form.label :startdate, style: "display: block" %>
+    <%= form.date_field :startdate, class: "col-8 form-control rounded-pill", value: locals[:startdate] %>
+
+  </div>
+
+
+</div>
+</div>
+<div class="col-2">
+<div class="form-group">
+
+  <div>
+    <%= form.label :stopdate, style: "display: block" %>
+    <%= form.date_field :stopdate, class: "col-8 form-control rounded-pill", value: locals[:stopdate] %>
+  </div>
+
+
+</div>
+</div>
+<div class="col-2">
+<div class="form-group">
+
+  <div>
+    <%= form.label :starttime, style: "display: block" %>
+    <%= form.time_field :starttime, class: "col-8 form-control rounded-pill", value: '00:00:00' %>
+  </div>
+
+</div>
+</div>
+<div class="col-2">
+<div class="form-group">
+
+  <div>
+    <%= form.label :stoptime, style: "display: block" %>
+    <%= form.time_field :stoptime, class: "col-8 form-control rounded-pill", value: '23:59:59' %>
+  </div>
+
+
+</div>
+</div>
+<div class="col-2">
+<div class="form-group">
+
+
+  <div>
+    <%= form.label :queue, style: "display: block" %>
+    <%= form.collection_select :hotline,  Hotline.all.where(account_id: current_user.account.id), :id, :title,  {prompt: "Select Queue", selected: 1}, {class: "col-8 form-control rounded-pill"} %>
+  </div>
+
+
+</div>
+</div>
+<div class="col-sm-1">
+<div class="form-group">
+
+
+  <div>
+    <%= form.label :active_agents, style: "display: block" %>
+    <%= form.select :active_agents, ['Yes', 'No'] , {selected: 'No'} , {class: "col-10 form-control rounded-pill"}%>
+  </div>
+
+
+
+</div>
+</div>
+<div class="col-1">
+<div class="form-group">
+
+
+
+
+  <div>
+    <%= form.label :timeout, style: "display: block" %>
+    <%= form.select :timeout, ['5','10', '15','20','30','60'] , {value: '10'} , {class: "col-10 form-control rounded-pill"}%>
+  </div>
+
+
+</div>
+</div>
+<div class="col-sm-2">
+<div class="form-group">
+
+
+
+
+  <div>
+   <br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
+
+
+</div>
+</div>
+</div>
+
