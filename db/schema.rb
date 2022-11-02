@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_27_084419) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_02_080600) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_084419) do
     t.string "peeraccount"
     t.integer "sequence"
     t.index ["accountcode", "created_at"], name: "index_cdrs_on_accountcode_and_created_at"
+    t.index ["accountcode", "start"], name: "index_cdrs_on_accountcode_and_start"
     t.index ["accountcode"], name: "index_cdrs_on_accountcode"
     t.index ["created_at"], name: "index_cdrs_on_created_at"
   end

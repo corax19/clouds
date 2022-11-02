@@ -52,12 +52,12 @@
 <td>Agent</td>
 </tr>
 
-<% @callerres.each do |callerrow| %>
-<tr class="table-secondary <%= "text-success" if callerrow["myagent"] != "" %>">
-<td><%= callerrow["data2"] %></td>
-<td><%= callerrow["time"].to_s[11..19] %></td>
-<td><%= callerrow["mytime"] %></td>
-<td><%= callerrow["myagent"] %></td>
+<% @missedcallerres.each do |missedcallerrow| %>
+<tr class="table <%= "table-danger" if missedcallerrow["myagent"] == "" %> <%= "table-success" if missedcallerrow["myagent"] != "" %>">
+<td><%= missedcallerrow["data2"] %></td>
+<td><%= missedcallerrow["time"].to_s[11..19] %></td>
+<td><%= missedcallerrow["mytime"] %></td>
+<td><%= missedcallerrow["myagent"] %></td>
 
 </tr>
 <% end %>

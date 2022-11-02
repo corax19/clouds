@@ -195,8 +195,9 @@
 </span>
 <% end %>
 </li>
-                  <li>
 
+<% if @userpermissionspages['permission_accounts'] == 1 %>
+                  <li>
 <%= link_to myaccount_path  do %>
 <span data-toggle="tooltip" title="Account Settings">
            <i class="mdi mdi-settings"></i>
@@ -204,6 +205,8 @@
 <% end %>
 
                   </li>
+<% end %>
+
                 </ul>
               </div>
             </div>

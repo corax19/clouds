@@ -231,28 +231,38 @@ end
 end
 
 @callerres = Queuelog.select("time,data2,(select agent from queuelogs b where b.id>queuelogs.id and b.callid=queuelogs.callid  and b.event='CONNECT' order by b.id asc limit 1) as myagent,(select timediff(now(),time) from queuelogs c where c.id>queuelogs.id and c.callid=queuelogs.callid and c.event='CONNECT' order by c.id asc limit 1) as mytime,timediff(now(),time) as fulltime").where(['event="ENTERQUEUE" and callid in (?)',callids]).order(:id)
-#puts callerres
 @callerres.each do |callerrow|
-puts callerrow["time"]
-puts callerrow["data2"]
-puts callerrow["myagent"]
-if  callerrow["myagent"] == nil
-callerrow["myagent"] = ""
-else
-callerrow["myagent"] = callerrow["myagent"][8..10]
+ puts callerrow["time"]
+ puts callerrow["data2"]
+ puts callerrow["myagent"]
+ if  callerrow["myagent"] == nil
+  callerrow["myagent"] = ""
+ else
+  callerrow["myagent"] = callerrow["myagent"][8..10]
+ end
+ if  callerrow["mytime"]  == nil
+  callerrow["mytime"] = callerrow["fulltime"].to_s[11..19]
+ else
+  callerrow["mytime"] = callerrow["mytime"].to_s[11..19]
+ end
 end
 
-if  callerrow["mytime"]  == nil
-callerrow["mytime"] = callerrow["fulltime"].to_s[11..19]
-else
-callerrow["mytime"] = callerrow["mytime"].to_s[11..19]
+@missedcallerres = Queuelog.select("time,data2,(select src from cdrs where start>queuelogs.time and start >= '"+@startdate+"' and start < '"+@stopdate+"' and accountcode='"+current_user.account.id.to_s+"' and dcontext='pbxout' and dst in (queuelogs.data2,concat('995',queuelogs.data2),concat('99532',queuelogs.data2)) order by id limit 1) as myagent,(select start from cdrs where start>queuelogs.time and start >= '"+@startdate+"' and start < '"+@stopdate+"' and accountcode='"+current_user.account.id.to_s+"' and dcontext='pbxout' and dst in (queuelogs.data2,concat('995',queuelogs.data2),concat('99532',queuelogs.data2)) order by id limit 1) as mytime").where(['time >= ? and time < ? and queuename =? and event="ENTERQUEUE" and callid not in (select callid from queuelogs b where time >= ? and time < ? and queuename =? and event="CONNECT")  and callid in (select callid from queuelogs c where c.callid=queuelogs.callid and event in("ABANDON","EXITWITHTIMEOUT","EXITWITHKEY"))',@startdate,@stopdate,@queuename,@startdate,@stopdate,@queuename]).order(:id ).reverse
+@missedcallerres.each do |missedcallerrow|
+ puts missedcallerrow["time"]
+ puts missedcallerrow["data2"]
+ puts missedcallerrow["myagent"]
+ if  missedcallerrow["myagent"] == nil
+  missedcallerrow["myagent"] = ""
+ end
+ if  missedcallerrow["mytime"]  == nil
+  missedcallerrow["mytime"] = missedcallerrow["fulltime"].to_s[11..19]
+ else
+  missedcallerrow["mytime"] = missedcallerrow["mytime"].to_s[11..19]
+ end
 end
 
 
-puts callerrow["mytime"]
-end
-
-#puts @agentrowdata
 
 end
 

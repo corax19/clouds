@@ -242,13 +242,14 @@ updateOnline2();
                       </li>
 <% end %>
 
+<% if @userpermissionspages['permission_accounts'] == 1 %>
                       <li>
-
                   <%= link_to myaccount_path do %>
                   <i class="mdi mdi-settings"></i>
                   <span class="nav-text">Account Setting</span>
                   <% end %>
                       </li>
+<% end %>
 
 
 <% if session[:super_admin_mode] == true %>
