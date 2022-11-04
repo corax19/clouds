@@ -6,6 +6,7 @@
     <td>Start time</td>
     <td>Time</td>
     <td>Channel</td>
+    <td></td>
 
 
     </tr>
@@ -13,11 +14,22 @@
   <% @queuecalls.each do |queuecall| %>
     <tr>
 
-    <td style="width:15%"><%= queuecall.src %></td>
-    <td style="width:20%"><%= queuecall.dst %></td>
-    <td style="width:30%"><%= queuecall.start.to_s[0,19] %></td>
-    <td style="width:15%"><%= queuecall.duration %></td>
-    <td style="width:15%"><%= queuecall.dstchannel %></td>
+<% filename= "/var/www/html/records/"+current_user.account.id.to_s+"/"+queuecall.start.to_s[0..7].gsub('-', '')+"/"+queuecall.start.to_s[0..9].gsub('-', '')+ "/"+ queuecall.uniqueid + ".mp3"  %>
+<% fileurl= "records/"+current_user.account.id.to_s+"/"+queuecall.start.to_s[0..7].gsub('-', '')+"/"+queuecall.start.to_s[0..9].gsub('-', '')+ "/"+ queuecall.uniqueid + ".mp3"  %>
+
+
+    <td style="width:18%"><%= queuecall.src %></td>
+    <td style="width:18%"><%= queuecall.dst %></td>
+    <td style="width:28%"><%= queuecall.start.to_s[0,19] %></td>
+    <td style="width:18%"><%= queuecall.duration %></td>
+    <td style="width:18%"><%= queuecall.dstchannel %></td>
+    <td>
+        <% if File.exists?(filename) && File.size(filename) > 1000 %>
+        <audio controls style="width:190px; height: 35px">
+        <source src="<%= fileurl %>" type="audio/mpeg" >
+        </audio>
+        <% end %>
+    </td>
 
     </tr>
   <% end %>

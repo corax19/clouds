@@ -7,8 +7,8 @@ before_action :authenticate_user!
 
   # GET /agents or /agents.json
   def index
-    @mohentries = MohEntry.all.where(account_id: current_user.account.id,moh_id: params[:mohid])
     @moh = Moh.find(params[:mohid])
+    @mohentries = MohEntry.all.where(account_id: current_user.account.id,moh_id: params[:mohid])
   end
 
   def new

@@ -5,17 +5,29 @@
     <td>Start time</td>
     <td>Stop time</td>
     <td>Last Event</td>
+    <td></td>
 
 
     </tr>
 
   <% @queuecalls.each do |queuecall| %>
-    <tr>
+<% filename= "/var/www/html/records/"+current_user.account.id.to_s+"/"+queuecall.time.to_s[0..7].gsub('-', '')+"/"+queuecall.time.to_s[0..9].gsub('-', '')+ "/"+ queuecall.callid + ".mp3"  %>
+<% fileurl= "records/"+current_user.account.id.to_s+"/"+queuecall.time.to_s[0..7].gsub('-', '')+"/"+queuecall.time.to_s[0..9].gsub('-', '')+ "/"+ queuecall.callid + ".mp3"  %>
 
-    <td style="width:20%"><%= queuecall.data1 %></td>
-    <td style="width:40%"><%= queuecall.time.to_s[0,19] %></td>
-    <td style="width:20%"><%= queuecall.data2.to_s[0,19] %></td>
-    <td style="width:20%"><%= queuecall.data3 %></td>
+    <tr>
+    <td style="width:18%"><%= queuecall.data1 %></td>
+    <td style="width:35%"><%= queuecall.time.to_s[0,19] %></td>
+    <td style="width:18%"><%= queuecall.data2.to_s[0,19] %></td>
+    <td style="width:18%"><%= queuecall.data3 %></td>
+
+
+    <td>
+        <% if File.exists?(filename) && File.size(filename) > 1000 %>
+        <audio controls style="width:190px; height: 35px">
+        <source src="<%= fileurl %>" type="audio/mpeg" >
+        </audio>
+        <% end %>
+    </td>
 
     </tr>
   <% end %>

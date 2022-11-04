@@ -1,14 +1,28 @@
 <table  id="productsTable01" class="table table-hover table-product" style="width:80%">
     <tr>
-    <td>Created</td><td>Caller</td><td>Called</td><td>Direction</td><td>Duration</td>
+    <td style="width: 25%">Created</td><td style="width: 15%">Caller</td><td style="width: 15%">Called</td><td style="width: 20%">Direction</td><td style="width: 15%">Duration</td><td></td>
     </tr>
 
 
   <% @cdrs.each do |cdr| %>
+<% filename= "/var/www/html/records/"+current_user.account.id.to_s+"/"+cdr.start.to_s[0..7].gsub('-', '')+"/"+cdr.start.to_s[0..9].gsub('-', '')+ "/"+ cdr.uniqueid + ".mp3"  %>
+<% fileurl= "records/"+current_user.account.id.to_s+"/"+cdr.start.to_s[0..7].gsub('-', '')+"/"+cdr.start.to_s[0..9].gsub('-', '')+ "/"+ cdr.uniqueid + ".mp3"  %>
+
     <tr>
 
 
-<td> <%= cdr.created_at.localtime.to_s[0..19] %></td><td><%= cdr.src %></td><td><%= cdr.dst %></td><td><%= cdr.dcontext %></td><td><%= cdr.billsec %></td>
+<td> <%= cdr.created_at.localtime.to_s[0..19] %></td><td><%= cdr.src %></td><td><%= cdr.dst %></td><td>
+<%= "Outbound" if cdr.dcontext == "pbxout" %>
+<%= "Inbound" if cdr.dcontext == "pbxin" %>
+</td><td><%= cdr.billsec %></td>
+<td>
+<% if File.exists?(filename) && File.size(filename) > 1000 %>
+<audio controls style="width:190px">
+  <source src="<%= fileurl %>" type="audio/mpeg" >
+</audio>
+<% end %>
+
+</td>
     </tr>
   <% end %>
 
