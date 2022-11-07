@@ -28,7 +28,8 @@ def create
 
 allpermissions = {
   "permission_accounts" => "No",
-   "permission_active" => "No",
+  "permission_cdrs" => "No",
+  "permission_active" => "No",
   "permission_users" => "No",
   "permission_sips" => "No",
   "permission_extensions" => "No",
@@ -162,6 +163,7 @@ def setuserpermissions
 @select_list = [ 'Yes', 'No' ]
 allpermissions = {
   "permission_accounts" => "No",
+  "permission_cdrs" => "No",
   "permission_active" => "No",
   "permission_users" => "No",
   "permission_sips" => "No",

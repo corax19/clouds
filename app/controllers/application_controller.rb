@@ -34,6 +34,7 @@ def loadpermissions
 @@userpermissions = {
   "permission_accounts" => 0,
   "permission_active" => 0,
+  "permission_cdrs" => 0,
   "permission_users" => 0,
   "permission_sips" => 0,
   "permission_extensions" => 0,

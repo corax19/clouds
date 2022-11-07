@@ -1,0 +1,120 @@
+if @pageid == "123"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Start time','Stop time','Last Event']
+   @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.data1,queuecall.time.to_s[0,19],queuecall.data2.to_s[0,19],queuecall.data3]
+  end
+ end
+end
+
+
+if @pageid == "256"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Start time','Agent','Duration','Event']
+  @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.data1,queuecall.time.to_s[0,19],queuecall.data2.to_s[0,19],queuecall.data3,queuecall.data4]
+  end
+ end
+end
+
+
+
+
+if @pageid == "342"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Start time','Stop time','Last Event']
+  @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.data1,queuecall.time.to_s[0,19],queuecall.data2.to_s[0,19],queuecall.data3]
+  end
+ end
+end
+
+
+
+if @pageid == "473"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Start time','Stop time','Event']
+   @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.data1,queuecall.time.to_s[0,19],queuecall.data2.to_s[0,19],queuecall.data3]
+  end
+ end
+end
+
+
+if @pageid == "507"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Start time','Duration','Event']
+   @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.data1,queuecall.time.to_s[0,19],queuecall.data2.to_s[11,8],queuecall.data3]
+  end
+ end
+end
+
+if @pageid == "683"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Start time','Duration','Event']
+  @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.data1,queuecall.time.to_s[0,19],queuecall.data2.to_i,queuecall.data3]
+  end
+ end
+end
+
+
+if @pageid == "473"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Start time','Stop time','Event']
+   @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.data1,queuecall.time.to_s[0,19],queuecall.data2.to_s[0,19],queuecall.data3]
+  end
+ end
+end
+
+
+if @pageid == "7472"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Called','Start time','Duration','Event']
+   @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.src,queuecall.dst,queuecall.start.to_s[0,19],queuecall.billsec,queuecall.disposition]
+  end
+ end
+end
+
+if @pageid == "2573"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Called','Start time','Time','Channel']
+   @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.src,queuecall.dst,queuecall.start.to_s[0,19],queuecall.billsec,queuecall.dstchannel]
+  end
+ end
+end
+
+
+
+if @pageid == "8379"
+ wb = xlsx_package.workbook
+ wb.add_worksheet(name: "Cover Sheet") do |sheet|
+  sheet.add_row ['Caller','Called','Start time','Duration','Event']
+   @queuecalls.each do |queuecall|
+   direction= ""
+   sheet.add_row [queuecall.src,queuecall.dst,queuecall.start.to_s[0,19],queuecall.duration,queuecall.disposition]
+  end
+ end
+end

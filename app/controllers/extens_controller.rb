@@ -16,11 +16,17 @@ sips =  JSON.parse(res.body)
 @sipsonline={}
 sips.each do |value|
 @sipsonline[value["resource"]] = value["state"]
+
+
+
 end
 
 
     @extens = Exten.all.where(account_id: current_user.account.id)
+
   end
+
+
 
   # GET /extens/1 or /extens/1.json
   def show

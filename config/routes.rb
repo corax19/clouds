@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # root "articles#index"
 
 
+
 get "/active", to: "active#index"
 
 

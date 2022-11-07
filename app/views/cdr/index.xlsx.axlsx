@@ -1,0 +1,13 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Cover Sheet") do |sheet|
+    sheet.add_row ['Start','Caller','Called','Direction','Duration']
+
+@cdrsexport.each do |cdr|
+direction= ""
+direction="Inbound" if cdr.dcontext == "pbxin"
+direction="Outbound" if cdr.dcontext == "pbxout"
+    sheet.add_row [cdr.start,cdr.src,cdr.dst,direction ,cdr.billsec]
+
+end
+
+end

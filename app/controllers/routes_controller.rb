@@ -38,7 +38,7 @@ before_action :authenticate_user!
       if @route.save
         Log.create(account: current_user.account, user: current_user, event: "createroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
 
-if params[:route][:route_sip_id] != nil
+if params[:route][:route_sip_id] != nil && params[:route][:route_sip_id] != ""
         format.html { redirect_to siproutes_path(params[:route][:route_sip_id]), notice: "Route was successfully created." }
 else
         format.html { redirect_to routes_path, notice: "Route was successfully created." }
@@ -57,7 +57,7 @@ end
     respond_to do |format|
       if @route.update(route_params)
         Log.create(account: current_user.account, user: current_user, event: "updateroute", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
-if params[:route][:route_sip_id] != nil
+if params[:route][:route_sip_id] != nil && params[:route][:route_sip_id] != ""
         format.html { redirect_to siproutes_path(params[:route][:route_sip_id]), notice: "Route was successfully updated." }
 else
         format.html { redirect_to routes_path, notice: "Route was successfully updated." }

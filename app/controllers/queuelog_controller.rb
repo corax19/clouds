@@ -7,6 +7,16 @@ def showcalls
 
 @startdate = params[:datestart]
 @stopdate = params[:dateend]
+
+
+session[:qstat_startdate] = @startdate
+session[:qstat_stopdate] = @stopdate
+session[:qstat_pageid] = @pageid
+session[:qstat_queueid] = @queue_id
+session[:qstat_exten] = @exten
+
+
+
 @queuename = Hotline.find_by(id: @queue_id).name
 if @pageid == "123"
 @queuecalls = Queuelog.select("time,data2 as data1,(select time from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data2,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,callid").where(['event="ENTERQUEUE" and time >= ? and time < adddate(?,interval 1 day) and queuename =?',@startdate,@stopdate,@queuename])
@@ -60,6 +70,74 @@ getstats
 
 @datestart=@startdate.strftime('%Y%m%d')
 @dateend=@stopdate.strftime('%Y%m%d')
+
+
+respond_to do |format|
+format.html
+format.xlsx{
+puts "Excel"
+@pageid =  session[:qstat_pageid]
+@queue_id =  session[:qstat_queueid]
+@exten =  session[:qstat_exten]
+
+@startdate = session[:qstat_startdate]
+@stopdate = session[:qstat_stopdate]
+
+@queuename = Hotline.find_by(id: @queue_id).name
+if @pageid == "123"
+excelpage = "_all"
+@queuecalls = Queuelog.select("time,data2 as data1,(select time from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data2,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,callid").where(['event="ENTERQUEUE" and time >= ? and time < adddate(?,interval 1 day) and queuename =?',@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "256"
+excelpage = "_answered"
+@queuecalls = Queuelog.select("time,(select b.data2 from queuelogs b where b.callid=queuelogs.callid and event='ENTERQUEUE' order by id asc limit 1) as data1,substring(agent,9) as  data2,(select if(c.event in('COMPLETEAGENT','COMPLETECALLER'),c.data2,if(c.event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),c.data4,0))  from queuelogs c where c.callid=queuelogs.callid and event in ('COMPLETEAGENT','COMPLETECALLER','ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER') order by id asc limit 1) as data3,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data4,callid").where(['event="CONNECT" and time >= ? and time < adddate(?,interval 1 day) and queuename =?',@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "342"
+excelpage = "_missed"
+@queuecalls = Queuelog.select("time,data2 as data1,(select time from queuelogs c where c.callid=queuelogs.callid order by id desc limit 1) as data2,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3").where(['event="ENTERQUEUE" and time >= ? and time < adddate(?,interval 1 day) and queuename =? and callid not in (select callid from queuelogs where event="CONNECT" and time >= ? and time < adddate(?,interval 1 day) and queuename =?)',@startdate,@stopdate,@queuename,@startdate,@stopdate,@queuename])
+end
+
+
+if @pageid == "473"
+excelpage = "_all_"+@exten
+@queuecalls = Queuelog.select("time,(select time from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data2,event as data3,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("CONNECT","RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "507"
+excelpage = "_answered_"+@exten
+@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,(select sec_to_time(if(event in('COMPLETEAGENT','COMPLETECALLER'),data2,if(event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),data4,0))) from queuelogs d where d.callid=queuelogs.callid order by id desc limit 1) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("CONNECT") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "683"
+excelpage = "_missed_"+@exten
+@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,round(data1/1000) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+end
+
+if @pageid == "7472"
+excelpage = "_outall_"+@exten
+  @queuecalls = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < adddate(?,interval 1 day) and src = ? and dcontext = "pbxout"',@startdate,@stopdate,@exten]).order(created_at: :desc)
+end
+
+if @pageid == "2573"
+excelpage = "_outanswered_"+@exten
+  @queuecalls = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < adddate(?,interval 1 day) and src = ? and dcontext = "pbxout" and billsec>0',@startdate,@stopdate,@exten]).order(created_at: :desc)
+end
+
+if @pageid == "8379"
+excelpage = "_outmissed_"+@exten
+  @queuecalls = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < adddate(?,interval 1 day) and src = ? and dcontext = "pbxout" and billsec=0',@startdate,@stopdate,@exten]).order(created_at: :desc)
+end
+
+
+
+render :xlsx => "index", :filename => "queue_statistics"+excelpage+".xlsx"
+}
+end
+
+
+
 
   end
 

@@ -87,8 +87,7 @@ session[:super_admin_user_id] = current_user.id.to_s
   end
 
   def entersuperuser
-session[:super_admin_mode] = false
-
+  session[:super_admin_mode] = false
    bypass_sign_in(User.find_by(id: session[:super_admin_user_id]))
   redirect_to messages_path
   end
@@ -165,8 +164,10 @@ end
 
 
 def checkPermissions
+if action_name != "entersuperuser"
 unless @userpermissions['permission_accounts'] == 1
 render :file => "#{Rails.root}/public/errors/404.html",  :status => 404
+end
 end
 end
 

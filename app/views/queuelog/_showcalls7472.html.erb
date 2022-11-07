@@ -6,7 +6,7 @@
     <td>Start time</td>
     <td>Duration</td>
     <td>Event</td>
-    <td></td>
+    <td><%= link_to "Excel", stats_path(format: "xlsx"), class: "btn btn-xs btn-info btn-pill col-6"%></td>
 
     </tr>
 
@@ -15,11 +15,11 @@
 <% filename= "/var/www/html/records/"+current_user.account.id.to_s+"/"+queuecall.start.to_s[0..7].gsub('-', '')+"/"+queuecall.start.to_s[0..9].gsub('-', '')+ "/"+ queuecall.uniqueid + ".mp3"  %>
 <% fileurl= "records/"+current_user.account.id.to_s+"/"+queuecall.start.to_s[0..7].gsub('-', '')+"/"+queuecall.start.to_s[0..9].gsub('-', '')+ "/"+ queuecall.uniqueid + ".mp3"  %>
 
-    <td style="width:18%"><%= queuecall.src %></td>
-    <td style="width:18%"><%= queuecall.dst %></td>
-    <td style="width:28%"><%= queuecall.start.to_s[0,19] %></td>
-    <td style="width:18%"><%= queuecall.billsec %></td>
-    <td style="width:25%"><%= queuecall.disposition %></td>
+    <td style="width:13%"><%= queuecall.src %></td>
+    <td style="width:13%"><%= queuecall.dst %></td>
+    <td style="width:30%"><%= queuecall.start.to_s[0,19] %></td>
+    <td style="width:13%"><%= queuecall.billsec %></td>
+    <td style="width:13%"><%= queuecall.disposition %></td>
 
     <td>
         <% if File.exists?(filename) && File.size(filename) > 1000 %>

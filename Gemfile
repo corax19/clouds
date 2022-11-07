@@ -27,6 +27,11 @@ gem 'jquery-rails', '>= 1.0.3'
 gem 'rails-ujs'
 
 
+
+gem 'caxlsx'
+gem 'caxlsx_rails'
+
+
 gem 'devise'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"

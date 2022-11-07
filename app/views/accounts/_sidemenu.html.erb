@@ -28,16 +28,17 @@
                 
 
                 
+<% if @userpermissionspages['permission_cdrs'] == 1 %>
                   <li
                    >
-                    <a class="sidenav-item-link" href="../cdr/">
-                      <i class="fa fa-database" aria-hidden="true"></i>
-                      <span class="nav-text">CDR</span>
-                    </a>
-                  </li>
-                
 
-                
+                  <%= link_to cdr_path do %>
+                  <i class="fa fa-database" aria-hidden="true"></i>
+                  <span class="nav-text">CDRs</span>
+                  <% end %>
+                  </li>
+<% end %>
+
 
                 
                 
