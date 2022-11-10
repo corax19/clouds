@@ -3,7 +3,7 @@ before_action :authenticate_user!
  before_action :getPermissions
  before_action :checkPermissions
 
-  def index
+def index
 
   @startdate = Date.today.to_s + " 00:00:00"
   @stopdate = Date.today.to_s + " 23:59:59"
@@ -11,41 +11,28 @@ before_action :authenticate_user!
   @caller = ""
   @called = ""
   @direction = ""
-
   @cdrs = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate]).order(created_at: :desc)
-
-#  @cdrs = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate])
-
-
-
-respond_to do |format|
-format.html
-format.xlsx{
-puts "Excel"
-@startdate = session[:cdr_startdate] + " 00:00:00"
-@stopdate = session[:cdr_stopdate] + " 23:59:59"
-@caller = session[:cdr_caller]
-@called = session[:cdr_called]
-@direction = session[:cdr_direction]
-
-puts session[:cdr_startdate]
-puts session[:cdr_stopdate]
-puts session[:cdr_caller]
-puts session[:cdr_called]
-puts session[:cdr_direction]
-
-@cdrsexport = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ? and src like if(?="","%",concat("%",?,"%"))  and dst like if(?="","%",concat("%",?,"%")) and dcontext like if(?="" or ? = "Both","%",if(?="Inbound","pbxin","pbxout"))',@startdate,@stopdate,@caller,@caller,@called,@called,@direction,@direction,@direction]).order(created_at: :desc)
-render :xlsx => "index", :filename => "cdr.xlsx"
-}
-
-
+  session[:cdr_startdate] = @startdate
+  session[:cdr_stopdate] = @stopdate
+  session[:cdr_caller] = @caller
+  session[:cdr_called] = @called
+  session[:cdr_direction] = @direction
+  respond_to do |format|
+    format.html
+    format.xlsx{
+    puts "Excel"
+    @startdate = session[:cdr_startdate] + " 00:00:00"
+    @stopdate = session[:cdr_stopdate] + " 23:59:59"
+    @caller = session[:cdr_caller]
+    @called = session[:cdr_called]
+    @direction = session[:cdr_direction]
+    @cdrsexport = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ? and src like if(?="","%",concat("%",?,"%"))  and dst like if(?="","%",concat("%",?,"%")) and dcontext like if(?="" or ? = "Both","%",if(?="Inbound","pbxin","pbxout"))',@startdate,@stopdate,@caller,@caller,@called,@called,@direction,@direction,@direction]).order(created_at: :desc)
+    render :xlsx => "index", :filename => "cdr.xlsx"
+    }
   @startdate = Date.today
   @stopdate = Date.today
-
-end
-
-
   end
+end
 
 
   def search
@@ -66,13 +53,7 @@ session[:cdr_stopdate] = @stopdate
 session[:cdr_caller] = @caller
 session[:cdr_called] = @called
 session[:cdr_direction] = @direction
-#respond_to do |format|
-#  format.html
-#  format.xlsx
-#end
-
-
-  end
+end
 
 
 

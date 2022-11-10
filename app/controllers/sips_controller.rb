@@ -29,7 +29,9 @@ before_action :authenticate_user!
     @sip.account = current_user.account
     respond_to do |format|
       if @sip.save
-        Log.create(account: current_user.account, user: current_user, event: "createsip", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+puts "Create route"
+        Route.create(account_id: current_user.account.id,name: "DEFAULT", sip: @sip)
+        Log.create(account_id: current_user.account.id, user: current_user, event: "createsip", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to sips_path, notice: "Sip was successfully created." }
         format.json { render :show, status: :created, location: @sip }
       else
@@ -55,7 +57,9 @@ before_action :authenticate_user!
 
   # DELETE /sips/1 or /sips/1.json
   def destroy
+#ActiveRecord::Base.connection.execute 'SET FOREIGN_KEY_CHECKS=0;'
     @sip.destroy
+#ActiveRecord::Base.connection.execute 'SET FOREIGN_KEY_CHECKS=1;'
     Log.create(account: current_user.account, user: current_user, event: "destroysip", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
       format.html { redirect_to sips_url, notice: "Sip was successfully destroyed." }

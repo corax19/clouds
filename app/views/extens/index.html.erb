@@ -1,5 +1,5 @@
 
-<h1>Extensions</h1>
+<h1>Extentions</h1>
 
 
 <table  id="extenTable" class="table table-hover table-product" style="width:80%">
@@ -37,7 +37,7 @@
               <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= exten.id %>"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px;">
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= exten.id %>" style="width:50px;">
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= exten.id %>" style="min-width:110px;width:110px;">
 
             <%= button_to "<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</button>".html_safe, edit_exten_path(exten), class: 'btn btn-info btn-pill', :method => :get %>
 <button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../extens/<%= exten.id %>"  onClick="setDelExt(<%= exten.id %>)">Delete</button>
