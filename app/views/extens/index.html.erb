@@ -17,7 +17,8 @@
 <td>
 
 <% extstatus="" %>
-<% extstatus =  @sipsonline[exten.account_id.to_s + exten.exten ] if @sipsonline[exten.account_id.to_s + exten.exten ] != nil  %>
+<% extstatus =  @sipsonline[exten.account_id.to_s + exten.exten ] if @sipsonline[exten.account_id.to_s + exten.exten ] != nil && Rails.configuration.isinhouse == "No"  %>
+<% extstatus =  @sipsonline[exten.exten ] if @sipsonline[exten.exten ] != nil && Rails.configuration.isinhouse == "Yes"  %>
 
 <% if extstatus != "online" %>
 <span class="mdi mdi-name text-muted"><i class="fa fa-circle-o" aria-hidden="true"></i></span>
@@ -28,7 +29,7 @@
 </div>
 </td>
 <td><%= exten.exten %></td>
-<td style="border: 1px solid;border-color: red"><%= exten.account_id %><%= exten.exten %></td>
+<td style="border: 1px solid;border-color: red"><%= exten.account_id  if Rails.configuration.isinhouse == "No" %><%= exten.exten %></td>
 <td style="border: 1px solid;border-color: red"><%= exten.secret %></td>
 <td><%= exten.name %></td>
 <td><%= exten.sip.number %></td><td><%= exten.record %></td><td><%= exten.calllimit %></td><td><%= exten.decription %></td>

@@ -21,7 +21,6 @@ sips.each do |value|
 
 end
 
-
     @extens = Exten.all.where(account_id: current_user.account.id)
 
   end

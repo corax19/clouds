@@ -7,7 +7,9 @@ def getStepSound(mystep)
 soundID = "0"
 puts mystep.data
 if valid_json?(mystep.data)
+if Sound.find_by(id: JSON.parse(mystep.data)[0][1]) != nil
 soundID = Sound.find_by(id: JSON.parse(mystep.data)[0][1]).id
+end
 end
 
 soundID
@@ -18,7 +20,9 @@ def getStepMenu(mystep)
 menuID = "0"
 puts mystep.data
 if valid_json?(mystep.data)
+if Route.find_by(id: JSON.parse(mystep.data)[0][1]) != nil
 menuID = Route.find_by(id: JSON.parse(mystep.data)[0][1]).id
+end
 end
 
 menuID
@@ -28,7 +32,9 @@ def getStepExten(mystep)
 dialoptions = {}
 puts mystep.data
 if valid_json?(mystep.data)
+if Exten.find_by(id: JSON.parse(mystep.data)[0][1]) != nil
 extenID = Exten.find_by(id: JSON.parse(mystep.data)[0][1]).id
+end
 dialtimeout = JSON.parse(mystep.data)[1][1]
 dialoptions = JSON.parse(mystep.data)[2][1]
 
@@ -44,7 +50,9 @@ readoptions = {}
 puts "DATA:"
 puts mystep.data
 if valid_json?(mystep.data)
+if Sound.find_by(id: JSON.parse(mystep.data)[0][1]) != nil
 soundID = Sound.find_by(id: JSON.parse(mystep.data)[0][1]).id
+end
 maxlen = JSON.parse(mystep.data)[1][1]
 readtimeout = JSON.parse(mystep.data)[2][1]
 
@@ -81,7 +89,9 @@ def getStepQueue(mystep)
 dialoptions = {}
 puts mystep.data
 if valid_json?(mystep.data)
+if Hotline.find_by(id: JSON.parse(mystep.data)[0][1]) != nil
 queueID = Hotline.find_by(id: JSON.parse(mystep.data)[0][1]).id
+end
 puts queueID
 dialoptions = JSON.parse(mystep.data)[1][1]
 
@@ -95,7 +105,9 @@ def getStepVoicemail(mystep)
 dialoptions = {}
 puts mystep.data
 if valid_json?(mystep.data)
+if Exten.find_by(id: JSON.parse(mystep.data)["exten_id"]) != nil
 vmID = Exten.find_by(id: JSON.parse(mystep.data)["exten_id"]).id
+end
 puts vmID
 dialoptions = JSON.parse(mystep.data)["options"]
 puts dialoptions
@@ -128,7 +140,9 @@ puts mystep.data
 if valid_json?(mystep.data)
 
 number = JSON.parse(mystep.data)[0][1]
+if Sip.find_by(id: JSON.parse(mystep.data)[1][1]) != nil
 sipID = Sip.find_by(id: JSON.parse(mystep.data)[1][1]).id
+end
 dialtimeout = JSON.parse(mystep.data)[2][1]
 dialoptions = JSON.parse(mystep.data)[3][1]
 

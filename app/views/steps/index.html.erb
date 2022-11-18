@@ -33,14 +33,14 @@
 <% @steps.each do |step| %>
 <% stepdata="" %>
 <% stepdata1="" %>
-<% stepdata=Sound.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Playback" %>
-<% stepdata=Exten.find_by(id: JSON.parse(step.data)["exten_id"]).exten if valid_json?(step.data) && step.event == "Voicemail" %>
+<% stepdata=Sound.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Playback" && Sound.find_by(id: JSON.parse(step.data)[0][1]) != nil %>
+<% stepdata=Exten.find_by(id: JSON.parse(step.data)["exten_id"]).exten if valid_json?(step.data) && step.event == "Voicemail" && Exten.find_by(id: JSON.parse(step.data)["exten_id"]) != nil  %>
 <% stepdata=JSON.parse(step.data)["extens"] if valid_json?(step.data) && step.event == "RingGroup" %>
-<% stepdata=Route.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Menu" %>
-<% stepdata=Exten.find_by(id: JSON.parse(step.data)[0][1]).exten + " , " + JSON.parse(step.data)[1][1] + " , " + JSON.parse(step.data)[2][1]  if valid_json?(step.data) && step.event == "Dial" %>
-<% stepdata=JSON.parse(step.data)[0][1] + "@" + Sip.find_by(id: JSON.parse(step.data)[1][1]).sipid + " , " + JSON.parse(step.data)[2][1] + " , " + JSON.parse(step.data)[3][1]  if valid_json?(step.data) && step.event == "ExternalDial" %>
+<% stepdata=Route.find_by(id: JSON.parse(step.data)[0][1]).name if valid_json?(step.data) && step.event == "Menu" && Route.find_by(id: JSON.parse(step.data)[0][1]) != nil %>
+<% stepdata=Exten.find_by(id: JSON.parse(step.data)[0][1]).exten + " , " + JSON.parse(step.data)[1][1] + " , " + JSON.parse(step.data)[2][1]  if valid_json?(step.data) && step.event == "Dial" && Exten.find_by(id: JSON.parse(step.data)[0][1]) != nil  %>
+<% stepdata=JSON.parse(step.data)[0][1] + "@" + Sip.find_by(id: JSON.parse(step.data)[1][1]).sipid + " , " + JSON.parse(step.data)[2][1] + " , " + JSON.parse(step.data)[3][1]  if valid_json?(step.data) && step.event == "ExternalDial" && Sip.find_by(id: JSON.parse(step.data)[1][1]) !=nil %>
 
-<% stepdata=Hotline.find_by(id: JSON.parse(step.data)[0][1]).title + " , " + JSON.parse(step.data)[1][1]   if valid_json?(step.data) && step.event == "Queue" %>
+<% stepdata=Hotline.find_by(id: JSON.parse(step.data)[0][1]).title + " , " + JSON.parse(step.data)[1][1]   if valid_json?(step.data) && step.event == "Queue" && Hotline.find_by(id: JSON.parse(step.data)[0][1]) != nil %>
 
 <% editlink=edit_stepplayback_path(@route,step) %>
 <% editlink=edit_stepdial_path(@route,step) if step.event == "Dial" %>

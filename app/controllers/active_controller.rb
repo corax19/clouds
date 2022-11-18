@@ -1,6 +1,22 @@
 class ActiveController < ApplicationController
   def index
 
+
+uri = URI.parse("http://localhost:8088/ari/bridges")
+http = Net::HTTP.new(uri.host, uri.port)
+request = Net::HTTP::Get.new(uri.request_uri)
+request.basic_auth("sasha", "qscesz")
+res = http.request(request)
+bridges =  JSON.parse(res.body)
+
+@bridgesonlines = {}
+bridges.each do |value|
+@bridgesonlines[value["channels"][0]] = 1
+@bridgesonlines[value["channels"][1]] = 1
+end
+
+
+
 uri = URI.parse("http://localhost:8088/ari/channels")
 http = Net::HTTP.new(uri.host, uri.port)
 request = Net::HTTP::Get.new(uri.request_uri)
@@ -12,7 +28,9 @@ sips =  JSON.parse(res.body)
 sips.each do |value|
 sipsonline={}
 #@sipsonline[value["resource"]] = value["state"]
+callid = value["id"]
 state = value["state"]
+name = value["name"]
 start = value["creationtime"]
 starttime = Time.parse(start)
 caller = value["caller"]["number"]
@@ -25,7 +43,9 @@ duration = (Time.now - starttime).to_i
 
 unless context == "pbxout" && appdata =="(Outgoing Line)"
 #puts state, caller, context, appname, called, duration
+sipsonline["callid"] = callid
 sipsonline["caller"] = caller
+sipsonline["name"] = name[4..]
 sipsonline["called"] = called
 sipsonline["started"] = starttime
 sipsonline["duration"] = duration

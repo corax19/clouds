@@ -52,8 +52,13 @@ end
 @agent.name = Hotline.find_by(id: @agent.hotline_id).name
 @agent.queue_name = Hotline.find_by(id: @agent.hotline_id).name
 
+if Rails.configuration.isinhouse == "Yes"
+@agent.interface = "SIP/" +  Exten.find_by(id: @agent.exten_id).exten
+@agent.membername = "SIP/" + Exten.find_by(id: @agent.exten_id).exten
+else
 @agent.interface = "SIP/" + current_user.account.id.to_s + Exten.find_by(id: @agent.exten_id).exten
 @agent.membername = "SIP/" + current_user.account.id.to_s + Exten.find_by(id: @agent.exten_id).exten
+end
 
     respond_to do |format|
       if @agent.save
@@ -76,8 +81,13 @@ end
 
 @agent.name = Hotline.find_by(id: @agent.hotline_id).name
 @agent.queue_name = Hotline.find_by(id: @agent.hotline_id).name
+if Rails.configuration.isinhouse == "Yes"
+@agent.interface = "SIP/" +  Exten.find_by(id: @agent.exten_id).exten
+@agent.membername = "SIP/" +  Exten.find_by(id: @agent.exten_id).exten
+else
 @agent.interface = "SIP/" + current_user.account.id.to_s + Exten.find_by(id: @agent.exten_id).exten
 @agent.membername = "SIP/" + current_user.account.id.to_s + Exten.find_by(id: @agent.exten_id).exten
+end
 
     respond_to do |format|
       if @agent.update(agent_params)

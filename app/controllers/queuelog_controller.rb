@@ -15,7 +15,8 @@ session[:qstat_pageid] = @pageid
 session[:qstat_queueid] = @queue_id
 session[:qstat_exten] = @exten
 
-
+agentprefix = ""
+agentprefix = current_user.account.id.to_s if Rails.configuration.isinhouse == "No"
 
 @queuename = Hotline.find_by(id: @queue_id).name
 if @pageid == "123"
@@ -32,15 +33,15 @@ end
 
 
 if @pageid == "473"
-@queuecalls = Queuelog.select("time,(select time from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data2,event as data3,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("CONNECT","RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+@queuecalls = Queuelog.select("time,(select time from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data2,event as data3,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("CONNECT","RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',agentprefix,@exten,@startdate,@stopdate,@queuename])
 end
 
 if @pageid == "507"
-@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,(select sec_to_time(if(event in('COMPLETEAGENT','COMPLETECALLER'),data2,if(event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),data4,0))) from queuelogs d where d.callid=queuelogs.callid order by id desc limit 1) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("CONNECT") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,(select sec_to_time(if(event in('COMPLETEAGENT','COMPLETECALLER'),data2,if(event in('ATTENDEDTRANSFER','BLINDTRANSFER','TRANSFER'),data4,0))) from queuelogs d where d.callid=queuelogs.callid order by id desc limit 1) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("CONNECT") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',agentprefix,@exten,@startdate,@stopdate,@queuename])
 end
 
 if @pageid == "683"
-@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,round(data1/1000) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',current_user.account.id.to_s,@exten,@startdate,@stopdate,@queuename])
+@queuecalls = Queuelog.select("time,(select event from queuelogs b where b.callid=queuelogs.callid order by id desc limit 1) as data3,round(data1/1000) as data2,(select data2 from queuelogs c where c.callid=queuelogs.callid and c.event='ENTERQUEUE' order by id asc limit 1) as data1,callid").where(['event in("RINGNOANSWER") and agent=concat("SIP/",?,?) and time >= ? and time < adddate(?,interval 1 day) and queuename =?',agentprefix,@exten,@startdate,@stopdate,@queuename])
 end
 
 if @pageid == "7472"
@@ -186,7 +187,11 @@ agentsresult = Queuelog.group(:agent).select("agent,sum(if(event='RINGNOANSWER',
 agentsresult.each do |agent|
 if agent["agent"] != "NONE"
 agentrow={}
+if Rails.configuration.isinhouse == "No"
 agentexten=Exten.where(account_id: current_user.account.id).where(exten: agent.agent[8..10]).first
+else
+agentexten=Exten.where(account_id: current_user.account.id).where(exten: agent.agent[4..6]).first
+end
 agentid= agentexten.exten
 agentrow["agentname"] = agentexten.name
 agentrow["agent"] = agent.agent[8..10]

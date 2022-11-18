@@ -65,7 +65,13 @@ end
 @agents = Agent.all.where(account_id: current_user.account.id,hotline: session[:livemonitor_hotline])
 @agents.each do |agent|
  exten = Exten.find_by(id: agent.exten_id).exten
+
+if Rails.configuration.isinhouse == "Yes"
+ agentexten = exten
+else
  agentexten = current_user.account.id.to_s + exten
+end
+
  if @sipsonline[agentexten] == nil
   @agentsoffline = @agentsoffline + 1
  elsif @sipsonline[agentexten] == "online"
@@ -146,7 +152,13 @@ agentsresult = Queuelog.group(:agent).select("agent,sum(if(event='RINGNOANSWER',
 agentsresult.each do |agent|
 if agent["agent"] != "NONE"
 agentrow={}
+puts agent.agent
+if Rails.configuration.isinhouse == "Yes"
+agentexten=Exten.where(account_id: current_user.account.id).where(exten: agent.agent[4..6]).first
+else
 agentexten=Exten.where(account_id: current_user.account.id).where(exten: agent.agent[8..10]).first
+end
+
 agentid= agentexten.exten
 agentrow["agentname"] = agentexten.name
 agentrow["agent"] = agent.agent[8..10]
@@ -212,7 +224,11 @@ agentrow["cdravgduration"] = @agentdatacdr[agentnum]["cdravgduration"]
 end
 
 #puts agentsonline
+if Rails.configuration.isinhouse == "Yes"
+agentnumfull = agentnum
+else
 agentnumfull = current_user.account.id.to_s + agentnum
+end
 agentrow[:state] = @sipsonline[agentnumfull]
 if agentrow[:state] == "unknown"
 agentrow[:state] = "offline"

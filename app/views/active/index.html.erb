@@ -3,6 +3,7 @@
 <table  id="accountsTable" class="table table-hover table-product" style="width:98%">
     <tr><td></td>
     <td>Caller</td><td>Called</td><td>Started</td><td>Direction</td><td>Duration</td><td>App</td><td>Status</td>
+<td></td>
 
     </tr>
 
@@ -24,6 +25,21 @@
 <td><%= online["duration"] %></td>
 <td><%= online["appname"] %></td>
 <td><%= online["status"] %></td>
+<td>
+<% if @bridgesonlines[online["callid"]] == 1 %>
+<div class="btn-group mb-1 col-1">
+          <button type="button" class="btn btn-success btn-pill"><i class="fa fa-phone-square"></i></button>
+          <button type="button" class="btn btn-success btn-pill dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+          <%= link_to "Spy", "javascript:makeCall('1','"+online["name"]+"')", class: 'dropdown-item' %>
+          <%= link_to "Whisper", "javascript:makeCall('2','"+online["name"]+"')", class: 'dropdown-item' %>
+          <%= link_to "Barge", "javascript:makeCall('3','"+online["name"]+"')", class: 'dropdown-item' %>
+          </div>
+</div>
+<% end %>
+</td>
 
 
     </tr>

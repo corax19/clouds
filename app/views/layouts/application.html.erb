@@ -36,6 +36,194 @@
 <%= stylesheet_link_tag "plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css" %>
 
 
+
+
+<% if controller_path == "active" %>
+
+<script src="SIPml-api.js?svn=252" type="text/javascript"> </script>
+<script type="text/javascript">
+var sipStack;
+var registerSession;
+var messageSession;
+var publishSession;
+var subscribeSession;
+var callSession;
+
+var readyCallback = function(e){
+createSipStack(); // see next section
+};
+var errorCallback = function(e){
+console.error('Failed to initialize the engine: ' + e.message);
+}
+
+function sipInit(){
+SIPml.init(readyCallback, errorCallback);
+}
+
+var eventsListener = function(e){
+var flag=1;
+if(e.type == 'started'){
+ login();
+}
+ else if(e.type == 'i_new_message'){ // incoming new SIP MESSAGE (SMS-like)
+ acceptMessage(e);
+}
+else if(e.type == 'terminated'){
+stopRingbackTone();
+ document.getElementById("hangupbutton").style.display='none';
+// document.getElementById("callbutton").style.display='block';
+}
+else if(e.type == 'i_ao_request'){
+
+}
+
+else if(e.type == 'm_early_media'){
+startRingbackTone();
+}
+else if(e.type == 'connected'){
+stopRingbackTone();
+}
+
+
+else if(e.type == 'i_new_call'){
+ callSession=e.newSession;
+ callSession.accept({events_listener: { events: '*', listener: eventsListener }});
+ document.getElementById("hangupbutton").style.display='block';
+// document.getElementById("callbutton").style.display='none';
+}
+
+else if(e.type == 'm_permission_accepted'){
+}
+}
+
+var login = function(){
+ registerSession = sipStack.newSession('register', {
+ events_listener: { events: '*', listener: eventsListener } // optional: '*' means all events
+ });
+ registerSession.register();
+}
+
+
+
+function createSipStack(){
+sipStack = new SIPml.Stack({
+ realm: 'myclouds.myphone.ge', // mandatory: domain name
+ impi: '5060', // mandatory: authorization name (IMS Private Identity)
+ impu: 'sip:5060@myclouds.myphone.ge', // mandatory: valid SIP Uri (IMS Public Identity)
+ password: 'SYS5060pass', // optional
+ display_name: '5060', // optional
+ websocket_proxy_url: 'wss://myclouds.myphone.ge:8089/ws', // optional
+ outbound_proxy_url: '', // optional
+ ice_servers:  "[]",
+ enable_rtcweb_breaker: false, // optional
+ events_listener: { events: '*', listener: eventsListener }, // optional: '*' means all events
+ sip_headers: [ // optional
+ { name: 'User-Agent', value: 'SashaWebSIP 11' },
+ { name: 'Organization', value: 'Sasha Telecom' }
+ ]
+ }
+ );
+ sipStack.start();
+}
+
+
+var makeCall = function(ctype,num){
+
+ callSession = sipStack.newSession('call-audio', {
+ audio_remote: document.getElementById('audio_remote'),
+ video_local: document.getElementById('video_local'),
+ video_remote: document.getElementById('video_remote'),
+ events_listener: { events: '*', listener: eventsListener } // optional: '*' means all events
+ });
+ document.getElementById("hangupbutton").style.display='block';
+ document.getElementById("onlinel").style.display='block';
+//alert(num);
+ callSession.call(ctype+num);
+//
+}
+
+var hangupCall = function(){
+//$(window).bind('beforeunload', function () {    sipHangUp();    });
+stopRingbackTone();
+ document.getElementById("hangupbutton").style.display='none';
+ document.getElementById("onlinel").style.display='none';
+ callSession.hangup();
+}
+
+
+var sendMessage = function(){
+messageSession = sipStack.newSession('message', {
+events_listener: { events: '*', listener: eventsListener } // optional: '*' means all events
+});
+//messageSession.send('551125252', 'Hi there', 'text/plain;charset=utf-8');
+}
+
+function startRingTone() {
+try { ringtone.play(); }
+catch (e) { }
+}
+
+function stopRingTone() {
+try { ringtone.pause(); }
+catch (e) { }
+}
+
+function startRingbackTone() {
+try { ringbacktone.play(); }
+catch (e) { }
+}
+
+function stopRingbackTone() {
+try { ringbacktone.pause(); }
+catch (e) { }
+}
+
+</script>
+
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 function confirmDestroy(message) {
 $('#delModal').modal('show');
@@ -157,7 +345,11 @@ updateOnline2();
 </head>
 
 
-  <body class="navbar-fixed sidebar-fixed" id="body">
+  <body class="navbar-fixed sidebar-fixed" id="body" 
+<% if controller_path == "active" %>
+onload="sipInit()"
+<% end %>
+>
     <script>
       NProgress.configure({ showSpinner: false });
       NProgress.start();
@@ -373,6 +565,14 @@ updateOnline2();
     </div>
     
                     <!-- Card Offcanvas -->
+
+<div id="onlinel" style="position:absolute;top:80px;left:250px;width:40px;display: block">
+<button type="button" id="hangupbutton" class="btn btn-danger btn-pill" onClick="hangupCall()" style="display: none"><i class="fa fa-phone-square"></i></button>
+<audio id="audio_remote" autoplay="autoplay" />
+<audio id="ringtone" loop src="ringtone.wav" />
+<audio id="ringbacktone" loop src="ringbacktone.wav" />
+<audio id="dtmfTone" src="dtmf.wav" />
+</div>
 
 
     
