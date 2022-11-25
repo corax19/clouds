@@ -1,7 +1,7 @@
 class MohentriesController < ApplicationController
 before_action :authenticate_user!
- before_action :getPermissions
- before_action :checkPermissions
+before_action :getPermissions
+before_action :checkPermissions
 
  before_action :set_mohentry, only: %i[ destroy ]
 

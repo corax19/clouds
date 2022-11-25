@@ -1,0 +1,9 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Cover Sheet") do |sheet|
+    sheet.add_row ['First Name','Last Name','ID NUMBER','Phone 1','Phone 2','Phone 3','Birthday','Email','Country','City','Address']
+
+@allclients.each do |client|
+    sheet.add_row [client.firstname,client.lastname,client.idnum,client.phone1,client.phone2,client.phone3,client.birthday,client.email,client.country,client.city,client.address]
+end
+
+end

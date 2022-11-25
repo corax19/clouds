@@ -2,7 +2,7 @@
           <div id="sidebar" class="sidebar sidebar-with-footer">
             <!-- Aplication Brand -->
             <div class="app-brand">
-              <a href="/index.html">
+              <a href="/">
 <%= image_tag(current_user.account.image.thumb.url, alt: 'Image' , class:"user-image rounded-circle") if current_user.account.image? %>
 <%= image_tag "logo.png" if !current_user.account.image? %>
                 <span class="brand-name"><%= current_user.account.name %></span>
@@ -136,6 +136,7 @@
 <% end %>
 
 
+
 <% if @userpermissionspages['permission_monitor'] == 1 %>
                   <li>
                   <%= link_to monitor_path do %>
@@ -143,6 +144,15 @@
                   <% end %>
                   </li>
 <% end %>
+
+<% if @userpermissionspages['permission_clients'] == 1 %>
+                  <li>
+                  <%= link_to clients_path do %>
+                  <span class="nav-text">Clients</span> 
+                  <% end %>
+                  </li>
+<% end %>
+
                      </div>
                     </ul>
                   </li>
@@ -173,7 +183,7 @@
                   <li>
                   <%= link_to users_path do %>
                   <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                  <span class="nav-text">Users</span> <span class="badge badge-pill badge-primary"><%= User.where(account_id: current_user.account.id).count %></span>
+                  <span class="nav-text">Users</span>
                   <% end %>
                   </li>
 <% end  %>

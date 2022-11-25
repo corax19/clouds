@@ -1,7 +1,7 @@
 class StepsController < ApplicationController
 before_action :authenticate_user!
- before_action :getPermissions
- before_action :checkPermissions
+before_action :getPermissions
+before_action :checkPermissions
 
   before_action :set_step, only: %i[ show edit editplayback editdial editdialexternal editmenu editqueue editread editvoicemail editringgroup updateringgroup updatevoicemail updatedial updatemenu updatequeue updatedialexternal updateplayback updateread update destroy stepup stepdown]
   before_action :set_newstep, only: %i[ new newplayback newread newdial newqueue newdialexternal newmenu newvoicemail newringgroup]

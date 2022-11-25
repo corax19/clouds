@@ -1,0 +1,614 @@
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="refresh" content="<%= session[:livemonitor_timeout] %>">
+  <title>New Virtual PBX phone</title>
+
+     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<%= javascript_include_tag :application %>
+
+  <!-- GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
+
+<%= stylesheet_link_tag "plugins/material/css/materialdesignicons.min" %>
+
+<%= stylesheet_link_tag "plugins/simplebar/simplebar.css" %>
+
+
+  <!-- PLUGINS CSS STYLE -->
+<%= stylesheet_link_tag "plugins/nprogress/nprogress.css" %>
+
+
+<%= stylesheet_link_tag "plugins/prism/prism.css" %>
+  
+  
+  <!-- MONO CSS -->
+<%= stylesheet_link_tag "style.css" %>
+
+
+
+  
+<%= stylesheet_link_tag "plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css" %>
+
+<script src="SIPml-api.js?svn=213" type="text/javascript"> </script>
+<script type="text/javascript">
+var etype;
+var isconnected;
+var sipStack;
+var registerSession;
+var messageSession;
+var publishSession;
+var subscribeSession;
+var callSession;
+var readyCallback = function(e){
+createSipStack(); // see next section
+};
+var errorCallback = function(e){
+console.error('Failed to initialize the engine: ' + e.message);
+}
+function checkReg(){
+if (etype != 'connected'){
+document.getElementById("sipchecked").checked = false;
+document.getElementById("phonestatus").innerHTML = "<font color=red>not connected</font>";
+} else {
+document.getElementById("phonestatus").innerHTML = "<font color=green>connected</font>";
+}
+}
+function sipMakeInit(){
+if(document.getElementById("sipchecked").checked == true){
+createSipStack();
+sipInit();
+sipStack.start();
+document.getElementById("phonestatus").innerHTML = "connecting...";
+setTimeout(function() { checkReg(); }, 2000);
+} else {
+if (sipStack) {
+sipStack.stop(); // shutdown all sessions
+document.getElementById("phonestatus").innerHTML = "<font color=red>not connected</font>";
+}
+}
+}
+
+
+function sipInit(){
+SIPml.init(readyCallback, errorCallback);
+}
+
+var eventsListener = function(e){
+var flag=1;
+etype = e.type;
+//alert(etype);
+//document.getElementById("phonestatus").innerHTML=e.type;
+//document.getElementById("logdiv").innerHTML=etype;
+if(e.type == 'started'){
+ login();
+}
+ else if(e.type == 'i_new_message'){ // incoming new SIP MESSAGE (SMS-like)
+ acceptMessage(e);
+}
+else if(e.type == 'terminated'){
+
+stopRingbackTone();
+
+
+ document.getElementById("dialbutton").classList.remove('btn-danger');
+ document.getElementById("dialbutton").classList.add('btn-success');
+ document.getElementById("dialbutton").classList.remove('danger');
+ document.getElementById("dialbutton").classList.add('success');
+
+ hangupCall();
+}
+
+
+else if(e.type == 'terminating'){
+stopRingbackTone();
+
+ document.getElementById("dialbutton").classList.remove('btn-danger');
+ document.getElementById("dialbutton").classList.add('btn-success');
+ document.getElementById("dialbutton").classList.remove('danger');
+ document.getElementById("dialbutton").classList.add('success');
+
+ hangupCall();
+}
+
+else if(e.type == 'i_ao_request'){
+//hangupCall();
+}
+
+else if(e.type == 'm_early_media'){
+startRingbackTone();
+}
+else if(e.type == 'connected'){
+
+stopRingbackTone();
+}
+
+
+else if(e.type == 'i_new_call'){
+//
+
+ callSession=e.newSession;
+ callSession.accept({events_listener: { events: '*', listener: eventsListener }});
+
+
+  document.getElementById("dialbutton").classList.add('btn-danger');
+  document.getElementById("dialbutton").classList.remove('btn-success');
+  document.getElementById("dialbutton").classList.add('danger');
+  document.getElementById("dialbutton").classList.remove('success');
+
+  document.getElementById("dialbutton").innerHTML = "REJECT";
+  var sRemoteNumber = (callSession.getRemoteFriendlyName() || 'unknown');
+  document.getElementById("logdiv").innerHTML = 'Incoming Call '+sRemoteNumber;
+  document.getElementById("acceptbutton").style.display='block';
+
+getClientInfo(sRemoteNumber);
+setTimeout(function() {
+getClientNotes(sRemoteNumber);
+}, 1700);
+
+
+
+startRingbackTone();
+
+
+//alert('OK');
+}
+
+else if(e.type == 'm_permission_accepted'){
+startRingbackTone();
+}
+
+
+}
+
+var login = function(){
+ registerSession = sipStack.newSession('register', {
+ events_listener: { events: '*', listener: eventsListener } // optional: '*' means all events
+ });
+ registerSession.register();
+}
+
+function createSipStack(){
+myimpu = 'sip:'+ document.getElementById("sipid").value + '@' +document.getElementById("siphost").value
+mywss  = 'wss://'+ document.getElementById("siphost").value +':8089/ws'
+sipStack = new SIPml.Stack({
+ realm: document.getElementById("siphost").value, // mandatory: domain name
+ impi: document.getElementById("sipid").value, // mandatory: authorization name (IMS Private Identity)
+ impu: myimpu, // mandatory: valid SIP Uri (IMS Public Identity)
+ password: document.getElementById("sippass").value, // optional
+ display_name: document.getElementById("sipid").value, // optional
+ websocket_proxy_url: mywss, // optional
+ outbound_proxy_url: '', // optional
+ ice_servers:  "[]",
+ enable_rtcweb_breaker: false, // optional
+ events_listener: { events: '*', listener: eventsListener }, // optional: '*' means all events
+ sip_headers: [ // optional
+ { name: 'User-Agent', value: 'SashaWebSIP' },
+ { name: 'Organization', value: 'MyClouds' }
+ ]
+ }
+ );
+ sipStack.start();
+}
+
+
+var makeCall = function(){
+startRingbackTone();
+ callSession = sipStack.newSession('call-audio', {
+ audio_remote: document.getElementById('audio_remote'),
+ video_local: document.getElementById('video_local'),
+ video_remote: document.getElementById('video_remote'),
+ events_listener: { events: '*', listener: eventsListener } // optional: '*' means all events
+ });
+
+
+ document.getElementById("logdiv").innerHTML = "On Call!";
+ document.getElementById("dialbutton").innerHTML = "HANGUP";
+// document.getElementById("dialbutton").class='btn btn-danger danger btn-block flatbtn';
+ callSession.call(document.getElementById('telNumber').value);
+
+ document.getElementById("acceptbutton").style.display='none';
+}
+
+
+ var acceptCall = function(e){
+ document.getElementById("dialbutton").classList.add('danger');
+ document.getElementById("dialbutton").classList.remove('success');
+
+ document.getElementById("acceptbutton").style.display='none';
+ document.getElementById("dialbutton").innerHTML = "HANGUP";
+ stopRingbackTone();
+                 e.newSession.accept();
+
+}
+
+var hangupCall = function(){
+stopRingbackTone();
+document.getElementById("logdiv").innerHTML = "On Hook!";
+ document.getElementById("dialbutton").innerHTML = "CALL";
+ document.getElementById("acceptbutton").style.display='none';
+ callSession.hangup();
+}
+
+var sendMessage = function(){
+messageSession = sipStack.newSession('message', {
+events_listener: { events: '*', listener: eventsListener } // optional: '*' means all events
+});
+messageSession.send('551125252', 'Hi there', 'text/plain;charset=utf-8');
+}
+
+function startRingTone() {
+try { ringtone.play(); }
+catch (e) { }
+}
+
+function stopRingTone() {
+try { ringtone.pause(); }
+catch (e) { }
+}
+
+function startRingbackTone() {
+try { ringbacktone.play(); }
+catch (e) { }
+}
+
+function stopRingbackTone() {
+try { ringbacktone.pause(); }
+catch (e) { }
+}
+
+
+var button1Click = function(){
+
+//alert(etype);
+if((etype=='connected') || (etype=='connecting') || (etype=='sent_request') || (etype=='terminated')){
+makeCall();
+ document.getElementById("dialbutton").classList.add('btn-danger');
+ document.getElementById("dialbutton").classList.remove('btn-success');
+ document.getElementById("dialbutton").classList.add('danger');
+ document.getElementById("dialbutton").classList.remove('success');
+}
+
+if((etype=='m_permission_accepted') || (etype=='i_ao_request') || (etype=='connecting') || (etype=='m_stream_audio_remote_added')){
+hangupCall();
+ document.getElementById("dialbutton").classList.remove('btn-danger');
+ document.getElementById("dialbutton").classList.add('btn-success');
+ document.getElementById("dialbutton").classList.remove('danger');
+ document.getElementById("dialbutton").classList.add('success');
+
+}
+
+}
+
+</script>
+
+
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<%= stylesheet_link_tag "wp.css" %>
+
+<%= stylesheet_link_tag "plugins/nprogress/nprogress.css" %>
+
+
+<script>
+function confirmDestroy(message) {
+$('#delModal').modal('show');
+<!--  if (!confirm(message)) {    return false;  }-->
+}
+
+
+function setDelUser(userID) {
+myurl='../users/'+userID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSound(soundID) {
+myurl='../sounds/'+soundID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSIP(SIPID) {
+myurl='../sips/'+SIPID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelExt(extID) {
+myurl='../extens/'+extID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelHotline(hotlineID) {
+myurl='../hotlines/'+hotlineID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelAgent(queueID,agentID) {
+myurl='../'+queueID+'/agents/'+agentID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelRoute(routeID) {
+myurl='../routes/'+routeID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelSipRoute(routeID,sipID) {
+myurl='../../routes/'+routeID+'?routesipid='+sipID;
+document.getElementById("myform1").action = myurl;
+}
+
+
+function setDelStep(routeID,stepID) {
+myurl='../'+routeID+'/steps/'+stepID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelMOH(mohID) {
+myurl='../mohs/'+mohID;
+document.getElementById("myform1").action = myurl;
+}
+
+
+function setDelMohEntry(mohID,mohentryID) {
+myurl='../'+mohID+'/mohentries/'+mohentryID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelAcct(accountID) {
+myurl='../accounts/'+accountID;
+document.getElementById("myform1").action = myurl;
+}
+
+function getCalls(tupe,hot,exst,vard1,vard2){
+var url1;
+url1='/stats/calls/'+tupe+'/'+hot+'/'+exst+'/'+vard1+'/'+vard2+'';
+document.getElementById('callrows').innerHTML=url1;
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateGetCalls;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateGetCalls;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+}
+function StateGetCalls(){
+if (request.readyState == 4){
+document.getElementById('callrows').innerHTML=request.responseText;
+document.getElementById("collapseBorderTwo").className = "collapse show";
+document.getElementById("collapseBorderOne").className = "collapse";
+updateOnline2();
+}
+}
+
+
+function getClientInfo(callerID){
+var url1;
+url1='/phone/getinfo/'+callerID;
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateClientInfo;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateClientInfo;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+}
+
+
+function StateClientInfo(){
+if (request.readyState == 4){
+document.getElementById('nav-client').innerHTML=request.responseText;
+}
+}
+
+function getClientNotes(callerID){
+var url1;
+url1='/phone/getnotes/'+callerID;
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateClientNotes;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateClientNotes;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+}
+
+
+function StateClientNotes(){
+if (request.readyState == 4){
+document.getElementById('nav-client-notes').innerHTML=request.responseText;
+}
+}
+
+
+
+
+
+
+
+function updateClientInfo(clientID){
+var url1;
+if (clientID == '') {
+clientID = '0';
+}
+
+url1='/phone/updateinfo/'+clientID+'/?firstname='+document.getElementById('client_firstname').value+'&lastname='+document.getElementById('client_lastname').value+'&phone1='+document.getElementById('client_phone1').value+'&phone2='+document.getElementById('client_phone2').value+'&phone3='+document.getElementById('client_phone3').value+'&email='+document.getElementById('client_email').value+'&idnum='+document.getElementById('client_idnum').value+'&birthday='+document.getElementById('client_birthday').value+'&country='+document.getElementById('client_country').value+'&city='+document.getElementById('client_city').value+'&address='+document.getElementById('client_address').value+'';
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateUpdateClientInfo;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateUpdateClientInfo;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+}
+
+
+function StateUpdateClientInfo(){
+if (request.readyState == 4){
+if(request.responseText == 'OK'){
+
+document.getElementById('clientalert').innerHTML='Client Info Updated';
+document.getElementById('clientalert').className='alert alert-success';
+setTimeout(function() {
+    document.getElementById('clientalert').className='alert alert-success hidden';
+}, 1500);
+
+} else {
+
+document.getElementById('clientalertnotok').innerHTML='Client Info not Updated';
+document.getElementById('clientalertnotok').className='alert alert-danger';
+setTimeout(function() {
+    document.getElementById('clientalertnotok').className='alert alert-danger hidden';
+}, 1500);
+
+
+}
+
+}
+}
+
+
+
+
+</script>
+
+
+  <!-- FAVICON -->
+  <link href="images/favicon.png" rel="shortcut icon" />
+
+  <!--
+    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+  -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+<%= javascript_include_tag "plugins/nprogress/nprogress" %>
+
+
+</head>
+
+
+  <body class="navbar-fixed sidebar-fixed" id="body">
+    <script>
+      NProgress.configure({ showSpinner: false });
+      NProgress.start();
+    </script>
+
+    
+
+    <!-- ====================================
+    ——— WRAPPER
+    ===================================== -->
+<%= yield %>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+
+$('.num').click(function () {
+var num = $(this);
+var text = $.trim(num.find('.txt').clone().children().remove().end().text());
+var telNumber = $('#telNumber');
+$(telNumber).val(telNumber.val() + text);
+});
+
+
+});
+</script>
+
+    
+                    <!-- Card Offcanvas -->
+
+
+    
+                    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+                    
+<%= javascript_include_tag "plugins/jquery/jquery.min" %>
+<%= javascript_include_tag "plugins/bootstrap/js/bootstrap.bundle.min" %>
+<%= javascript_include_tag "plugins/simplebar/simplebar.min" %>
+<%= javascript_include_tag "plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min" %>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+
+<script>
+$('#delModal').on('show.bs.modal', function(e) {
+    $(this).find('.btn-success').attr('href', $(e.relatedTarget).data('href'));
+});
+
+</script>
+
+
+
+    <script>
+        $('#delModal').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    </script>
+
+
+
+
+
+<%= javascript_include_tag "plugins/prism/prism" %>
+                    
+                    <%= javascript_include_tag "mono" %>
+                    <%= javascript_include_tag "chart" %>
+                    <%= javascript_include_tag "map" %>
+                    <%= javascript_include_tag "custom" %>
+
+                    
+
+
+                    <!--  -->
+
+
+  </body>
+</html>
+
+
+

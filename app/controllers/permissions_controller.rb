@@ -13,7 +13,9 @@ def index
 #mystr = myarr.to_json
 #puts mystr
 #puts @@userpermissions["sounds"]
-@users = User.where(account_id: current_user.account.id)
+puts "get users"
+@users = User.where('account_id = ? and isadmin>=0',current_user.account.id)
+puts "got users"
 end
 
 
@@ -41,6 +43,7 @@ allpermissions = {
   "permission_mohs" => "No",
   "permission_logs" => "No",
   "permission_sounds" => "No",
+  "permission_clients" => "No",
   "permission_messages" => "No"
 }
 
@@ -176,6 +179,7 @@ allpermissions = {
   "permission_mohs" => "No",
   "permission_logs" => "No",
   "permission_sounds" => "No",
+  "permission_clients" => "No",
   "permission_messages" => "No"
 }
 @edituserpermission = allpermissions

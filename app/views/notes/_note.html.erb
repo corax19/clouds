@@ -1,0 +1,32 @@
+<div id="<%= dom_id note %>">
+
+<% username = "" %>
+<% username =  User.find_by(id: note.user_id).username if User.find_by(id: note.user_id) != nil %>
+
+<td><%= username %></td>
+<td><%= note.created_at.localtime.to_s[0..19] %></td>
+
+<td><%= note.subject %></td>
+<td><%= note.body %></td>
+
+          <td style="width:50px" align="right">
+            <div class="dropdown" style="width:50px;">
+              <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= note.id %>"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px;">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= note.id %>" style="min-width:110px;width:110px;">
+
+<% if note.user_id == current_user.id %>
+<%= button_to "<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</button>".html_safe, edit_note_path(@client,note), class: 'btn btn-info btn-pill', :method => :get %>
+<button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../notes/<%= note.id %>"  onClick="setDelNote(<%= note.client_id %>,<%= note.id %>)">Delete</button>
+<% end %>
+              </div>
+            </div>
+
+
+
+          </td>
+
+    </tr>
+
+

@@ -9,6 +9,7 @@ has_many :steps, dependent: :destroy
 has_many :mohs, dependent: :destroy
 has_many :messages, dependent: :destroy
 
+has_many :clients, dependent: :destroy
 
 mount_uploader :image, SoundUploader
 

@@ -1,0 +1,303 @@
+<table style="width=70%">
+<tr>
+<td style="width:80%">
+<%= image_tag(current_user.account.image.thumb.url, alt: 'Image' , class:"user-image rounded-circle") if current_user.account.image? %>
+<%= current_user.account.name %>
+</td><td style="width:20%">
+<h4>Hello <%= current_user.firstname %></h4>
+</td>
+</tr>
+</table>
+<table border=0 style="width: 100%">
+<tr>
+
+<td colspan=3>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="form-group">
+        <label for="fname">SERVER</label>
+        <input type="text" class="form-control" placeholder="your server address" id="siphost" value="myclouds.myphone.ge">
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-group">
+        <label for="lname">SIP ID</label>
+        <input type="text" class="form-control" placeholder="username" id="sipid" value="<%= current_user.username %>">
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-group">
+        <label for="city">PASSWORD</label>
+        <input type="password" class="form-control" placeholder="password" id="sippass" value ="<%= current_user.password %>">
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="form-group">
+<br>
+        <label for="city">Active</label>
+
+<label class="switch switch-success  form-control-label mr-2">
+  <input type="checkbox" class="switch-input form-check-input" value="on"  id="sipchecked" onChange="sipMakeInit();">
+  <span class="switch-label"></span>
+  <span class="switch-handle"></span>
+</label>
+<div id="phonestatus"></div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+
+</td>
+</tr>
+
+<tr>
+
+<td style="width:39%" valign="top">
+
+<ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#nav-tabs-home" role="tab"
+      aria-controls="nav-tabs" aria-selected="true" onClick="document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane show';">Client Info</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="nav-profile-tab" data-toggle="pill" href="#nav-profile" role="tab"
+      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-client-notes').className='tab-pane show';document.getElementById('nav-client').className='tab-pane fade';">Client Notes</a>
+  </li>
+</ul>
+<div class="tab-content mt-5" id="nav-tabContent">
+  <div class="tab-pane show" id="nav-client" role="tabpanel" aria-labelledby="nav-client">
+
+<% client = @client %>
+<%= form_with(url: '' ,model: client) do |form| %>
+  <% if client.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
+
+      <ul>
+        <% client.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <div class="row">
+ <div class="col-sm-6">
+ <div class="form-group">
+
+  <div>
+    <%= form.label :firstname, style: "display: block" %>
+    <%= form.text_field :firstname, class: "col-11 form-control rounded-pill" %>
+  </div>
+
+ </div>
+ </div>
+ <div class="col-sm-6">
+ <div class="form-group">
+
+
+  <div>
+    <%= form.label :lastname, style: "display: block" %>
+    <%= form.text_field :lastname, class: "col-11 form-control rounded-pill" %>
+  </div>
+
+</div>
+</div>
+</div>
+
+
+ <div class="row">
+ <div class="col-sm-4">
+ <div class="form-group">
+
+  <div>
+    <%= form.label :phone_1, style: "display: block" %>
+    <%= form.text_field :phone1, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+ </div>
+ </div>
+ <div class="col-sm-4">
+ <div class="form-group">
+
+  <div>
+    <%= form.label :phone_2, style: "display: block" %>
+    <%= form.text_field :phone2, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+ </div>
+ </div>
+ <div class="col-sm-4">
+ <div class="form-group">
+
+
+  <div>
+    <%= form.label :phone_3, style: "display: block" %>
+    <%= form.text_field :phone3, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+</div>
+</div>
+</div>
+
+ <div class="row">
+ <div class="col-sm-4">
+ <div class="form-group">
+
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+ </div>
+ </div>
+ <div class="col-sm-4">
+ <div class="form-group">
+
+
+  <div>
+    <%= form.label :id_num, style: "display: block" %>
+    <%= form.text_field :idnum, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+ </div>
+ </div>
+ <div class="col-sm-4">
+ <div class="form-group">
+
+
+  <div>
+    <%= form.label :birthday, style: "display: block" %>
+    <%= form.date_field :birthday, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+
+</div>
+</div>
+</div>
+
+
+ <div class="row">
+ <div class="col-sm-4">
+ <div class="form-group">
+
+  <div>
+    <%= form.label :country, style: "display: block" %>
+    <%= form.text_field :country, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+ </div>
+ </div>
+ <div class="col-sm-4">
+ <div class="form-group">
+
+  <div>
+    <%= form.label :city, style: "display: block" %>
+    <%= form.text_field :city, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+ </div>
+ </div>
+ <div class="col-sm-4">
+ <div class="form-group">
+
+  <div>
+    <%= form.label :address, style: "display: block" %>
+    <%= form.text_field :address, class: "col-10 form-control rounded-pill" %>
+  </div>
+
+</div>
+</div>
+</div>
+
+
+
+  <div>
+<br>
+<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="alert('<%= client.id.to_s %>');">Update Client Info</button>
+  </div>
+
+
+<% end %>
+
+
+  </div>
+  <div class="tab-pane fade" id="nav-client-notes" role="tabpanel" aria-labelledby="nav-client-notes">
+    Client notes
+  </div>
+</div>
+
+</td>
+
+<td style="width:24%">
+ <div class="col-md-12 phone" style="nargin:left: 5px;padding-left:5px">
+ <div class="col-md-12">
+ <div id="logdiv"></div>
+ <input type="tel" name="name" id="telNumber" class="form-control tel" value="" />
+ <table style="width:100%" border=0>
+ <div class="col-md-10 num-pad">
+ <tr>
+ <td><div class="span4"><div class="num"><div class="txt">1</div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">2 <span class="small"><p>ABC</p></span></div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">3 <span class="small"><p>DEF</p></span></div></div></div></td>
+ <tr></tr>
+ <td><div class="span4"><div class="num"><div class="txt">4 <span class="small"><p>GHI</p></span></div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">5 <span class="small"><p>JKL</p></span></div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">6 <span class="small"><p>MNO</p></span></div></div></div></td>
+ <tr></tr>
+ <td><div class="span4"><div class="num"><div class="txt">7 <span class="small"><p>PQRS</p></span></div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">8 <span class="small"><p>TUV</p></span></div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">9 <span class="small"><p>WXYZ</p></span></div></div></div></td>
+ <tr></tr>
+ <td><div class="span4"><div class="num"><div class="txt">*</div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">0 <span class="small"><p>+</p></span></div></div></div></td>
+ <td><div class="span4"><div class="num"><div class="txt">#</div></div></div></td>
+ </tr>
+ </div>
+ </table>
+
+ <div class="clearfix"></div>
+ <table><tr>
+ <td><a href="#" class="btn btn-success success flatbtn" onClick="button1Click()" id="dialbutton">CALL</a><br></td>
+ <td><a href="#" class="btn btn-success success" onClick="acceptCall()" id="acceptbutton" style="display:none">ACCEPT</a></td>
+ </tr>
+ </table>
+ </div>
+
+</div>
+<div class="row"><div class="col-md-12"><div></div></div></div>
+<div class="clearfix"></div>
+</div>
+
+</td>
+
+<td style="width:39%">
+
+
+
+
+</td>
+
+</tr>
+</table>
+
+
+
+
+
+<audio id="audio_remote" autoplay="autoplay"> </audio>
+
+<audio id="ringtone" loop src="ringtone.wav" />
+<audio id="ringbacktone" loop src="ringbacktone.wav" />
+<audio id="dtmfTone" src="dtmf.wav" />
+

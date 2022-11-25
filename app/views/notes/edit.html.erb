@@ -1,0 +1,9 @@
+<h1>Editing note</h1>
+
+<%= render "form", note: @note, locals: {:btitle => "Edit Note", :formmethod => :put, :url => note_path(@clientid,@note)} %>
+
+<br>
+
+<div>
+  <%= link_to "Back to notes", notes_path %>
+</div>

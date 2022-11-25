@@ -5,6 +5,17 @@ before_action :authenticate_user!
 
 def index
 #puts Rails.configuration.isinhouse
+if request.format == "text/html"
+if params[:page] == nil
+puts "Lets begin"
+session[:cdr_startdate] = nil
+session[:cdr_stopdate] = nil
+session[:cdr_caller] = nil
+session[:cdr_called] = nil
+session[:cdr_direction] = nil
+
+end
+end
 
   @startdate = Date.today.to_s + " 00:00:00"
   @stopdate = Date.today.to_s + " 23:59:59"
@@ -12,16 +23,30 @@ def index
   @caller = ""
   @called = ""
   @direction = ""
-  @cdrs = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate]).order(created_at: :desc)
-  session[:cdr_startdate] = @startdate
-  session[:cdr_stopdate] = @stopdate
-  session[:cdr_caller] = @caller
-  session[:cdr_called] = @called
-  session[:cdr_direction] = @direction
+if session[:cdr_startdate] != nil
+puts "CDR"
+puts session[:cdr_startdate]
+    @startdate = session[:cdr_startdate] + " 00:00:00"
+    @stopdate = session[:cdr_stopdate] + " 23:59:59"
+    @caller = session[:cdr_caller]
+    @called = session[:cdr_called]
+    @direction = session[:cdr_direction]
+end
+session[:cdr_startdate] = @startdate
+session[:cdr_stopdate] = @stopdate
+session[:cdr_caller] = @caller
+session[:cdr_called] = @called
+session[:cdr_direction] = @direction
+
+  @pagy, @cdrs = pagy( Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate]).order(created_at: :desc), page: params[:page], items: 15)
+
+
+
   respond_to do |format|
     format.html
     format.xlsx{
     puts "Excel"
+puts session[:cdr_startdate]
     @startdate = session[:cdr_startdate] + " 00:00:00"
     @stopdate = session[:cdr_stopdate] + " 23:59:59"
     @caller = session[:cdr_caller]
@@ -30,8 +55,18 @@ def index
     @cdrsexport = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ? and src like if(?="","%",concat("%",?,"%"))  and dst like if(?="","%",concat("%",?,"%")) and dcontext like if(?="" or ? = "Both","%",if(?="Inbound","pbxin","pbxout"))',@startdate,@stopdate,@caller,@caller,@called,@called,@direction,@direction,@direction]).order(created_at: :desc)
     render :xlsx => "index", :filename => "cdr.xlsx"
     }
-  @startdate = Date.today
-  @stopdate = Date.today
+if session[:cdr_startdate] != nil
+@startdate = session[:cdr_startdate].to_date
+@stopdate = session[:cdr_stopdate].to_date
+#@startdate = Date.today
+#@stopdate = Date.today
+
+else
+@startdate = Date.today
+@stopdate = Date.today
+end
+
+
   end
 end
 
@@ -43,7 +78,7 @@ end
   @called=params[:called]
   @direction=params[:direction]
 
-  @cdrs = Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ? and src like if(?="","%",concat("%",?,"%"))  and dst like if(?="","%",concat("%",?,"%")) and dcontext like if(?="" or ? = "Both","%",if(?="Inbound","pbxin","pbxout"))',@startdate,@stopdate,@caller,@caller,@called,@called,@direction,@direction,@direction]).order(created_at: :desc)
+  @pagy, @cdrs = pagy(Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ? and src like if(?="","%",concat("%",?,"%"))  and dst like if(?="","%",concat("%",?,"%")) and dcontext like if(?="" or ? = "Both","%",if(?="Inbound","pbxin","pbxout"))',@startdate,@stopdate,@caller,@caller,@called,@called,@direction,@direction,@direction]).order(created_at: :desc), page: params[:page], items: 10)
 
   @startdate = params[:startdate]
   @stopdate = params[:stopdate]
@@ -54,6 +89,8 @@ session[:cdr_stopdate] = @stopdate
 session[:cdr_caller] = @caller
 session[:cdr_called] = @called
 session[:cdr_direction] = @direction
+
+puts session[:cdr_startdate]
 end
 
 

@@ -51,6 +51,21 @@ if params[:exten]["voicemail"] == "Yes"
   @exten.voicemail=Voicemail.create(context: "default", mailbox: current_user.account_id.to_s+@exten.exten.to_s, password: params[:exten]["vmsecret"], email: params[:exten]["vmemail"], attach: "yes", exten: @exten)
 end
 
+puts params[:exten]["webrtc"]
+if params[:exten]["webrtc"] == "Yes"
+puts "Lets create " + current_user.account_id.to_s+@exten.exten.to_s
+webrtcuser = User.new
+webrtcuser.email = current_user.account_id.to_s+@exten.exten.to_s + '@localhost'
+webrtcuser.username = current_user.account_id.to_s+@exten.exten.to_s
+webrtcuser.password = @exten.secret
+webrtcuser.firstname = ''
+webrtcuser.lastname = ''
+webrtcuser.isadmin = -1
+webrtcuser.account_id = current_user.account_id
+webrtcuser.save
+end
+
+
 
         Log.create(account: current_user.account, user: current_user, event: "createexten", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to extens_path, notice: "Exten was successfully created." }
@@ -82,6 +97,30 @@ else
 
 end
 
+if params[:exten]["webrtc"] == "Yes"
+puts current_user.account_id.to_s+@exten.exten.to_s
+if User.find_by(username: current_user.account_id.to_s+@exten.exten.to_s) == nil
+webrtcuser = User.new
+webrtcuser.account_id = current_user.account_id
+webrtcuser.email = current_user.account_id.to_s+@exten.exten.to_s + '@localhost'
+webrtcuser.username = current_user.account_id.to_s+@exten.exten.to_s
+webrtcuser.password = @exten.secret
+webrtcuser.isadmin = -1
+webrtcuser.save
+else
+webrtcuser = User.find_by(username: current_user.account_id.to_s+@exten.exten.to_s)
+webrtcuser.email = current_user.account_id.to_s+@exten.exten.to_s + '@localhost'
+webrtcuser.username = current_user.account_id.to_s+@exten.exten.to_s
+webrtcuser.password = @exten.secret
+webrtcuser.isadmin = -1
+webrtcuser.save
+end
+else
+if User.find_by(username: current_user.account_id.to_s+@exten.exten.to_s) != nil
+webrtcuser = User.find_by(username: current_user.account_id.to_s+@exten.exten.to_s)
+webrtcuser.destroy
+end
+end
 
 
 
@@ -97,6 +136,12 @@ end
 
   # DELETE /extens/1 or /extens/1.json
   def destroy
+
+if User.find_by(username: current_user.account_id.to_s+@exten.exten.to_s) != nil
+webrtcuser = User.find_by(username: current_user.account_id.to_s+@exten.exten.to_s)
+webrtcuser.destroy
+end
+
     @exten.destroy
         Log.create(account: current_user.account, user: current_user, event: "destroyexten", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     respond_to do |format|
@@ -113,7 +158,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def exten_params
-      params.require(:exten).permit(:exten, :secret, :name, :decription, :account_id, :sip_id, :record, :calllimit)
+      params.require(:exten).permit(:exten, :secret, :name, :decription, :account_id, :sip_id, :record, :calllimit, :webrtc)
     end
 
 def getPermissions

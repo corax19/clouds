@@ -44,8 +44,19 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <div class="form-group">
+
+  <div>
+    <%= form.label :web_phone, style: "display: block" %>
+    <%= form.select :webrtc, ['Yes', 'No'] , {prompt: "Is Web phone?"} , {class: "col-6 form-control rounded-pill"}%>
+  </div>
+
+
+</div>
+</div>
+<div class="col-sm-3">
+<div class="form-group">
 
   <div>
     <%= form.label :record, style: "display: block" %>
@@ -55,15 +66,13 @@
 
 </div>
 </div>
-
-
-<div class="col-sm-4">
+<div class="col-sm-3">
 <div class="form-group">
 
 
   <div>
     <%= form.label :calllimit, style: "display: block" %>
-    <%= form.text_field :calllimit, class: "col-6 form-control rounded-pill" %>
+    <%= form.text_field :calllimit, class: "col-4 form-control rounded-pill" %>
   </div>
 
 </div>

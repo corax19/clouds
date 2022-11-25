@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :clients
 #  resources :messages
 #  get 'log/index'
   resources :mohs
@@ -32,6 +33,12 @@ get "/accounts", to: "accounts#index"
 
 delete "/accounts/:id", to: "accounts#destroy", as: :del_account
 
+get "/phone", to: "phone#show"
+
+get "/phone/getinfo/:callerid", to: "phone#getinfo"
+get "/phone/getnotes/:callerid", to: "phone#getnotes"
+
+get "/phone/updateinfo/:clientid", to: "phone#updateinfo"
 
 get "/cdr", to: "cdr#index"
 post "/cdr", to: "cdr#search", as: :search_cdr
@@ -149,6 +156,11 @@ end
 scope '/mohs/:mohid/' do
 #CRUD MOH Entries
 resources :mohentries
+end
+
+scope '/clients/:clientid/' do
+  resources :notes
+
 end
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_02_080600) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_25_084044) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -71,6 +71,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_080600) do
     t.index ["created_at"], name: "index_cdrs_on_created_at"
   end
 
+  create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "firstname"
+    t.string "lastname"
+    t.string "phone1"
+    t.string "phone2"
+    t.string "phone3"
+    t.string "idnum"
+    t.string "country"
+    t.string "city"
+    t.string "address"
+    t.string "email"
+    t.date "birthday"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "account_id", null: false
+    t.index ["account_id", "phone1"], name: "index_clients_on_account_id_and_phone1"
+    t.index ["account_id", "phone2"], name: "index_clients_on_account_id_and_phone2"
+    t.index ["account_id", "phone3"], name: "index_clients_on_account_id_and_phone3"
+    t.index ["account_id"], name: "index_clients_on_account_id"
+  end
+
   create_table "extens", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "exten"
     t.string "secret"
@@ -82,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_080600) do
     t.datetime "updated_at", null: false
     t.integer "calllimit", default: 1
     t.string "record", default: "No"
+    t.string "webrtc", default: "No"
     t.index ["account_id", "exten"], name: "index_extens_on_account_id_and_exten", unique: true
     t.index ["account_id"], name: "index_extens_on_account_id"
     t.index ["sip_id"], name: "index_extens_on_sip_id"
@@ -180,6 +202,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_080600) do
     t.bigint "account_id", null: false
     t.index ["account_id", "name"], name: "index_mohs_on_account_id_and_name", unique: true
     t.index ["account_id"], name: "index_mohs_on_account_id"
+  end
+
+  create_table "notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "subject"
+    t.text "body"
+    t.integer "user_id"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_notes_on_client_id"
   end
 
   create_table "queuelogs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -294,6 +326,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_080600) do
   add_foreign_key "agents", "accounts"
   add_foreign_key "agents", "extens"
   add_foreign_key "agents", "hotlines"
+  add_foreign_key "clients", "accounts"
   add_foreign_key "extens", "accounts"
   add_foreign_key "extens", "sips"
   add_foreign_key "hotlines", "accounts"
@@ -304,6 +337,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_02_080600) do
   add_foreign_key "moh_entries", "mohs"
   add_foreign_key "moh_entries", "sounds"
   add_foreign_key "mohs", "accounts"
+  add_foreign_key "notes", "clients"
   add_foreign_key "routes", "accounts"
   add_foreign_key "routes", "sips"
   add_foreign_key "sips", "accounts"

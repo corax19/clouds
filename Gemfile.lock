@@ -167,6 +167,7 @@ GEM
     nokogiri (1.13.8-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pagy (3.0.0)
     public_suffix (5.0.0)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -274,6 +275,7 @@ DEPENDENCIES
   json
   mini_magick
   mysql2 (~> 0.5)
+  pagy (~> 3.0.0)
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
   rails-ujs

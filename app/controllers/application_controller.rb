@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+include Pagy::Backend
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :loadpermissions
@@ -24,6 +25,12 @@ class ApplicationController < ActionController::Base
       "application3"
     elsif controller_path == "monitor" and action_name == "livemonitor"
       "application4"
+    elsif controller_path == "phone" and action_name == "show"
+      "application_phone"
+    elsif controller_path == "phone" and action_name == "getinfo"
+      "application_phone"
+    elsif controller_path == "phone" and action_name == "getnotes"
+      "application_phone"
     else
       "application"
     end
@@ -46,6 +53,7 @@ def loadpermissions
   "permission_mohs" => 0,
   "permission_logs" => 0,
   "permission_sounds" => 0,
+  "permission_clients" => 0,
   "permission_messages" => 0
 }
 @userpermissionspages=@@userpermissions

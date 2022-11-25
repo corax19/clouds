@@ -1,6 +1,5 @@
 <h1>CDR</h1>
 
-<%= render "search", locals: {:btitle => "Search CDR", :startdate => Date.today, :stopdate => Date.today, :caller => '', :called => '', :direction => 'Both'}  %>
-
-
+<%= render "search", locals: {:btitle => "Search CDR", :startdate =>  @startdate, :stopdate =>  @stopdate, :caller => '', :called => '', :direction => 'Both'}  %>
+<%== pagy_bootstrap_nav(@pagy) %>
 <%= render "cdrtable"%>

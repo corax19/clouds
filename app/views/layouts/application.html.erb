@@ -266,8 +266,18 @@ myurl='../routes/'+routeID;
 document.getElementById("myform1").action = myurl;
 }
 
+function setDelClient(clientID) {
+myurl='../clients/'+clientID;
+document.getElementById("myform1").action = myurl;
+}
+
 function setDelSipRoute(routeID,sipID) {
 myurl='../../routes/'+routeID+'?routesipid='+sipID;
+document.getElementById("myform1").action = myurl;
+}
+
+function setDelNote(clientID,noteID) {
+myurl='../'+clientID+'/notes/'+noteID;
 document.getElementById("myform1").action = myurl;
 }
 
@@ -312,6 +322,8 @@ request.send();
 }
 }
 }
+
+
 function StateGetCalls(){
 if (request.readyState == 4){
 document.getElementById('callrows').innerHTML=request.responseText;

@@ -1,0 +1,12 @@
+<div id="notes">
+  <% @notes.each do |note| %>
+
+<% username = "" %>
+<% username =  User.find_by(id: note.user_id).username if User.find_by(id: note.user_id) != nil %>
+
+<%= note.created_at.localtime.to_s[0..19] %>: <%= username %>  <b><%= note.subject %></b>
+<div style="font: 12px"><%= note.body %></div>
+<br>
+<hr>
+  <% end %>
+</div>

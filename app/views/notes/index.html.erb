@@ -1,0 +1,25 @@
+<h4>Notes</h4>
+
+<table  id="extenTable" class="table table-hover table-product" style="width:98%">
+    <tr>
+    <td >User</td><td>Time</td><td>Subject</td><td>Note Text</td>
+    <td style="width:55px" align="right"><a class="dropdown-item" href="../<%= @client.id.to_s  %>/notes/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>New</button></a></td>
+    </tr>
+
+
+
+
+<div id="notes">
+  <% @notes.each do |note| %>
+    <%= render note %>
+  <% end %>
+</div>
+
+
+
+</table>
+
+
+<div>
+  <%= link_to "Back to clients", clients_path %>
+</div>

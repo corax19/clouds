@@ -31,6 +31,10 @@ gem 'rails-ujs'
 gem 'caxlsx'
 gem 'caxlsx_rails'
 
+#gem 'pagy', '~> 5.10'
+#gem 'pagy', '~> 0.8.1'
+#gem 'pagy', '~> 4.1'
+gem 'pagy', '~> 3.0.0'
 
 gem 'devise'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]

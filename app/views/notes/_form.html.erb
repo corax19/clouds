@@ -1,0 +1,27 @@
+<%= form_with(url: locals[:url], method: locals[:formmethod] ,model: note) do |form| %>
+  <% if note.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(note.errors.count, "error") %> prohibited this note from being saved:</h2>
+
+      <ul>
+        <% note.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :subject, style: "display: block" %>
+    <%= form.text_field :subject, class: "col-4 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body,rows: 5,  class: "col-6 form-control" %>
+  </div>
+
+  <div>
+<br><%= form.submit locals[:btitle], :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>
