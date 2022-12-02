@@ -17,7 +17,7 @@
 
 
   <div>
-    <%= form.label :exten, style: "display: block" %>
+    <%= form.label I18n.t(:exten), style: "display: block" %>
     <%= form.text_field :exten, class: "col-6 form-control rounded-pill" %>
   </div>
 
@@ -30,7 +30,7 @@
 
 
   <div>
-    <%= form.label :secret, style: "display: block" %>
+    <%= form.label I18n.t(:secret), style: "display: block" %>
     <%= form.text_field :secret, class: "col-6 form-control rounded-pill" %>
   </div>
 
@@ -39,7 +39,7 @@
 </div>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label I18n.t(:name), style: "display: block" %>
     <%= form.text_field :name, class: "col-2 form-control rounded-pill" %>
   </div>
 
@@ -59,7 +59,7 @@
 <div class="form-group">
 
   <div>
-    <%= form.label :record, style: "display: block" %>
+    <%= form.label I18n.t(:record), style: "display: block" %>
     <%= form.select :record, ['Yes', 'No'] , {prompt: "Record Call or No?"} , {class: "col-6 form-control rounded-pill"}%>
   </div>
 
@@ -71,7 +71,7 @@
 
 
   <div>
-    <%= form.label :calllimit, style: "display: block" %>
+    <%= form.label I18n.t(:calllimit), style: "display: block" %>
     <%= form.text_field :calllimit, class: "col-4 form-control rounded-pill" %>
   </div>
 
@@ -82,7 +82,7 @@
 
 
   <div>
-    <%= form.label :decription, style: "display: block" %>
+    <%= form.label I18n.t(:description), style: "display: block" %>
     <%= form.text_field :decription, class: "col-6 form-control rounded-pill" %>
   </div>
 
@@ -97,7 +97,7 @@
       <div class="form-group">
 
   <div>
-    <%= form.label :voice_mail, style: "display: block" %>
+    <%= form.label I18n.t(:voicemail), style: "display: block" %>
     <%= form.select :voicemail, ['Yes', 'No'] , {prompt: "Has Voicemail?"} , {class: "col-8 form-control rounded-pill"}%>
   </div>
 
@@ -117,7 +117,7 @@
 <% end %>
 
   <div>
-    <%= form.label :vm_secret, style: "display: block" %>
+    <%= form.label I18n.t(:vmsecret), style: "display: block" %>
     <%= form.text_field :vmsecret, class: "col-8 form-control rounded-pill", value: vmpassword %>
   </div>
 
@@ -130,7 +130,7 @@
 
 
   <div>
-    <%= form.label :vm_email, style: "display: block" %>
+    <%= form.label I18n.t(:vmemail), style: "display: block" %>
     <%= form.text_field :vmemail, class: "col-12 form-control rounded-pill", value: vmpassword %>
   </div>
 

@@ -1,19 +1,19 @@
 
-<h3>New Sound</h3>
+<h3><%= I18n.t(:newsound) %></h3>
 <%= form_with url: add_sound_path, method: :post,  model: @sound do |form| %>
 
   <div>
-    <%= form.label :name %><br>
+    <%= form.label I18n.t(:name) %><br>
     <%= form.text_field :name, value:@sound.name %>
   </div>
 
 
   <div>
-    <%= form.label :audio %>
+    <%= form.label I18n.t(:audio) %>
     <%= form.file_field :audio %>
   </div>
 
   <div>
-    <br><%= form.submit 'Add Sound', :class => 'btn btn-info btn-pill' %>
+    <br><%= form.submit I18n.t(:addsound), :class => 'btn btn-info btn-pill' %>
   </div>
 <% end %>

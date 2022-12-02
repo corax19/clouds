@@ -1,0 +1,136 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   "true": "foo"
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+ru:
+  hello: "Привет"
+  new: "Новый"
+  edit: "Править"
+  delete: "Удалить"
+  add: "Добавить"
+  update: "Сохранить"
+  extentions: "Внутренние номера"
+  exten: "Номер"
+  name: "Имя"
+  secret: "Пароль"
+  record: "Запись"
+  calllimit: "Лимит звонков"
+  description: "Описание"
+  newextention: "Новый Внутренний Номер"
+  editextention: "Редактировать Внутренний Номер"
+  addextention: "Добавить Внутренний Номер"
+  updateextention: "Обновить Внутренний Номер"
+  voicemail: "Голосовая Почта"
+  vmsecret: "Пароль Голосовой почты"
+  vmemail: "e-mail голосовой почты"
+  backtoextens: "Веруться к списку внутренних номеров"
+  host: "Сервер"
+  number: "Номер"
+  sipnumbers: "SIP Номера"
+  routes: "Маршруты"
+  addsip: "Добавить SIP"
+  updatesip: "Обновить SIP"
+  backtosips: "Веруться к SIP номерам"
+  newsip: "Новый SIP Номер"
+  editsip: "Редактировать SIP Номер"
+  startdate: "Первый день"
+  stopdate: "Последний день"
+  starttime: "Время начала"
+  stoptime: "Время до"
+  caller: "Звонящий"
+  called: "Вызываемый"
+  direction: "Направление"
+  searchcdr: "Искать в CDR"
+  created: "Создан"
+  duration: "Продолжительность"
+  category: "Категория"
+  comments: "Коментарии"
+  status: "Статус"
+  start: "Начало"
+  sounds: "Звуки"
+  sound: "Звук"
+  soundname: "Назвние звука"
+  addsound: "Добавить запись"
+  audio: "Аудио"
+  app: "Приложение"
+  newsound: "Новая запись"
+  musiconhold: "Музыка Удержания"
+  entries: "Элементы"
+  newmohentry: "Новый Элемент Музыки Удержания"
+  addmohentry: "Добавить Элемент Музыки Удержания"
+  newmusiconhold: "Новая Музыка Удержания"
+  editmusiconhold: "Редактирование Музыки Удержания"
+  addmusiconhold: "Добавить Музыку Удержания"
+  updatemusiconhold: "Обновить Музыку Удержания"
+  backtomusiconhold: "Вернуться к списку Музыки Удержания"
+  backtomusiconholdentries: "Вернуться к списку элементов Музыки Удержания"
+  musiconholdclass: "Класс Музыки Удержания"
+  musiconholdentries: "Элементы Музыки Удержания"
+  activecalls: "Текущие Звонки"
+  category: "Категория"
+  newcategory: "Новая Категория"
+  addcategory: "Добавить Категорию"
+  editcategory: "Редактировать Категорию"
+  updatecategory: "Обновить Категорию"
+  categories: "Категории"
+  backtocategories: "Вернуться к категориям"
+  title: "Название"
+  clients: "Клиенты"
+  client: "Клиент"
+  phones: "Телефоны"
+  phone: "Телефон"
+  address: "Адрес"
+  birthday: "Дата рожденья"
+  notes: "Заметки"
+  backtoclients: "Вернуться к Клиентам"
+  newclient: "Новый Клиент"
+  editclient: "Редактирование Клиента"
+  addclient: "Добаить Клиента"
+  updateclient: "Обновить Клиента"
+  firstname: "Имя"
+  lastname: "Фамилия"
+  country: "Страна"
+  city: "Город"
+  user: "Пользователь"
+  time: "Время"
+  subject: "Тема"
+  body: "Содержание"
+  notetext: "Текст Заметки"
+  backtonotes: "Вернуться к Заметкам"
+  newnote: "Новая Заметка"
+  editnote: "Редактирование заметки"
+  addnote: "Добавить Заметку"
+  updatenote: "Обновить Заметку"
+  monitor: "Монитор"
+  queue: "Очередь"
+  activeagents: "Активные Агенты"
+  timeout: "Таймаут"
+  startmonitor: "Запустить Монитор"
+

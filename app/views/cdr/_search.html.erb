@@ -5,7 +5,7 @@
 
 
   <div>
-    <%= form.label :startdate, style: "display: block" %>
+    <%= form.label I18n.t(:startdate), style: "display: block" %>
     <%= form.date_field :startdate, class: "col-12 form-control rounded-pill", value: locals[:startdate] %>
   </div>
 
@@ -16,7 +16,7 @@
 <div class="form-group">
 
   <div>
-    <%= form.label :stopdate, style: "display: block" %>
+    <%= form.label I18n.t(:stopdate), style: "display: block" %>
     <%= form.date_field :stopdate, class: "col-12 form-control rounded-pill", value: locals[:stopdate] %>
   </div>
 
@@ -27,7 +27,7 @@
 
 
   <div>
-    <%= form.label :caller, style: "display: block" %>
+    <%= form.label I18n.t(:caller), style: "display: block" %>
     <%= form.text_field :caller, class: "col-11 form-control rounded-pill", value: locals[:caller] %>
   </div>
 
@@ -38,7 +38,7 @@
 
 
   <div>
-    <%= form.label :called, style: "display: block" %>
+    <%= form.label I18n.t(:called), style: "display: block" %>
     <%= form.text_field :called, class: "col-11 form-control rounded-pill", value: locals[:called] %>
   </div>
 
@@ -52,7 +52,7 @@
 
 
   <div>
-    <%= form.label :direction, style: "display: block" %>
+    <%= form.label I18n.t(:direction), style: "display: block" %>
     <%= form.select :direction, ['Both','Inbound', 'Outbound'] , {prompt: "Choose call direction", selected: locals[:direction]} , {class: "col-9 form-control rounded-pill"} %>
   </div>
 

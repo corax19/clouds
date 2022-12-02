@@ -1,12 +1,66 @@
-<div id="notes">
+<div id="notealert" class="alert alert-success hidden" role="alert"></div>
+<div id="notealertnotok" class="alert alert-danger hidden" role="alert"></div>
+
+
+<% client = @client %>
+<table>
+<tr>
+<td colspan=2 style="padding-left:5px">
+<input type="hidden" class="form-control rounded-pill col-8" id="notecallid" placeholder="Note CAllid" value="<%= @callid %>">
+<input type="text" class="form-control rounded-pill col-8" id="notesubject" placeholder="Note Subject">
+</td><tr><td style="width:85%;padding-left:5px">
+<textarea class="form-control col-12" id="notebody" rows="3"></textarea>
+</td><td>
+<% if client != nil %>
+<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="addNote('<%= client.id.to_s %>');">Add Note</button>
+<% end %>
+</td>
+</tr>
+</table>
+
+
+<div class="card card-default">
+      <div class="card-header">
+        <h4>Notes</h4>
+      </div>
+
+      <div style="height: 450px; overflow: auto">
+
+      <div class="card-body">
+        <ul class="list-group">
+
   <% @notes.each do |note| %>
 
 <% username = "" %>
 <% username =  User.find_by(id: note.user_id).username if User.find_by(id: note.user_id) != nil %>
+                <% username =  username[4..]  if username[0..3] == current_user.account.id.to_s %>
 
-<%= note.created_at.localtime.to_s[0..19] %>: <%= username %>  <b><%= note.subject %></b>
-<div style="font: 12px"><%= note.body %></div>
-<br>
-<hr>
+
+          <li class="list-group-item list-group-item-action">
+            <div class="media media-sm ml-5">
+<ul>
+<li style="font-weight: bold;">
+<%= username %></b>
+</li><li style="font-size:12px">
+<%= note.created_at.localtime.to_s[0..19] %>
+</li>
+</ul>
+              <div class="media-body  ml-5">
+                <span class="title"><%= note.subject %></span>
+                <p><%= note.body %></p>
+              </div>
+            </div>
+          </li>
+
   <% end %>
-</div>
+
+        </ul>
+      </div>
+
+      </div>
+
+    </div>
+
+
+
+

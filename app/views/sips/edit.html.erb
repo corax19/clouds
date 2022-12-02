@@ -1,9 +1,9 @@
-<h1>Editing SIP</h1>
+<h1><%= I18n.t(:editsip) %></h1>
 
-<%= render "form", sip: @sip, btitle: "Update SIP" %>
+<%= render "form", sip: @sip, btitle: I18n.t(:updatesip) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to sips", sips_path %>
+  <%= link_to I18n.t(:backtosips), sips_path %>
 </div>

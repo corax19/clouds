@@ -8,7 +8,6 @@
 
      <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,22 +18,16 @@
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
 
 <%= stylesheet_link_tag "plugins/material/css/materialdesignicons.min" %>
-
 <%= stylesheet_link_tag "plugins/simplebar/simplebar.css" %>
 
 
   <!-- PLUGINS CSS STYLE -->
 <%= stylesheet_link_tag "plugins/nprogress/nprogress.css" %>
-
-
 <%= stylesheet_link_tag "plugins/prism/prism.css" %>
   
   
   <!-- MONO CSS -->
 <%= stylesheet_link_tag "style.css" %>
-
-
-
   
 <%= stylesheet_link_tag "plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css" %>
 
@@ -60,6 +53,7 @@ document.getElementById("sipchecked").checked = false;
 document.getElementById("phonestatus").innerHTML = "<font color=red>not connected</font>";
 } else {
 document.getElementById("phonestatus").innerHTML = "<font color=green>connected</font>";
+getMyStat();
 }
 }
 function sipMakeInit(){
@@ -135,9 +129,13 @@ stopRingbackTone();
 else if(e.type == 'i_new_call'){
 //
 
- callSession=e.newSession;
- callSession.accept({events_listener: { events: '*', listener: eventsListener }});
-
+callSession=e.newSession;
+callSession.setConfiguration({
+ audio_remote: document.getElementById('audio_remote'),
+ video_local: document.getElementById('video_local'),
+ video_remote: document.getElementById('video_remote'),
+ events_listener: { events: '*', listener: eventsListener } // optional: '*' means all events
+ });
 
   document.getElementById("dialbutton").classList.add('btn-danger');
   document.getElementById("dialbutton").classList.remove('btn-success');
@@ -149,17 +147,13 @@ else if(e.type == 'i_new_call'){
   document.getElementById("logdiv").innerHTML = 'Incoming Call '+sRemoteNumber;
   document.getElementById("acceptbutton").style.display='block';
 
+document.getElementById('telNumber').value = sRemoteNumber;
+document.getElementById("callnotebody").value = '';
 getClientInfo(sRemoteNumber);
 setTimeout(function() {
-getClientNotes(sRemoteNumber);
+getClientNotes(sRemoteNumber,'IN');
 }, 1700);
-
-
-
 startRingbackTone();
-
-
-//alert('OK');
 }
 
 else if(e.type == 'm_permission_accepted'){
@@ -216,6 +210,14 @@ startRingbackTone();
  callSession.call(document.getElementById('telNumber').value);
 
  document.getElementById("acceptbutton").style.display='none';
+
+sRemoteNumber = document.getElementById('telNumber').value;
+getClientInfo(sRemoteNumber);
+setTimeout(function() {
+getClientNotes(sRemoteNumber,'OUT');
+}, 1700);
+
+
 }
 
 
@@ -226,8 +228,8 @@ startRingbackTone();
  document.getElementById("acceptbutton").style.display='none';
  document.getElementById("dialbutton").innerHTML = "HANGUP";
  stopRingbackTone();
-                 e.newSession.accept();
-
+// e.newSession.accept();
+callSession.accept();
 }
 
 var hangupCall = function(){
@@ -236,6 +238,7 @@ document.getElementById("logdiv").innerHTML = "On Hook!";
  document.getElementById("dialbutton").innerHTML = "CALL";
  document.getElementById("acceptbutton").style.display='none';
  callSession.hangup();
+getMyStat();
 }
 
 var sendMessage = function(){
@@ -268,7 +271,15 @@ catch (e) { }
 
 var button1Click = function(){
 
-//alert(etype);
+if(document.getElementById("dialbutton").innerHTML == 'HANGUP'){
+hangupCall();
+ document.getElementById("dialbutton").classList.remove('btn-danger');
+ document.getElementById("dialbutton").classList.add('btn-success');
+ document.getElementById("dialbutton").classList.remove('danger');
+ document.getElementById("dialbutton").classList.add('success');
+} else {
+
+
 if((etype=='connected') || (etype=='connecting') || (etype=='sent_request') || (etype=='terminated')){
 makeCall();
  document.getElementById("dialbutton").classList.add('btn-danger');
@@ -285,8 +296,138 @@ hangupCall();
  document.getElementById("dialbutton").classList.add('success');
 
 }
+}
+}
+
+
+function getMyStat(){
+var url1;
+url1='/phone/getstat';
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateMyStat;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateMyStat;
+request.open("GET", url1, true);
+request.send();
 
 }
+}
+}
+
+
+function StateMyStat(){
+if (request.readyState == 4){
+document.getElementById('mystats').innerHTML=request.responseText;
+}
+}
+
+
+
+function addNote(clientID){
+var url1;
+if (clientID != '') {
+
+url1='/phone/addnote/'+clientID+'/?subject='+document.getElementById('notesubject').value+'&body='+document.getElementById('notebody').value+'&callid='+document.getElementById('notecallid').value;
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateAddNote;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateAddNote;
+request.open("GET", url1, true);
+request.send();
+}
+}
+
+}
+}
+function StateAddNote(){
+if (request.readyState == 4){
+if(request.responseText == 'OK'){
+
+document.getElementById('notealert').innerHTML='Note has been added';
+document.getElementById('notealert').className='alert alert-success';
+setTimeout(function() {
+    document.getElementById('notealert').className='alert alert-success hidden';
+}, 1500);
+
+setTimeout(function() {
+getClientNotes(document.getElementById('telNumber').value);
+}, 1500);
+
+} else {
+
+document.getElementById('notealertnotok').innerHTML='Note NOT added';
+document.getElementById('notealertnotok').className='alert alert-danger';
+setTimeout(function() {
+    document.getElementById('notealertnotok').className='alert alert-danger hidden';
+}, 1500);
+
+
+}
+
+}
+}
+
+
+
+
+function addCallNote(){
+var url1;
+
+url1='/phone/addcallnote/?status='+document.getElementById('callstatus').value+'&body='+document.getElementById('callnotebody').value+'&callid='+document.getElementById('notecallid').value+'&category='+document.getElementById('category').value;
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateAddCallNote;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateAddCallNote;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+
+
+}
+
+
+function StateAddCallNote(){
+if (request.readyState == 4){
+if(request.responseText == 'OK'){
+
+document.getElementById('callalert').innerHTML='Call Note has been added';
+document.getElementById('callalert').className='alert alert-success';
+setTimeout(function() {
+    document.getElementById('callalert').className='alert alert-success hidden';
+}, 1500);
+
+
+} else {
+
+document.getElementById('callalertnotok').innerHTML='Call Note NOT added';
+document.getElementById('callalertnotok').className='alert alert-danger';
+setTimeout(function() {
+    document.getElementById('callalertnotok').className='alert alert-danger hidden';
+}, 1500);
+
+
+}
+
+}
+}
+
 
 </script>
 
@@ -298,7 +439,6 @@ hangupCall();
 
 
 <%= stylesheet_link_tag "wp.css" %>
-
 <%= stylesheet_link_tag "plugins/nprogress/nprogress.css" %>
 
 
@@ -426,9 +566,13 @@ document.getElementById('nav-client').innerHTML=request.responseText;
 }
 }
 
-function getClientNotes(callerID){
+//function getClientNotes(callerID){
+//var url1;
+//url1='/phone/getnotes/'+callerID;
+function getClientNotes(callerID,direction){
 var url1;
-url1='/phone/getnotes/'+callerID;
+url1='/phone/getnotes/'+callerID+'?direction='+direction;
+
 if(window.XMLHttpRequest){
 request = new XMLHttpRequest();
 request.onreadystatechange = StateClientNotes;
@@ -609,6 +753,3 @@ $('#delModal').on('show.bs.modal', function(e) {
 
   </body>
 </html>
-
-
-

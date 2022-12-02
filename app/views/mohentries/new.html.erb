@@ -1,9 +1,9 @@
-<h1>New MOH Entry</h1>
+<h4><%= I18n.t(:newmohentry) %></h4>
 
-<%= render "form", mohentry: @mohentry, btitle: "Add MOH Entry" %>
+<%= render "form", mohentry: @mohentry, btitle: I18n.t(:addmohentry) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to MOH Entries", mohentries_path %>
+  <%= link_to I18n.t(:backtomusiconholdentries), mohentries_path %>
 </div>

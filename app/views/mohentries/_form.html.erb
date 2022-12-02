@@ -13,12 +13,12 @@
 
 
   <div>
-    <%= form.label :moh_id, style: "display: block" %>
+    <%= form.label I18n.t(:musiconhold), style: "display: block" %>
     <%= form.collection_select :moh_id, Moh.all.where(account_id: current_user.account.id), :id, :name , {prompt: "Select MOH"} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
   <div>
-    <%= form.label :sound_id, style: "display: block" %>
+    <%= form.label I18n.t(:sound), style: "display: block" %>
     <%= form.collection_select :sound_id, Sound.all.where(account_id: current_user.account.id), :id, :name , {prompt: "Select Sound"} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 

@@ -1,9 +1,9 @@
-<h1>New note</h1>
+<h4><%= I18n.t(:newnote) %></h4>
 
-<%= render "form", note: @note, locals: {:btitle => "Add Note", :formmethod => :post, :url => notes_path(@clientid)} %>
+<%= render "form", note: @note, locals: {:btitle => I18n.t(:addnote), :formmethod => :post, :url => notes_path(@clientid)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to notes", notes_path %>
+  <%= link_to I18n.t(:backtonotes), notes_path %>
 </div>

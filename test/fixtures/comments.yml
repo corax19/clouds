@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Callinfo: MyString
+  callid: MyString
+  status: MyText
+  category_id: 1
+  body: MyText
+  account: one
+
+two:
+  Callinfo: MyString
+  callid: MyString
+  status: MyText
+  category_id: 1
+  body: MyText
+  account: two

@@ -1,9 +1,9 @@
-<h1>New Music On Hold Class</h1>
+<h4><%= I18n.t(:newmusiconhold) %></h4>
 
-<%= render "form", moh: @moh, btitle: "Add Music On Hold" %>
+<%= render "form", moh: @moh, btitle: I18n.t(:addmusiconhold) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to mohs", mohs_path %>
+  <%= link_to I18n.t(:backtomusiconhold), mohs_path %>
 </div>

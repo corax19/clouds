@@ -5,6 +5,8 @@ include Pagy::Backend
   before_action :loadpermissions
   layout :layout_by_resource
 
+require 'i18n'
+I18n.default_locale = :ru
 
 
   protected
@@ -31,6 +33,8 @@ include Pagy::Backend
       "application_phone"
     elsif controller_path == "phone" and action_name == "getnotes"
       "application_phone"
+    elsif controller_path == "phone" and action_name == "getstat"
+      "application_phone"
     else
       "application"
     end
@@ -47,6 +51,7 @@ def loadpermissions
   "permission_extensions" => 0,
   "permission_queues" => 0,
   "permission_agents" => 0,
+  "permission_categories" => 0,
   "permission_monitor" => 0,
   "permission_routes" => 0,
   "permission_steps" => 0,

@@ -303,6 +303,12 @@ myurl='../accounts/'+accountID;
 document.getElementById("myform1").action = myurl;
 }
 
+function setDelCategory(categoryID) {
+myurl='../categories/'+categoryID;
+document.getElementById("myform1").action = myurl;
+}
+
+
 function getCalls(tupe,hot,exst,vard1,vard2){
 var url1;
 url1='/stats/calls/'+tupe+'/'+hot+'/'+exst+'/'+vard1+'/'+vard2+'';

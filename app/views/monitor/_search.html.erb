@@ -5,7 +5,7 @@
 
 
   <div>
-    <%= form.label :startdate, style: "display: block" %>
+    <%= form.label I18n.t(:startdate), style: "display: block;font-size:12px" %>
     <%= form.date_field :startdate, class: "col-8 form-control rounded-pill", value: locals[:startdate] %>
 
   </div>
@@ -17,7 +17,7 @@
 <div class="form-group">
 
   <div>
-    <%= form.label :stopdate, style: "display: block" %>
+    <%= form.label I18n.t(:stopdate), style: "display: block;font-size:12px" %>
     <%= form.date_field :stopdate, class: "col-8 form-control rounded-pill", value: locals[:stopdate] %>
   </div>
 
@@ -28,8 +28,8 @@
 <div class="form-group">
 
   <div>
-    <%= form.label :starttime, style: "display: block" %>
-    <%= form.time_field :starttime, class: "col-8 form-control rounded-pill", value: '00:00:00' %>
+    <%= form.label I18n.t(:starttime), style: "display: block;font-size:12px" %>
+    <%= form.time_field :starttime, class: "col-7 form-control rounded-pill", value: '00:00:00' %>
   </div>
 
 </div>
@@ -38,8 +38,8 @@
 <div class="form-group">
 
   <div>
-    <%= form.label :stoptime, style: "display: block" %>
-    <%= form.time_field :stoptime, class: "col-8 form-control rounded-pill", value: '23:59:59' %>
+    <%= form.label I18n.t(:stoptime), style: "display: block;font-size:12px" %>
+    <%= form.time_field :stoptime, class: "col-7 form-control rounded-pill", value: '23:59:59' %>
   </div>
 
 
@@ -50,7 +50,7 @@
 
 
   <div>
-    <%= form.label :queue, style: "display: block" %>
+    <%= form.label I18n.t(:queue), style: "display: block;font-size:12px" %>
     <%= form.collection_select :hotline,  Hotline.all.where(account_id: current_user.account.id), :id, :title,  {prompt: "Select Queue", selected: 1}, {class: "col-8 form-control rounded-pill"} %>
   </div>
 
@@ -62,8 +62,8 @@
 
 
   <div>
-    <%= form.label :active_agents, style: "display: block" %>
-    <%= form.select :active_agents, ['Yes', 'No'] , {selected: 'No'} , {class: "col-10 form-control rounded-pill"}%>
+    <%= form.label I18n.t(:activeagents), style: "display: block;font-size:12px" %>
+    <%= form.select :active_agents, ['Yes', 'No'] , {selected: 'No'} , {class: "col-12 form-control rounded-pill"}%>
   </div>
 
 
@@ -77,7 +77,7 @@
 
 
   <div>
-    <%= form.label :timeout, style: "display: block" %>
+    <%= form.label I18n.t(:timeout), style: "display: block;font-size:12px" %>
     <%= form.select :timeout, ['5','10', '15','20','30','60'] , {value: '10'} , {class: "col-10 form-control rounded-pill"}%>
   </div>
 

@@ -1,6 +1,6 @@
 <div id="clientalert" class="alert alert-success hidden" role="alert"></div>
 <div id="clientalertnotok" class="alert alert-danger hidden" role="alert"></div>
-
+<div class="card card-default">
 <% client = @client %>
 <%= form_with(model: client) do |form| %>
   <% if client.errors.any? %>
@@ -154,3 +154,4 @@
 
 
 <% end %>
+</div>

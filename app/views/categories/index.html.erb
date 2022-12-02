@@ -1,0 +1,36 @@
+
+<h4><%= I18n.t(:categories) %></h4>
+
+<table  id="productsTable01" class="table table-hover table-product" style="width:98%">
+    <tr>
+<td><%= I18n.t(:category) %></td><td><%= I18n.t(:status) %></td><td><%= I18n.t(:description) %></td>
+    <td style="width:55px" align="right"><a class="dropdown-item" href="../categories/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i><%= I18n.t(:new) %></button></a></td>
+
+
+    </tr>
+
+
+<% @categories.each do |category| %>
+    <tr>
+
+
+<td><%= category.title %></td><td><%= category.status %></td><td><%= category.description %></td>
+          <td style="width:50px" align="right">
+            <div class="dropdown" style="width:50px">
+              <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= category.id %>"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px">
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= category.id %>" style="min-width:150px;width:150px;">
+
+            <%= button_to ("<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> "+I18n.t(:edit)+"</button>").html_safe, edit_category_path(category), class: 'btn btn-info btn-pill', :method => :get %>
+<button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../categories/<%= category.id %>"  onClick="setDelCategory(<%= category.id %>)"><%= I18n.t(:delete) %></button>
+              </div>
+            </div>
+          </td>
+
+    </tr>
+  <% end %>
+
+
+
+</table>

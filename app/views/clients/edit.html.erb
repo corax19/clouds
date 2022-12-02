@@ -1,9 +1,9 @@
-<h1>Editing client</h1>
+<h4><%= I18n.t(:editclient) %></h4>
 
-<%= render "form", client: @client, btitle: "Update Client" %>
+<%= render "form", client: @client, btitle: I18n.t(:updateclient) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to clients", clients_path %>
+  <%= link_to I18n.t(:backtoclients), clients_path %>
 </div>

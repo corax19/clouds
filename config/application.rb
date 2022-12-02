@@ -5,7 +5,6 @@ require "rails/all"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-
 module Clouds
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -19,5 +18,6 @@ module Clouds
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 #  config.hosts << "myclouds.ge"
+config.i18n.available_locales = [:en, :ru]
   end
 end

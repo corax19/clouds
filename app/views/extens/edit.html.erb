@@ -1,9 +1,9 @@
-<h1>Editing extension</h1>
+<h1><%= I18n.t(:editextention) %></h1>
 
-<%= render "form", exten: @exten, btitle: "Update Extension" %>
+<%= render "form", exten: @exten, btitle: I18n.t(:updateextention) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to extens", extens_path %>
+  <%= link_to I18n.t(:backtoextens), extens_path %>
 </div>

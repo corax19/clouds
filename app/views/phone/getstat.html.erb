@@ -1,0 +1,81 @@
+<div class="card card-default">
+                      <div class="card-header">
+                        <h4>My Statistics</h4>
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-borderless table-thead-border">
+                          <thead>
+                            <tr>
+                              <th>Incoming Calls</th>
+                              <th class="text-right"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">All</td>
+                              <td class="text-right table-primary"><%= @allnum %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-success">Answered</td>
+                              <td class="text-right table-success"><%= @answerednum %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-danger">Missed</td>
+                              <td class="text-right table-danger"><%= @missednum %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">SLA (%)</td>
+                              <td class="text-right table-primary"><%= @sla %></td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Total Duration</td>
+                              <td class="text-right table-primary"><%= @totaltime %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Average Call Duration</td>
+                              <td class="text-right table-primary"><%= @avgtime %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Average Answer Time</td>
+                              <td class="text-right table-primary"><%= @avganswer %></td>
+                            </tr>
+
+                          <thead>
+                            <tr>
+                              <th>Outbound Calls</th>
+                              <th class="text-right"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">All</td>
+                              <td class="text-right table-info"><%= @allnumout %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-success">Answered</td>
+                              <td class="text-right table-success"><%= @answerednumout %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-danger">Missed</td>
+                              <td class="text-right table-danger"><%= @missednumout %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">SLA (%)</td>
+                              <td class="text-right table-info"><%= @slaout %></td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">Total Duration</td>
+                              <td class="text-right table-info"><%= @totaltimeout %></td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">Average Call Duration</td>
+                              <td class="text-right table-info"><%= @avgtimeout %></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>

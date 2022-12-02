@@ -1,12 +1,29 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Cover Sheet") do |sheet|
-    sheet.add_row ['Start','Caller','Called','Direction','Duration']
+    sheet.add_row [I18n.t(:status),I18n.t(:start),I18n.t(:caller),I18n.t(:called),I18n.t(:direction),I18n.t(:duration),I18n.t(:category),I18n.t(:comments)]
 
 @cdrsexport.each do |cdr|
 direction= ""
 direction="Inbound" if cdr.dcontext == "pbxin"
 direction="Outbound" if cdr.dcontext == "pbxout"
-    sheet.add_row [cdr.start,cdr.src,cdr.dst,direction ,cdr.billsec]
+callstatus = ""
+category = ""
+comment = ""
+
+if Comment.find_by(callid: cdr.uniqueid) != nil
+callstatus = Comment.find_by(callid: cdr.uniqueid).status
+comment = Comment.find_by(callid: cdr.uniqueid).body
+end
+
+if Comment.find_by(callid: cdr.uniqueid) != nil
+if Category.find_by(id: Comment.find_by(callid: cdr.uniqueid).category_id) != nil
+category = Category.find_by(id: Comment.find_by(callid: cdr.uniqueid).category_id).title
+end
+end
+
+
+
+    sheet.add_row [callstatus,cdr.start,cdr.src,cdr.dst,direction ,cdr.billsec,category,comment]
 
 end
 

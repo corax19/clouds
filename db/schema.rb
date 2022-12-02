@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_25_084044) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_29_113625) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -39,6 +39,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_084044) do
     t.index ["account_id"], name: "index_agents_on_account_id"
     t.index ["exten_id"], name: "index_agents_on_exten_id"
     t.index ["hotline_id"], name: "index_agents_on_hotline_id"
+  end
+
+  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "status"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_categories_on_account_id"
   end
 
   create_table "cdrs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -90,6 +100,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_084044) do
     t.index ["account_id", "phone2"], name: "index_clients_on_account_id_and_phone2"
     t.index ["account_id", "phone3"], name: "index_clients_on_account_id_and_phone3"
     t.index ["account_id"], name: "index_clients_on_account_id"
+  end
+
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "callid"
+    t.string "status"
+    t.integer "category_id"
+    t.integer "user_id"
+    t.text "body"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_comments_on_account_id"
+    t.index ["callid"], name: "index_comments_on_callid"
   end
 
   create_table "extens", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -211,6 +234,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_084044) do
     t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "callid"
+    t.index ["callid"], name: "index_notes_on_callid"
     t.index ["client_id"], name: "index_notes_on_client_id"
   end
 
@@ -326,7 +351,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_25_084044) do
   add_foreign_key "agents", "accounts"
   add_foreign_key "agents", "extens"
   add_foreign_key "agents", "hotlines"
+  add_foreign_key "categories", "accounts"
   add_foreign_key "clients", "accounts"
+  add_foreign_key "comments", "accounts"
   add_foreign_key "extens", "accounts"
   add_foreign_key "extens", "sips"
   add_foreign_key "hotlines", "accounts"

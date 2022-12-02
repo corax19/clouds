@@ -1,8 +1,10 @@
 <table  id="productsTable01" class="table table-hover table-product" style="width:98%">
     <tr>
-    <td style="width: 20%">Created</td><td style="width: 15%">Caller</td><td style="width: 15%">Called</td><td style="width: 15%">Direction</td><td style="width: 15%">Duration</td>
+    <td style="width: 3%"></td><td style="width: 15%"><%= I18n.t(:created) %></td><td style="width: 10%"><%= I18n.t(:caller) %></td><td style="width: 10%"><%= I18n.t(:called) %></td><td style="width: 8%"><%= I18n.t(:direction) %></td><td style="width: 10%"><%= I18n.t(:duration) %></td>
+<td><%= I18n.t(:category) %></td>
+<td><%= I18n.t(:comments) %></td>
     <td>
-    <%= link_to "Excel", search_cdr_path(format: "xlsx"), class: "btn btn-xs btn-info btn-pill col-6"%>
+    <%= link_to "Excel", search_cdr_path(format: "xlsx"), class: "btn btn-xs btn-info btn-pill col-6" %>
     </td>
     </tr>
 
@@ -13,14 +15,77 @@
 
     <tr>
 
+<% callstatus = "" %>
+<% callstatus = "<i class=\"fa fa-flag\" aria-hidden=\"true\".html_safe ></i>" %>
 
-<td> <%= cdr.created_at.localtime.to_s[0..19] %></td><td><%= cdr.src %></td><td><%= cdr.dst %></td><td>
+<td>
+<% if Comment.find_by(callid: cdr.uniqueid) != nil %>
+<% if Comment.find_by(callid: cdr.uniqueid).status == "normal" %>
+<i class="fa fa-flag" aria-hidden="true"  style="color:DarkGreen"></i>
+<% end %>
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "favorite" %>
+<i class="fa fa-heart" aria-hidden="true"  style="color:Khaki"></i>
+<% end %>
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "urgent" %>
+<i class="fa fa-exclamation" aria-hidden="true"  style="color:HotPink"></i>
+<% end %>
+
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "warning" %>
+<i class="fa fa-exclamation-triangle" aria-hidden="true" style="color:LightSalmon"></i>
+<% end %>
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "star" %>
+<i class="fa fa-star" aria-hidden="true" style="color:Yellow"></i>
+<% end %>
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "success" %>
+<i class="fa fa-check-circle" aria-hidden="true" style="color:Green"></i>
+<% end %>
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "progress" %>
+<i class="fa fa-battery-half" aria-hidden="true" style="color:RoyalBlue"></i>
+<% end %>
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "help" %>
+<i class="fa fa-question-circle" aria-hidden="true" style="DarkSlateGray"></i>
+<% end %>
+
+<% if Comment.find_by(callid: cdr.uniqueid).status == "info" %>
+<i class="fa fa-commenting" aria-hidden="true" style="color:SteelBlue"></i>
+<% end %>
+
+
+<% end %>
+
+
+</td>
+<td style="font-size: 12px"> <%= cdr.created_at.localtime.to_s[0..19] %></td><td><%= cdr.src %></td><td><%= cdr.dst %></td><td style="font-size: 12px">
 <%= "Outbound" if cdr.dcontext == "pbxout" %>
 <%= "Inbound" if cdr.dcontext == "pbxin" %>
 </td><td><%= cdr.billsec %></td>
+
+
+<td style="font-size: 12px">
+<% if Comment.find_by(callid: cdr.uniqueid) != nil %>
+<% if Category.find_by(id: Comment.find_by(callid: cdr.uniqueid).category_id) != nil %>
+<%= Category.find_by(id: Comment.find_by(callid: cdr.uniqueid).category_id).title %>
+<% end %>
+<% end %>
+</td>
+
+
+<td style="font-size: 12px">
+<% if Comment.find_by(callid: cdr.uniqueid) != nil %>
+<%= Comment.find_by(callid: cdr.uniqueid).body %>
+<% end %>
+</td>
+
 <td>
 <% if File.exists?(filename) && File.size(filename) > 1000 %>
-<audio controls style="width:190px; height: 35px">
+<audio controls style="width:180px; height: 35px">
   <source src="<%= fileurl %>" type="audio/mpeg" >
 </audio>
 <% end %>

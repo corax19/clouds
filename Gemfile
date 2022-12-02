@@ -27,6 +27,8 @@ gem 'jquery-rails', '>= 1.0.3'
 gem 'rails-ujs'
 
 
+gem 'i18n', '~> 1.9'
+
 
 gem 'caxlsx'
 gem 'caxlsx_rails'

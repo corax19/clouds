@@ -38,7 +38,7 @@ session[:cdr_caller] = @caller
 session[:cdr_called] = @called
 session[:cdr_direction] = @direction
 
-  @pagy, @cdrs = pagy( Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate]).order(created_at: :desc), page: params[:page], items: 15)
+  @pagy, @cdrs = pagy( Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ?',@startdate,@stopdate]).order(created_at: :desc), page: params[:page], items: 25)
 
 
 
@@ -78,7 +78,7 @@ end
   @called=params[:called]
   @direction=params[:direction]
 
-  @pagy, @cdrs = pagy(Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ? and src like if(?="","%",concat("%",?,"%"))  and dst like if(?="","%",concat("%",?,"%")) and dcontext like if(?="" or ? = "Both","%",if(?="Inbound","pbxin","pbxout"))',@startdate,@stopdate,@caller,@caller,@called,@called,@direction,@direction,@direction]).order(created_at: :desc), page: params[:page], items: 10)
+  @pagy, @cdrs = pagy(Cdr.all.where(accountcode: current_user.account.id).where(['created_at >= ? and created_at < ? and src like if(?="","%",concat("%",?,"%"))  and dst like if(?="","%",concat("%",?,"%")) and dcontext like if(?="" or ? = "Both","%",if(?="Inbound","pbxin","pbxout"))',@startdate,@stopdate,@caller,@caller,@called,@called,@direction,@direction,@direction]).order(created_at: :desc), page: params[:page], items: 25)
 
   @startdate = params[:startdate]
   @stopdate = params[:stopdate]

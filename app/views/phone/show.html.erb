@@ -66,12 +66,19 @@
 <ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#nav-tabs-home" role="tab"
-      aria-controls="nav-tabs" aria-selected="true" onClick="document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane show';">Client Info</a>
+      aria-controls="nav-tabs" aria-selected="true" onClick="document.getElementById('nav-call-notes').className='tab-pane fade';document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane show';">Client Info</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="nav-profile-tab" data-toggle="pill" href="#nav-profile" role="tab"
-      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-client-notes').className='tab-pane show';document.getElementById('nav-client').className='tab-pane fade';">Client Notes</a>
+      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-call-notes').className='tab-pane fade';document.getElementById('nav-client-notes').className='tab-pane show';document.getElementById('nav-client').className='tab-pane fade';">Client Notes</a>
   </li>
+
+
+  <li class="nav-item">
+    <a class="nav-link" id="nav-profile-tab" data-toggle="pill" href="#nav-profile" role="tab"
+      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-call-notes').className='tab-pane show';document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane fade';">Call Notes</a>
+  </li>
+
 </ul>
 <div class="tab-content mt-5" id="nav-tabContent">
   <div class="tab-pane show" id="nav-client" role="tabpanel" aria-labelledby="nav-client">
@@ -235,11 +242,71 @@
   <div class="tab-pane fade" id="nav-client-notes" role="tabpanel" aria-labelledby="nav-client-notes">
     Client notes
   </div>
+
+
+  <div class="tab-pane fade" id="nav-call-notes" role="tabpanel" aria-labelledby="nav-call-notes">
+
+<div id="callalert" class="alert alert-success hidden" role="alert"></div>
+<div id="callalertnotok" class="alert alert-danger hidden" role="alert"></div>
+<table>
+<tr>
+<td style="padding-left:5px">Call Status</td>
+<td colspan=1 style="padding:15px">
+
+
+<style>
+#callstatus{
+font-family: fontAwesome
+}
+</style>
+
+<select id="callstatus" class="col-6 form-control rounded-pill">
+<option value='normal'>&#xf024; Normal</option>
+<option value='favorite'>&#xf004; Favorite</option>
+ <option value='urgent'>&#xf12a; Urgent</option>
+
+<option value='warning'>&#xf071; Warning</option>
+<option value='star'>&#xf005; Star</option>
+
+
+ <option value='success'>&#xf058; Success</option>
+ <option value='progress'>&#xf242; Progress</option>
+
+<option value='help'>&#xf128; Help</option>
+<option value='info'>&#xf27a; Info</option>
+
+</select>
+</td><tr>
+
+<tr>
+<td style="padding-left:5px">Call Category</td>
+<td colspan12 style="padding:15px">
+<%= select_tag 'category', options_from_collection_for_select(Category.all.where(account_id: current_user.account.id).where(status: :active),  "id", "title", "1") , class: "col-6 form-control rounded-pill" %>
+</td><tr>
+
+
+<td style="padding-left:5px">Call Note</td>
+<td style="width:75%;padding:15px">
+<textarea class="form-control col-12" id="callnotebody" rows="5"></textarea>
+</td>
+</tr><tr>
+<td>
+<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="addCallNote();">Update Call Status</button>
+</td>
+</tr>
+</table>
+
+
+
+
+
+  </div>
+
 </div>
 
 </td>
 
-<td style="width:24%">
+<td style="width:24%" valign="top">
  <div class="col-md-12 phone" style="nargin:left: 5px;padding-left:5px">
  <div class="col-md-12">
  <div id="logdiv"></div>
@@ -281,10 +348,90 @@
 
 </td>
 
-<td style="width:39%">
+<td style="width:39%;padding:10px" valign=top>
+<div id="mystats">
+<div class="card card-default">
+                      <div class="card-header">
+                        <h4>My Statistics</h4>
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-borderless table-thead-border">
+                          <thead>
+                            <tr>
+                              <th>Incoming Calls</th>
+                              <th class="text-right"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">All</td>
+                              <td class="text-right table-primary">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Answered</td>
+                              <td class="text-right table-primary">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Missed</td>
+                              <td class="text-right table-primary">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">SLA (%)</td>
+                              <td class="text-right table-primary">0</td>
+                            </tr>
 
 
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Total Duration</td>
+                              <td class="text-right table-primary">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Average Call Duration</td>
+                              <td class="text-right table-primary">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-primary">Average Answer Time</td>
+                              <td class="text-right table-primary">0</td>
+                            </tr>
 
+                          <thead>
+                            <tr>
+                              <th>Outbound Calls</th>
+                              <th class="text-right"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">All</td>
+                              <td class="text-right table-info">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">Answered</td>
+                              <td class="text-right table-info">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">Missed</td>
+                              <td class="text-right table-info">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">SLA (%)</td>
+                              <td class="text-right table-info">0</td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">Total Duration</td>
+                              <td class="text-right table-info">0</td>
+                            </tr>
+                            <tr>
+                              <td class="text-dark font-weight-bold table-info">Average Call Duration</td>
+                              <td class="text-right table-info">0</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+</div>
 
 </td>
 

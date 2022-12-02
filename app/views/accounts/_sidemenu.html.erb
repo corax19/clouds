@@ -153,6 +153,15 @@
                   </li>
 <% end %>
 
+<% if @userpermissionspages['permission_categories'] == 1 %>
+                  <li>
+                  <%= link_to categories_path do %>
+                  <span class="nav-text">Call Categories</span> 
+                  <% end %>
+                  </li>
+<% end %>
+
+
                      </div>
                     </ul>
                   </li>

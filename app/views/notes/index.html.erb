@@ -1,9 +1,9 @@
-<h4>Notes</h4>
+<h4><%= I18n.t(:notes) %></h4>
 
 <table  id="extenTable" class="table table-hover table-product" style="width:98%">
     <tr>
-    <td >User</td><td>Time</td><td>Subject</td><td>Note Text</td>
-    <td style="width:55px" align="right"><a class="dropdown-item" href="../<%= @client.id.to_s  %>/notes/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>New</button></a></td>
+    <td ><%= I18n.t(:user) %></td><td><%= I18n.t(:time) %></td><td><%= I18n.t(:subject) %></td><td><%= I18n.t(:notetext) %></td>
+    <td style="width:55px" align="right"><a class="dropdown-item" href="../<%= @client.id.to_s  %>/notes/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i><%= I18n.t(:new) %></button></a></td>
     </tr>
 
 
@@ -21,5 +21,5 @@
 
 
 <div>
-  <%= link_to "Back to clients", clients_path %>
+  <%= link_to I18n.t(:backtoclients), clients_path %>
 </div>

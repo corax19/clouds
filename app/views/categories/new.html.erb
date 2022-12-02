@@ -1,0 +1,9 @@
+<h4><%= I18n.t(:newcategory) %></h4>
+
+<%= render "form", category: @category, btitle: I18n.t(:addcategory) %>
+
+<br>
+
+<div>
+  <%= link_to I18n.t(:backtocategories), categories_path %>
+</div>

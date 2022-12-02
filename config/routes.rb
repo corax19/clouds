@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   resources :clients
 #  resources :messages
 #  get 'log/index'
@@ -39,6 +40,10 @@ get "/phone/getinfo/:callerid", to: "phone#getinfo"
 get "/phone/getnotes/:callerid", to: "phone#getnotes"
 
 get "/phone/updateinfo/:clientid", to: "phone#updateinfo"
+get "/phone/addnote/:clientid", to: "phone#addnote"
+get "/phone/addcallnote", to: "phone#addcallnote"
+get "/phone/getstat", to: "phone#getstat"
+
 
 get "/cdr", to: "cdr#index"
 post "/cdr", to: "cdr#search", as: :search_cdr

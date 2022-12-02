@@ -1,0 +1,33 @@
+<%= form_with(model: category) do |form| %>
+  <% if category.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+      <ul>
+        <% category.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label I18n.t(:title), style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label I18n.t(:description), style: "display: block" %>
+    <%= form.text_area :description, class: "col-2 form-control rounded-pill" %>
+  </div>
+
+  <div>
+    <%= form.label I18n.t(:status), style: "display: block" %>
+    <%= form.select :status, ['Active', 'Disabled'] , {prompt: "Is active or disabled?", selected: category.status } , {class: "col-2 form-control rounded-pill"} %>
+  </div>
+
+
+  <div>
+  <br><%= form.submit btitle, :class => 'btn btn-sm btn-success btn-pill'%>
+  </div>
+<% end %>

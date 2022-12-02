@@ -1,6 +1,6 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Cover Sheet") do |sheet|
-    sheet.add_row ['First Name','Last Name','ID NUMBER','Phone 1','Phone 2','Phone 3','Birthday','Email','Country','City','Address']
+    sheet.add_row [I18n.t(:firstname),I18n.t(:lastname),'ID NUMBER',I18n.t(:phone)+ " 1",I18n.t(:phone)+ " 2",I18n.t(:phone)+ " 3",I18n.t(:birthday),'Email',I18n.t(:country),I18n.t(:city),I18n.t(:address)]
 
 @allclients.each do |client|
     sheet.add_row [client.firstname,client.lastname,client.idnum,client.phone1,client.phone2,client.phone3,client.birthday,client.email,client.country,client.city,client.address]

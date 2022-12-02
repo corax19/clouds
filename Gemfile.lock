@@ -269,6 +269,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   devise
+  i18n (~> 1.9)
   jbuilder
   jquery-rails (>= 1.0.3)
   jsbundling-rails

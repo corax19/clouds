@@ -12,12 +12,12 @@
   <% end %>
 
   <div>
-    <%= form.label :subject, style: "display: block" %>
+    <%= form.label I18n.t(:subject), style: "display: block" %>
     <%= form.text_field :subject, class: "col-4 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :body, style: "display: block" %>
+    <%= form.label I18n.t(:body), style: "display: block" %>
     <%= form.text_area :body,rows: 5,  class: "col-6 form-control" %>
   </div>
 

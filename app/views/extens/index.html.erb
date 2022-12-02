@@ -1,11 +1,9 @@
 
-<h1>Extentions</h1>
-
-
+<h1><%= I18n.t(:extentions) %></h1>
 <table  id="extenTable" class="table table-hover table-product" style="width:98%">
     <tr>
-    <td colspan=2 align=center>Exten</td><td>UserID</td><td>Secret</td><td>Name</td><td>SIP Peer</td><td>Record</td><td>Call limit</td><td>Description</td>
-    <td style="width:55px" align="right"><a class="dropdown-item" href="../extens/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i>New</button></a></td>
+    <td colspan=2 align=center><%= I18n.t(:exten) %></td><td>UserID</td><td><%= I18n.t(:secret) %></td><td><%= I18n.t(:name) %></td><td>SIP Peer</td><td><%= I18n.t(:record) %></td><td><%= I18n.t(:calllimit) %></td><td><%= I18n.t(:description) %></td>
+    <td style="width:55px" align="right"><a class="dropdown-item" href="../extens/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i><%= I18n.t(:new) %></button></a></td>
 
 
     </tr>
@@ -38,10 +36,10 @@
               <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= exten.id %>"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" style="width:50px;">
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= exten.id %>" style="min-width:110px;width:110px;">
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink<%= exten.id %>" style="min-width:150px;width:150px;">
 
-            <%= button_to "<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> Edit</button>".html_safe, edit_exten_path(exten), class: 'btn btn-info btn-pill', :method => :get %>
-<button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../extens/<%= exten.id %>"  onClick="setDelExt(<%= exten.id %>)">Delete</button>
+            <%= button_to ("<i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i> "+I18n.t(:edit)+"</button>").html_safe, edit_exten_path(exten), class: 'btn btn-info btn-pill', :method => :get %>
+<button type="button" class="btn btn-danger btn-pill" data-toggle="modal" data-target="#delModal" data-href="../extens/<%= exten.id %>"  onClick="setDelExt(<%= exten.id %>)"><%= I18n.t(:delete) %></button>
               </div>
             </div>
           </td>
