@@ -1,4 +1,4 @@
-<h4>My Account</h4>
+<h4><%= I18n.t(:account) %></h4>
 
 
 
@@ -17,27 +17,27 @@
 
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label I18n.t(:name), style: "display: block" %>
     <%= form.text_field :name, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :phone, style: "display: block" %>
+    <%= form.label I18n.t(:phone), style: "display: block" %>
     <%= form.text_field :phone, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :address, style: "display: block" %>
+    <%= form.label I18n.t(:address), style: "display: block" %>
     <%= form.text_field :address, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :image %>
+    <%= form.label I18n.t(:image) %>
     <%= form.file_field :image %>
   </div>
 
 
   <div>
-   <br><%= form.submit "Update info", :class => 'btn btn-sm btn-success btn-pill'%>
+   <br><%= form.submit I18n.t(:update), :class => 'btn btn-sm btn-success btn-pill'%>
   </div>
 <% end %>

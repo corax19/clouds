@@ -7,6 +7,9 @@
 <% accountid = current_user.account.id.to_s %>
 <% if locals[:btitle] == "Update Read Step" %>
 <% readoptions=getStepRead(@step) %>
+<% locals[:btitle] = I18n.t(:updatereadstep) %>
+<% else %>
+<% locals[:btitle] = I18n.t(:addreadstep)  %>
 <% end %>
 
 
@@ -23,13 +26,13 @@
   <% end %>
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['Read'] ,  {prompt: "Select Event", :selected => 'Read'} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
 
   <div>
-    <%= form.label :sound, style: "display: block" %>
+    <%= form.label I18n.t(:sound), style: "display: block" %>
     <%= form.collection_select :sound_id,  Sound.all.where(account_id: current_user.account.id), :id, :name,  {prompt: "Select Sound", selected: readoptions[:sound_id]}, {class: "col-2 form-control rounded-pill"} %>
   </div>
 
@@ -38,7 +41,7 @@
       <div class="form-group">
 
   <div>
-    <%= form.label :maxlen, style: "display: block" %>
+    <%= form.label I18n.t(:maxlen), style: "display: block" %>
     <%= form.text_field :maxlen, class: "col-4 form-control rounded-pill", value: readoptions[:maxlen] %>
   </div>
 
@@ -50,7 +53,7 @@
 
 
   <div>
-    <%= form.label :timeout, style: "display: block" %>
+    <%= form.label I18n.t(:timeout), style: "display: block" %>
     <%= form.text_field :timeout, class: "col-4 form-control rounded-pill", value: readoptions[:timeout] %>
   </div>
 
@@ -64,7 +67,7 @@
 <% for ind in 0..9 do %>
     <div class="col-sm-6">
       <div class="form-group">
-      <%= form.label "Read "+ind.to_s, style: "display: block" %>
+      <%= form.label I18n.t(:read)+" "+ind.to_s, style: "display: block" %>
       <%= form.collection_select "read"+ind.to_s,  Exten.select('0,"0" as type,"None" as name, "Nothing" as myitem from dual union all select id,"3" as type,name,concat("Menu_",name) as myitem from routes where day is null and sip_id='+@step.route_id.to_s+' and account_id='+accountid+' and name !=""  union select all id,"3" as type, title as name,concat("Queue_",title) as myitem from hotlines where account_id='+accountid+' union all select id,"1"
       as type,exten as name,concat("Exten_",exten) as myitem').where(account_id: current_user.account.id).order(:type), :myitem, :myitem,  {prompt: "Select Sound", selected: readoptions["read"+ind.to_s]}, {class: "col-6 form-control rounded-pill"} %>
       </div>

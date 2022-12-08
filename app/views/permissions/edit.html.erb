@@ -1,5 +1,18 @@
-<h3>Edit User</h3>
+<h4><%= I18n.t(:edituser) %></h4>
 <%= form_with url: update_user_path, method: :put,  model: @user do |form| %>
+
+ <% if @user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 
   <div>
     <%= form.label :email %><br>
@@ -7,33 +20,33 @@
   </div>
 
   <div>
-    <%= form.label :username %><br>
+    <%= form.label I18n.t(:username) %><br>
     <%= form.text_field :username, value:@user.username %>
   </div>
 
   <div>
-    <%= form.label :firstname %><br>
+    <%= form.label I18n.t(:firstname) %><br>
     <%= form.text_field :firstname, value:@user.firstname %>
   </div>
 
   <div>
-    <%= form.label :lastname %><br>
+    <%= form.label I18n.t(:lastname)  %><br>
     <%= form.text_field :lastname, value:@user.lastname %>
   </div>
 
   <div>
-    <%= form.label :image %>
+    <%= form.label I18n.t(:image)  %>
     <%= form.file_field :image %>
   </div>
 
   <div>
-    <%= form.label :password %><br />
+    <%= form.label I18n.t(:password)  %><br />
     <%= form.password_field :password %>
   </div>
 
 
 <hr>
-<h4>Permissions</h4><br>
+<h4><%= I18n.t(:permissions) %></h4><br>
 <table cellspacing=15 cellpadding=15 width=200>
   <% @edituserpermission.each do |item| %>
 <% if current_user.isadmin == 1 || item[0][11..] != "accounts" %>
@@ -47,6 +60,6 @@
 </table>
 
   <div>
-    <br><%= form.submit 'Save User', :class => 'btn btn-info btn-pill' %>
+    <br><%= form.submit I18n.t(:saveuser), :class => 'btn btn-info btn-pill' %>
   </div>
 <% end %>

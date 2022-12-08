@@ -3,7 +3,7 @@
 
 <table  id="productsTable01" class="table table-hover table-product" style="width:98%">
     <tr>
-    <td>SIP ID</td><td><%= I18n.t(:secret) %></td><td><%= I18n.t(:host) %></td><td><%= I18n.t(:number) %></td><td><%= I18n.t(:description) %></td>
+    <td colspan=2 align="center">SIP ID</td><td><%= I18n.t(:secret) %></td><td><%= I18n.t(:host) %></td><td><%= I18n.t(:number) %></td><td><%= I18n.t(:description) %></td>
     <td style="width:55px" align="right"><a class="dropdown-item" href="../sips/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i><%= I18n.t(:new) %></button></a></td>
 
 
@@ -12,7 +12,16 @@
 
   <% @sips.each do |sip| %>
     <tr>
+<td>
+<% sipstatus="" %>
+<% sipstatus =  @sipsonline[sip.sipid ] if @sipsonline[sip.sipid ] != nil %>
 
+<% if sipstatus != "online" %>
+<span class="mdi mdi-name text-muted"><i class="fa fa-circle-o" aria-hidden="true"></i></span>
+<% else %>
+<span class="mdi mdi-name text-success"><i class="fa fa-circle" aria-hidden="true"></i></span>
+<% end %>
+</td>
 
 <td> <%= sip.sipid %></td><td><%= sip.secret %></td><td><%= sip.host %></td><td><%= sip.number %></td><td><%= sip.decription %></td>
           <td style="width:50px" align="right">

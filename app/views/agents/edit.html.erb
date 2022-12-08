@@ -1,9 +1,9 @@
-<h1>Editing agent</h1>
+<h4><%= I18n.t(:editagent) %></h4>
 
-<%= render "form", agent: @agent, btitle: "Update Agent" %>
+<%= render "form", agent: @agent, btitle: I18n.t(:updateagent) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to agents", agents_path %>
+  <%= link_to I18n.t(:backtoagents), agents_path %>
 </div>

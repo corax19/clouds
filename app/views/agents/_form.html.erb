@@ -13,14 +13,14 @@
 
 
   <div>
-    <%= form.label :exten_id, style: "display: block" %>
+    <%= form.label I18n.t(:exten), style: "display: block" %>
     <%= form.collection_select :exten_id, Exten.all.where(account_id: current_user.account.id), :id, :exten , {prompt: "Select Extension"} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
 
 
   <div>
-    <%= form.label :priority, style: "display: block" %>
+    <%= form.label I18n.t(:priority), style: "display: block" %>
 <%= form.select :priority, ['0', '1','2','3','4','5','6','7','8','9'] , {prompt: "Select Priority"} , {class: "col-2 form-control rounded-pill"}%>
   </div>
 

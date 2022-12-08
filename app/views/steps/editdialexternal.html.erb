@@ -1,9 +1,9 @@
-<h1>Edit External Dial step</h1>
+<h4><%= I18n.t(:editexdialstep) %></h4>
 
 <%= render "formdialexternal", step: @step , locals: {:btitle => "Update External Dial Step", :formmethod => :put, :url => update_stepdialexternal_path(@step.route_id,@step.id)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to steps", steps_path %>
+  <%= link_to I18n.t(:backtosteps), steps_path %>
 </div>

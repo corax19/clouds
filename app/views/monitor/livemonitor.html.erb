@@ -1,6 +1,6 @@
-<h4>General<h4>
+<h4><%= I18n.t(:general) %><h4>
 <%= render "head" %>
-<table style="width: 90%" border=0>
+<table style="width: 98%" border=0>
 <tr>
 <td>
 <%= render "agents", locals: {:agentrowdata => @agentrowdata, :queueid => @queue_id, :datestart => @datestart, :dateend => @dateend}  %>
@@ -8,14 +8,14 @@
 <td align="left" valign="top">
 <table border=0 style="width: 97%" class="table table-hover table-product">
 <tr>
-<td colspan=4 align="center">Callers</td>
+<td colspan=4 align="center"><%= I18n.t(:callers) %></td>
 </tr>
 
 <tr>
-<td>Caller</td>
-<td>Started</td>
-<td>Agent</td>
-<td>Time</td>
+<td><%= I18n.t(:caller) %></td>
+<td><%= I18n.t(:started) %></td>
+<td><%= I18n.t(:agent) %></td>
+<td><%= I18n.t(:time) %></td>
 </tr>
 
 <% @callerres.each do |callerrow| %>
@@ -42,14 +42,14 @@
 <table border=0 style="width: 70%" class="table table-hover table-product">
 
 <tr>
-<td colspan=4 align="center">Missed Calls</td>
+<td colspan=4 align="center"><%= I18n.t(:missedcalls) %></td>
 </tr>
 
 <tr>
-<td>Caller</td>
-<td>Time</td>
-<td>Callback</td>
-<td>Agent</td>
+<td><%= I18n.t(:caller) %></td>
+<td><%= I18n.t(:time) %></td>
+<td><%= I18n.t(:callback) %></td>
+<td><%= I18n.t(:agent) %></td>
 </tr>
 
 <% @missedcallerres.each do |missedcallerrow| %>

@@ -18,6 +18,6 @@ module Clouds
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 #  config.hosts << "myclouds.ge"
-config.i18n.available_locales = [:en, :ru]
+config.i18n.available_locales = [:en, :ru, :ge]
   end
 end

@@ -5,6 +5,9 @@
 <% dialoptions= {:extens => "",:dialoptions => "Tt", :dialtimeout => 40} %>
 <% if locals[:btitle] == "Update Ring Group Step" %>
 <% dialoptions=getStepRingGroup(@step) %>
+<% locals[:btitle] = I18n.t(:updateringgroupstep) %>
+<% else %>
+<% locals[:btitle] = I18n.t(:addringgroupstep)  %>
 <% end %>
 
 
@@ -21,29 +24,29 @@
   <% end %>
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['RingGroup'] ,  {prompt: "Select Event", :selected => 'RingGroup'} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
   <div>
-    <%= form.label :extens, style: "display: block" %>
+    <%= form.label I18n.t(:extens), style: "display: block" %>
     <%= form.text_area :extens, class: "col-2 form-control rounded-pill", value: dialoptions[:extens] %>
   </div>
 
 
   <div>
-    <%= form.label :timeout, style: "display: block" %>
+    <%= form.label I18n.t(:timeout), style: "display: block" %>
     <%= form.text_field :timeout, class: "col-2 form-control rounded-pill", value: dialoptions[:dialtimeout] %>
   </div>
 
   <div>
-    <%= form.label :options, style: "display: block" %>
+    <%= form.label I18n.t(:options), style: "display: block" %>
     <%= form.text_field :options, class: "col-2 form-control rounded-pill", value: dialoptions[:dialoptions] %>
   </div>
 
 
   <div>
-    <%= form.label :moh_id, style: "display: block" %>
+    <%= form.label I18n.t(:musiconhold), style: "display: block" %>
     <%= form.collection_select :moh_id, Moh.all.where(account_id: current_user.account.id), :id, :name ,{include_blank: true, selected: dialoptions[:moh_id]} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 

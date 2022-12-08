@@ -4,6 +4,9 @@
 <% sound_id = 0 %>
 <% if locals[:btitle] == "Update Playback Step" %>
 <% sound_id=getStepSound(@step) %>
+<% locals[:btitle] = I18n.t(:updateplaybackstep) %>
+<% else %>
+<% locals[:btitle] = I18n.t(:addplaybackstep)  %>
 <% end %>
 
 
@@ -20,12 +23,12 @@
   <% end %>
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['Playback'] ,  {prompt: "Select Event", :selected => 'Playback'} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
   <div>
-    <%= form.label :sound, style: "display: block" %>
+    <%= form.label I18n.t(:sound), style: "display: block" %>
     <%= form.collection_select :sound_id,  Sound.all.where(account_id: current_user.account.id), :id, :name,  {prompt: "Select Sound", selected: sound_id}, {class: "col-2 form-control rounded-pill"} %>
   </div>
 

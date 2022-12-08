@@ -423,7 +423,7 @@ onload="sipInit()"
                   <li>
                   <%= link_to edit_user_registration_path do %>
                   <i class="mdi mdi-account-outline"></i>
-                  <span class="nav-text">My Profile</span>
+                  <span class="nav-text"><%= I18n.t(:myprofile) %></span>
                   <% end %>
                   </li>
 
@@ -433,7 +433,7 @@ onload="sipInit()"
                       <li>
                   <%= link_to messages_path do %>
                   <i class="mdi mdi-email-outline"></i>
-                  <span class="nav-text">Messages</span>
+                  <span class="nav-text"><%= I18n.t(:messages) %></span>
 <% if messagesNum > 0 %>
 <span class="badge badge-pill badge-primary"><%= messagesNum %></span>
 <% end %>
@@ -447,7 +447,7 @@ onload="sipInit()"
                       <li>
                   <%= link_to logs_path do %>
                   <i class="mdi mdi-diamond-stone"></i>
-                  <span class="nav-text">Logs</span>
+                  <span class="nav-text"><%= I18n.t(:logs) %></span>
                   <% end %>
                       </li>
 <% end %>
@@ -456,7 +456,7 @@ onload="sipInit()"
                       <li>
                   <%= link_to myaccount_path do %>
                   <i class="mdi mdi-settings"></i>
-                  <span class="nav-text">Account Setting</span>
+                  <span class="nav-text"><%= I18n.t(:accountsettings) %></span>
                   <% end %>
                       </li>
 <% end %>
@@ -481,7 +481,7 @@ onload="sipInit()"
                         <a class="dropdown-link-item" href="#">
  <i class="mdi mdi-logout"></i>
  <%= button_to(
-  "Log Out",
+  I18n.t(:logout),
   destroy_user_session_path,
   method: :delete
 ) %>

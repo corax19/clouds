@@ -1,8 +1,8 @@
-<h1>New Account</h1>
+<h4><%= I18n.t(:newaccount) %></h4>
 
-<%= render "form", account: @account, locals: {:btitle => "Add Account", :formmethod => :post, :url => accounts_path} %>
+<%= render "form", account: @account, locals: {:btitle => I18n.t(:addaccount), :formmethod => :post, :url => accounts_path} %>
 <br>
 
 <div>
-  <%= link_to "Back to accounts", accounts_path %>
+  <%= link_to I18n.t(:backtoaccounts), accounts_path %>
 </div>

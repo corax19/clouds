@@ -6,13 +6,12 @@ include Pagy::Backend
   layout :layout_by_resource
 
 require 'i18n'
-I18n.default_locale = :ru
 
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [:firstname, :lastname, :username, :image])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:firstname, :lastname, :username, :image, :lang])
   end
 
 
@@ -64,6 +63,7 @@ def loadpermissions
 @userpermissionspages=@@userpermissions
 if current_user != nil
  userpermissions = JSON.parse(current_user.permission)
+ I18n.default_locale = current_user.lang
  userpermissions.each do |id, value|
  if value == "Yes"
  @userpermissionspages[id]= 1

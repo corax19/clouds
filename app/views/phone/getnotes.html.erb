@@ -12,7 +12,7 @@
 <textarea class="form-control col-12" id="notebody" rows="3"></textarea>
 </td><td>
 <% if client != nil %>
-<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="addNote('<%= client.id.to_s %>');">Add Note</button>
+<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="addNote('<%= client.id.to_s %>');"><%= I18n.t(:addnote) %></button>
 <% end %>
 </td>
 </tr>
@@ -21,7 +21,7 @@
 
 <div class="card card-default">
       <div class="card-header">
-        <h4>Notes</h4>
+        <h4><%= I18n.t(:notes) %></h4>
       </div>
 
       <div style="height: 450px; overflow: auto">

@@ -5,6 +5,9 @@
 <% dialoptions= {:number => "", :sip_id => 0,:dialoptions => "Tt", :dialtimeout => 40} %>
 <% if locals[:btitle] == "Update External Dial Step" %>
 <% dialoptions=getStepDialExternal(@step) %>
+<% locals[:btitle] = I18n.t(:updateexdialstep) %>
+<% else %>
+<% locals[:btitle] = I18n.t(:addexdialstep)  %>
 <% end %>
 
 
@@ -21,13 +24,13 @@
   <% end %>
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['ExternalDial'] ,  {prompt: "Select Event", :selected => 'ExternalDial'} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
 
   <div>
-    <%= form.label :number, style: "display: block" %>
+    <%= form.label I18n.t(:number), style: "display: block" %>
     <%= form.text_field :number, class: "col-2 form-control rounded-pill", value: dialoptions[:number] %>
   </div>
 
@@ -39,12 +42,12 @@
 
 
   <div>
-    <%= form.label :timeout, style: "display: block" %>
+    <%= form.label I18n.t(:timeout), style: "display: block" %>
     <%= form.text_field :timeout, class: "col-2 form-control rounded-pill", value: dialoptions[:dialtimeout] %>
   </div>
 
   <div>
-    <%= form.label :options, style: "display: block" %>
+    <%= form.label I18n.t(:options), style: "display: block" %>
     <%= form.text_field :options, class: "col-2 form-control rounded-pill", value: dialoptions[:dialoptions] %>
   </div>
 

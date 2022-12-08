@@ -1,9 +1,9 @@
-<h1>Editing Queue</h1>
+<h4><%= I18n.t(:editqueue) %></h4>
 
-<%= render "form", hotline: @hotline, btitle: "Update Queue" %>
+<%= render "form", hotline: @hotline, btitle: I18n.t(:updatequeue) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to Queues", hotlines_path %>
+  <%= link_to I18n.t(:backtoqueues), hotlines_path %>
 </div>

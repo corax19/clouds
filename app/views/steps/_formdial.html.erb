@@ -5,6 +5,9 @@
 <% dialoptions= {:exten_id => 0,:dialoptions => "Tt", :dialtimeout => 40} %>
 <% if locals[:btitle] == "Update Dial Step" %>
 <% dialoptions=getStepExten(@step) %>
+<% locals[:btitle] = I18n.t(:updatedialstep) %>
+<% else %>
+<% locals[:btitle] = I18n.t(:adddialstep)  %>
 <% end %>
 
 
@@ -21,23 +24,23 @@
   <% end %>
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['Dial'] ,  {prompt: "Select Event", :selected => 'Dial'} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
   <div>
-    <%= form.label :exten, style: "display: block" %>
+    <%= form.label I18n.t(:exten), style: "display: block" %>
     <%= form.collection_select :exten_id,  Exten.all.where(account_id: current_user.account.id), :id, :exten,  {prompt: "Select Extention", selected: dialoptions[:exten_id]}, {class: "col-2 form-control rounded-pill"} %>
   </div>
 
 
   <div>
-    <%= form.label :timeout, style: "display: block" %>
+    <%= form.label I18n.t(:timeout), style: "display: block" %>
     <%= form.text_field :timeout, class: "col-2 form-control rounded-pill", value: dialoptions[:dialtimeout] %>
   </div>
 
   <div>
-    <%= form.label :options, style: "display: block" %>
+    <%= form.label I18n.t(:options), style: "display: block" %>
     <%= form.text_field :options, class: "col-2 form-control rounded-pill", value: dialoptions[:dialoptions] %>
   </div>
 

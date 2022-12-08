@@ -3,8 +3,11 @@
 
 <% exten_id = 0 %>
 <% dialoptions= {:exten_id => 0,:dialoptions => "Tt", :dialtimeout => 40} %>
-<% if locals[:btitle] == "Update Dial Step" %>
+<% if locals[:btitle] == "Update Menu Step" %>
 <% menuid=getStepMenu(@step) %>
+<% locals[:btitle] = I18n.t(:updatemenustep) %>
+<% else %>
+<% locals[:btitle] = I18n.t(:addmenustep)  %>
 <% end %>
 
 
@@ -21,12 +24,12 @@
   <% end %>
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['Menu'] ,  {prompt: "Select Event", :selected => 'Menu'} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
   <div>
-    <%= form.label :menu, style: "display: block" %>
+    <%= form.label I18n.t(:menu), style: "display: block" %>
     <%= form.collection_select :menu_id,  Route.all.where(account_id: current_user.account.id,sip_id: step.route.sip_id).where.not(name: ''), :id, :name,  {prompt: "Select Extention", selected: menuid}, {class: "col-2 form-control rounded-pill"} %>
   </div>
 

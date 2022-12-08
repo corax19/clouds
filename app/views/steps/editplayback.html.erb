@@ -1,8 +1,8 @@
-<h1>Edit Playback step</h1>
+<h4><%= I18n.t(:editplaybackstep) %></h4>
 <%= render "formplayback", step: @step , locals: {:btitle => "Update Playback Step", :formmethod => :put , :url => update_stepplayback_path(@step.route_id,@step.id)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to steps", steps_path %>
+  <%= link_to I18n.t(:backtosteps), steps_path %>
 </div>

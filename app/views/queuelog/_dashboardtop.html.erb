@@ -6,7 +6,7 @@
 <div class="bg-primary col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
 <span class="h3 text-white" style="cursor: pointer" onClick="getCalls('123','<%= locals[:queueid] %>','0','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= locals[:allcalls] %></span>
-<span>All calls</span>
+<span><%= I18n.t(:allcalls) %></span>
 </div>
 </div>
 </div>
@@ -16,7 +16,7 @@
 <div class="bg-success col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
 <span class="h3 text-white" style="cursor: pointer" onClick="getCalls('256','<%= locals[:queueid] %>','0','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= locals[:successcalls] %></span>
-<span>Answered</span>
+<span><%= I18n.t(:answered) %></span>
 </div>
 </div>
 </div>
@@ -29,7 +29,7 @@
 <div class="bg-danger col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
 <span class="h3 text-white" style="cursor: pointer" onClick="getCalls('342','<%= locals[:queueid] %>','0','<%= locals[:datestart] %>','<%= locals[:dateend] %>')"><%= locals[:missedcalls] %></span>
-<span>Missed</span>
+<span><%= I18n.t(:missed) %></span>
 </div>
 </div>
 </div>
@@ -41,7 +41,7 @@
 <div class="bg-info col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
 <span class="h3 text-white"><%= locals[:duration] %></span>
-<span>Total time</span>
+<span><%= I18n.t(:totaltime) %></span>
 </div>
 </div>
 </div>
@@ -53,7 +53,7 @@
 <div class="bg-warning col-xl-12 d-flex justify-content-between flex-wrap p-5 text-white align-items-lg-end">
 <div class="d-flex flex-column">
 <span class="h3 text-white"><%= locals[:avgduration] %></span>
-<span>Avg. Time</span>
+<span><%= I18n.t(:averagedur) %></span>
 </div>
 </div>
 </div>

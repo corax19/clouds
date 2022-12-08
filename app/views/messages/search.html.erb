@@ -1,6 +1,6 @@
-<h1>Messages</h1>
+<h4><%= I18n.t(:messages) %></h4>
 
-<%= render "search", locals: {:btitle => "Search Messages", :startdate => @startdate, :stopdate => @stopdate, :event => @event} %>
+<%= render "search", locals: {:btitle => I18n.t(:searchmessages), :startdate => @startdate, :stopdate => @stopdate, :event => @event} %>
 
 
 

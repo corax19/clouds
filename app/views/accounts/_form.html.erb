@@ -13,22 +13,22 @@
 
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label I18n.t(:name), style: "display: block" %>
     <%= form.text_field :name, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :phone, style: "display: block" %>
+    <%= form.label I18n.t(:phone), style: "display: block" %>
     <%= form.text_field :phone, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :address, style: "display: block" %>
+    <%= form.label I18n.t(:address), style: "display: block" %>
     <%= form.text_field :address, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :image %>
+    <%= form.label I18n.t(:image) %>
     <%= form.file_field :image %>
   </div>
 
@@ -38,7 +38,7 @@
       <div class="form-group">
 
   <div>
-    <%= form.label :sip_ips, style: "display: block" %>
+    <%= form.label I18n.t(:sip_ips), style: "display: block" %>
     <%= form.text_area :sipips, size: "20x12", class: "col-6 form-control pill" %>
   </div>
 
@@ -49,7 +49,7 @@
       <div class="form-group">
 
   <div>
-    <%= form.label :web_ips, style: "display: block" %>
+    <%= form.label I18n.t(:web_ips), style: "display: block" %>
     <%= form.text_area :webips, size: "20x12", class: "col-6 form-control pill" %>
   </div>
 

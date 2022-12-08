@@ -1,9 +1,9 @@
-<h1>Editing route</h1>
+<h4><%= I18n.t(:editroute) %></h4>
 
-<%= render "form", route: @route, btitle: "Update Route" %>
+<%= render "form", route: @route, btitle: I18n.t(:updateroute) %>
 
 <br>
 
 <div>
-  <%= link_to "Back to routes", routes_path %>
+  <%= link_to I18n.t(:backtoroutes), routes_path %>
 </div>

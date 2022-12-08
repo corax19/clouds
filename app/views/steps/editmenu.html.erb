@@ -1,9 +1,9 @@
-<h1>Edit Dial step</h1>
+<h4><%= I18n.t(:editmenustep) %></h4>
 
-<%= render "formmenu", step: @step , locals: {:btitle => "Update Dial Step", :formmethod => :put, :url => update_stepmenu_path(@step.route_id,@step.id)} %>
+<%= render "formmenu", step: @step , locals: {:btitle => "Update Menu Step", :formmethod => :put, :url => update_stepmenu_path(@step.route_id,@step.id)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to steps", steps_path %>
+  <%= link_to I18n.t(:backtosteps), steps_path %>
 </div>

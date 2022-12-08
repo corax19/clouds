@@ -1,6 +1,6 @@
-<h1>Logs</h1>
+<h4><%= I18n.t(:logs) %></h4>
 
-<%= render "search", locals: {:btitle => "Search Logs", :startdate => Date.today, :stopdate => Date.today, :event => ''}  %>
+<%= render "search", locals: {:btitle => I18n.t(:searchlogs), :startdate => Date.today, :stopdate => Date.today, :event => ''}  %>
 
 
 <%= render "logtable"%>

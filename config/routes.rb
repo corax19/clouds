@@ -44,6 +44,8 @@ get "/phone/addnote/:clientid", to: "phone#addnote"
 get "/phone/addcallnote", to: "phone#addcallnote"
 get "/phone/getstat", to: "phone#getstat"
 
+get "/phone/setlang/:lang", to: "phone#show", as: :phone_setlang
+
 
 get "/cdr", to: "cdr#index"
 post "/cdr", to: "cdr#search", as: :search_cdr

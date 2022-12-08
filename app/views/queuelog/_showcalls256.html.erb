@@ -1,11 +1,11 @@
-<h5>Answered Calls</h5>
+<h5><%= I18n.t(:answeredcalls) %></h5>
 <table  id="productsTable01" class="table table-hover table-product" style="width:95%">
     <tr>
-    <td>Caller</td>
-    <td>Start time</td>
-    <td>Agent</td>
-    <td>Duration</td>
-    <td>Event</td>
+    <td><%= I18n.t(:caller) %></td>
+    <td><%= I18n.t(:starttime) %></td>
+    <td><%= I18n.t(:agent) %></td>
+    <td><%= I18n.t(:duration) %></td>
+    <td><%= I18n.t(:event) %></td>
     <td><%= link_to "Excel", stats_path(format: "xlsx"), class: "btn btn-xs btn-info btn-pill col-6"%></td>
 
     </tr>

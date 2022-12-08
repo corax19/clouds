@@ -1,10 +1,25 @@
-<table style="width=70%">
+<table style="width:98%">
 <tr>
-<td style="width:80%">
+<td style="width:40%">
 <%= image_tag(current_user.account.image.thumb.url, alt: 'Image' , class:"user-image rounded-circle") if current_user.account.image? %>
 <%= current_user.account.name %>
-</td><td style="width:20%">
-<h4>Hello <%= current_user.firstname %></h4>
+</td><td style="width:50%">
+<h4><%= I18n.t(:hello) %> <%= current_user.firstname %></h4>
+</td>
+<td align="left">
+
+<div class="btn-group mb-1">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false" data-display="static">
+    <%= I18n.t(:language) %>
+  </button>
+  <div class="dropdown-menu">
+<%= link_to 'English', phone_setlang_path(:en), class: 'dropdown-item' %>
+<%= link_to 'ქართული', phone_setlang_path(:ge), class: 'dropdown-item' %>
+<%= link_to 'Русский', phone_setlang_path(:ru), class: 'dropdown-item' %>
+  </div>
+</div>
+
 </td>
 </tr>
 </table>
@@ -15,7 +30,7 @@
   <div class="row">
     <div class="col-sm-2">
       <div class="form-group">
-        <label for="fname">SERVER</label>
+        <label for="fname"><%= I18n.t(:server) %></label>
         <input type="text" class="form-control" placeholder="your server address" id="siphost" value="myclouds.myphone.ge">
       </div>
     </div>
@@ -27,7 +42,7 @@
     </div>
     <div class="col-sm-2">
       <div class="form-group">
-        <label for="city">PASSWORD</label>
+        <label for="city"><%= I18n.t(:password) %></label>
         <input type="password" class="form-control" placeholder="password" id="sippass" value ="<%= current_user.password %>">
       </div>
     </div>
@@ -35,7 +50,7 @@
     <div class="col-sm-2">
       <div class="form-group">
 <br>
-        <label for="city">Active</label>
+        <label for="city"><%= I18n.t(:isactive) %></label>
 
 <label class="switch switch-success  form-control-label mr-2">
   <input type="checkbox" class="switch-input form-check-input" value="on"  id="sipchecked" onChange="sipMakeInit();">
@@ -66,17 +81,17 @@
 <ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#nav-tabs-home" role="tab"
-      aria-controls="nav-tabs" aria-selected="true" onClick="document.getElementById('nav-call-notes').className='tab-pane fade';document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane show';">Client Info</a>
+      aria-controls="nav-tabs" aria-selected="true" onClick="document.getElementById('nav-call-notes').className='tab-pane fade';document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane show';"><%= I18n.t(:clientinfo) %></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="nav-profile-tab" data-toggle="pill" href="#nav-profile" role="tab"
-      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-call-notes').className='tab-pane fade';document.getElementById('nav-client-notes').className='tab-pane show';document.getElementById('nav-client').className='tab-pane fade';">Client Notes</a>
+      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-call-notes').className='tab-pane fade';document.getElementById('nav-client-notes').className='tab-pane show';document.getElementById('nav-client').className='tab-pane fade';"><%= I18n.t(:clientnotes) %></a>
   </li>
 
 
   <li class="nav-item">
     <a class="nav-link" id="nav-profile-tab" data-toggle="pill" href="#nav-profile" role="tab"
-      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-call-notes').className='tab-pane show';document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane fade';">Call Notes</a>
+      aria-controls="nav-profile" aria-selected="false" onClick="document.getElementById('nav-call-notes').className='tab-pane show';document.getElementById('nav-client-notes').className='tab-pane fade';document.getElementById('nav-client').className='tab-pane fade';"><%= I18n.t(:callnotes) %></a>
   </li>
 
 </ul>
@@ -102,7 +117,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :firstname, style: "display: block" %>
+    <%= form.label I18n.t(:firstname), style: "display: block" %>
     <%= form.text_field :firstname, class: "col-11 form-control rounded-pill" %>
   </div>
 
@@ -113,7 +128,7 @@
 
 
   <div>
-    <%= form.label :lastname, style: "display: block" %>
+    <%= form.label I18n.t(:lastname), style: "display: block" %>
     <%= form.text_field :lastname, class: "col-11 form-control rounded-pill" %>
   </div>
 
@@ -127,7 +142,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :phone_1, style: "display: block" %>
+    <%= form.label I18n.t(:phone)+ " 1", style: "display: block" %>
     <%= form.text_field :phone1, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -137,7 +152,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :phone_2, style: "display: block" %>
+    <%= form.label I18n.t(:phone)+ " 2", style: "display: block" %>
     <%= form.text_field :phone2, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -148,7 +163,7 @@
 
 
   <div>
-    <%= form.label :phone_3, style: "display: block" %>
+    <%= form.label I18n.t(:phone)+ " 3", style: "display: block" %>
     <%= form.text_field :phone3, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -184,7 +199,7 @@
 
 
   <div>
-    <%= form.label :birthday, style: "display: block" %>
+    <%= form.label I18n.t(:birthday), style: "display: block" %>
     <%= form.date_field :birthday, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -200,7 +215,7 @@
 
   <div>
     <%= form.label :country, style: "display: block" %>
-    <%= form.text_field :country, class: "col-10 form-control rounded-pill" %>
+    <%= form.text_field I18n.t(:country), class: "col-10 form-control rounded-pill" %>
   </div>
 
  </div>
@@ -209,7 +224,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :city, style: "display: block" %>
+    <%= form.label I18n.t(:city), style: "display: block" %>
     <%= form.text_field :city, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -219,7 +234,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :address, style: "display: block" %>
+    <%= form.label I18n.t(:address), style: "display: block" %>
     <%= form.text_field :address, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -231,7 +246,7 @@
 
   <div>
 <br>
-<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="alert('<%= client.id.to_s %>');">Update Client Info</button>
+<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="alert('<%= client.id.to_s %>');"><%= I18n.t(:updateclientinfo) %></button>
   </div>
 
 
@@ -240,7 +255,7 @@
 
   </div>
   <div class="tab-pane fade" id="nav-client-notes" role="tabpanel" aria-labelledby="nav-client-notes">
-    Client notes
+    <%= I18n.t(:clientnotes) %>
   </div>
 
 
@@ -250,7 +265,7 @@
 <div id="callalertnotok" class="alert alert-danger hidden" role="alert"></div>
 <table>
 <tr>
-<td style="padding-left:5px">Call Status</td>
+<td style="padding-left:5px"><%= I18n.t(:callstatus) %></td>
 <td colspan=1 style="padding:15px">
 
 
@@ -279,19 +294,19 @@ font-family: fontAwesome
 </td><tr>
 
 <tr>
-<td style="padding-left:5px">Call Category</td>
+<td style="padding-left:5px"><%= I18n.t(:callcategory) %></td>
 <td colspan12 style="padding:15px">
 <%= select_tag 'category', options_from_collection_for_select(Category.all.where(account_id: current_user.account.id).where(status: :active),  "id", "title", "1") , class: "col-6 form-control rounded-pill" %>
 </td><tr>
 
 
-<td style="padding-left:5px">Call Note</td>
+<td style="padding-left:5px"><%= I18n.t(:callnote) %></td>
 <td style="width:75%;padding:15px">
 <textarea class="form-control col-12" id="callnotebody" rows="5"></textarea>
 </td>
 </tr><tr>
 <td>
-<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="addCallNote();">Update Call Status</button>
+<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="addCallNote();"><%= I18n.t(:updatecallstatus) %></button>
 </td>
 </tr>
 </table>
@@ -352,27 +367,27 @@ font-family: fontAwesome
 <div id="mystats">
 <div class="card card-default">
                       <div class="card-header">
-                        <h4>My Statistics</h4>
+                        <h4><%= I18n.t(:mystatistics) %></h4>
                       </div>
                       <div class="card-body">
                         <table class="table table-borderless table-thead-border">
                           <thead>
                             <tr>
-                              <th>Incoming Calls</th>
+                              <th><%= I18n.t(:incomingcalls) %></th>
                               <th class="text-right"></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">All</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:all) %></td>
                               <td class="text-right table-primary">0</td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Answered</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:answered) %></td>
                               <td class="text-right table-primary">0</td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Missed</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:missed) %></td>
                               <td class="text-right table-primary">0</td>
                             </tr>
                             <tr>
@@ -382,35 +397,35 @@ font-family: fontAwesome
 
 
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Total Duration</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:totalduration) %></td>
                               <td class="text-right table-primary">0</td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Average Call Duration</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:averagecallduration) %></td>
                               <td class="text-right table-primary">0</td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Average Answer Time</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:averageanswertime) %></td>
                               <td class="text-right table-primary">0</td>
                             </tr>
 
                           <thead>
                             <tr>
-                              <th>Outbound Calls</th>
+                              <th><%= I18n.t(:outboundcalls) %></th>
                               <th class="text-right"></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">All</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:all) %></td>
                               <td class="text-right table-info">0</td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">Answered</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:answered) %></td>
                               <td class="text-right table-info">0</td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">Missed</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:missed) %></td>
                               <td class="text-right table-info">0</td>
                             </tr>
                             <tr>
@@ -420,11 +435,11 @@ font-family: fontAwesome
 
 
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">Total Duration</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:totalduration) %></td>
                               <td class="text-right table-info">0</td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">Average Call Duration</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:averagecallduration) %></td>
                               <td class="text-right table-info">0</td>
                             </tr>
                           </tbody>

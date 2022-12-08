@@ -12,43 +12,43 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label I18n.t(:title), style: "display: block" %>
     <%= form.text_field :title, class: "col-2 form-control rounded-pill" %>
   </div>
 
 
   <div>
-    <%= form.label :strategy, style: "display: block" %>
+    <%= form.label I18n.t(:strategy), style: "display: block" %>
 <%= form.select :strategy, ['rrmemory', 'roundrobin','ringall','random','leastrecent','fewestcalls'] , {prompt: "Select Strategy"} , {class: "col-2 form-control rounded-pill"}%>
   </div>
 
   <div>
-    <%= form.label :timeout, style: "display: block" %>
+    <%= form.label I18n.t(:timeout), style: "display: block" %>
     <%= form.number_field :timeout, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :retry, style: "display: block" %>
+    <%= form.label I18n.t(:retry), style: "display: block" %>
     <%= form.number_field :retry, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :wrapuptime, style: "display: block" %>
+    <%= form.label I18n.t(:wrapuptime), style: "display: block" %>
     <%= form.number_field :wrapuptime, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :maxlen, style: "display: block" %>
+    <%= form.label I18n.t(:maxlen), style: "display: block" %>
     <%= form.number_field :maxlen, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :maxtime, style: "display: block" %>
+    <%= form.label I18n.t(:maxtime), style: "display: block" %>
     <%= form.number_field :maxtime, class: "col-2 form-control rounded-pill" %>
   </div>
 
   <div>
-    <%= form.label :moh_id, style: "display: block" %>
+    <%= form.label I18n.t(:musiconhold), style: "display: block" %>
     <%= form.collection_select :moh_id, Moh.all.where(account_id: current_user.account.id), :id, :name ,{include_blank: true} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 

@@ -1,9 +1,9 @@
-<h1>New Voicemail step</h1>
+<h4><%= I18n.t(:newvmstep) %></h4>
 
 <%= render "formvoicemail", step: @step , locals: {:btitle => "Add Voicemail Step", :formmethod => :post, :url => add_stepvoicemail_path(@step.route_id)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to steps", steps_path %>
+  <%= link_to I18n.t(:backtosteps), steps_path %>
 </div>

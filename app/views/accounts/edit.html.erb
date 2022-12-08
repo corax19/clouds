@@ -1,9 +1,9 @@
-<h1>Edit Account</h1>
+<h4><%= I18n.t(:editaccount) %></h4>
 
-<%= render "form", account: @account, locals: {:btitle => "Update Account", :formmethod => :put, :url => update_account_path(@account)} %>
+<%= render "form", account: @account, locals: {:btitle => I18n.t(:updateaccount), :formmethod => :put, :url => update_account_path(@account)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to accounts", accounts_path %>
+  <%= link_to I18n.t(:backtoaccounts), accounts_path %>
 </div>

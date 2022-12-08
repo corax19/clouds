@@ -5,7 +5,7 @@
 
 
   <div>
-    <%= form.label :startdate, style: "display: block" %>
+    <%= form.label I18n.t(:startdate), style: "display: block" %>
     <%= form.date_field :startdate, class: "col-12 form-control rounded-pill", value: locals[:startdate] %>
   </div>
 
@@ -16,7 +16,7 @@
 <div class="form-group">
 
   <div>
-    <%= form.label :stopdate, style: "display: block" %>
+    <%= form.label I18n.t(:stopdate), style: "display: block" %>
     <%= form.date_field :stopdate, class: "col-12 form-control rounded-pill", value: locals[:stopdate] %>
   </div>
 
@@ -30,7 +30,7 @@
 
 
   <div>
-    <%= form.label :queue, style: "display: block" %>
+    <%= form.label I18n.t(:queue), style: "display: block" %>
     <%= form.collection_select :hotline,  Hotline.all.where(account_id: current_user.account.id), :id, :title,  {prompt: "Select Queue", selected: locals[:queue_id]}, {class: "col-12 form-control rounded-pill"} %>
   </div>
 

@@ -1,6 +1,15 @@
 class PhoneController < ApplicationController
 before_action :authenticate_user!
   def show
+if params[:lang] != nil
+puts params[:lang]
+#current_user.lang = params[:lang]
+languser = User.find_by(id: current_user.id)
+languser.lang = params[:lang]
+languser.save
+redirect_to phone_path
+end
+
   @client = Client.new
 #find_by(id: 2)
   end

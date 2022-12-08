@@ -1,6 +1,19 @@
-<h3>New User</h3>
+<h4><%= I18n.t(:newuser) %></h4>
 
 <%= form_with url: add_user_path, method: :post, model: @user do |form| %>
+
+ <% if @user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 
   <div>
     <%= form.label :email %><br>
@@ -8,28 +21,28 @@
   </div>
 
   <div>
-    <%= form.label :username %><br>
+    <%= form.label I18n.t(:username) %><br>
     <%= form.text_field :username %>
   </div>
 
   <div>
-    <%= form.label :firstname %><br>
+    <%= form.label I18n.t(:firstname) %><br>
     <%= form.text_field :firstname %>
   </div>
 
   <div>
-    <%= form.label :lastname %><br>
+    <%= form.label I18n.t(:lastname) %><br>
     <%= form.text_field :lastname %>
   </div>
 
   <div>
-    <%= form.label :password %><br />
+    <%= form.label I18n.t(:password) %><br />
     <%= form.password_field :password %>
   </div>
 
 
 
   <div>
-    <br><%= form.submit 'Add User', :class => 'btn btn-sm btn-success btn-pill' %>
+    <br><%= form.submit I18n.t(:adduser), :class => 'btn btn-sm btn-success btn-pill' %>
   </div>
 <% end %>

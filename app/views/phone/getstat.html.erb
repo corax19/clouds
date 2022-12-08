@@ -1,26 +1,26 @@
 <div class="card card-default">
                       <div class="card-header">
-                        <h4>My Statistics</h4>
+                        <h4><%= I18n.t(:mystatistics) %></h4>
                       </div>
                       <div class="card-body">
                         <table class="table table-borderless table-thead-border">
                           <thead>
                             <tr>
-                              <th>Incoming Calls</th>
+                              <th><%= I18n.t(:incomingcalls) %></th>
                               <th class="text-right"></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">All</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:all) %></td>
                               <td class="text-right table-primary"><%= @allnum %></td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-success">Answered</td>
+                              <td class="text-dark font-weight-bold table-success"><%= I18n.t(:answered) %></td>
                               <td class="text-right table-success"><%= @answerednum %></td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-danger">Missed</td>
+                              <td class="text-dark font-weight-bold table-danger"><%= I18n.t(:missed) %></td>
                               <td class="text-right table-danger"><%= @missednum %></td>
                             </tr>
                             <tr>
@@ -30,35 +30,35 @@
 
 
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Total Duration</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:totalduration) %></td>
                               <td class="text-right table-primary"><%= @totaltime %></td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Average Call Duration</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:averagecallduration) %></td>
                               <td class="text-right table-primary"><%= @avgtime %></td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-primary">Average Answer Time</td>
+                              <td class="text-dark font-weight-bold table-primary"><%= I18n.t(:averageanswertime) %></td>
                               <td class="text-right table-primary"><%= @avganswer %></td>
                             </tr>
 
                           <thead>
                             <tr>
-                              <th>Outbound Calls</th>
+                              <th><%= I18n.t(:outboundcalls) %></th>
                               <th class="text-right"></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">All</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:all) %></td>
                               <td class="text-right table-info"><%= @allnumout %></td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-success">Answered</td>
+                              <td class="text-dark font-weight-bold table-success"><%= I18n.t(:answered) %></td>
                               <td class="text-right table-success"><%= @answerednumout %></td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-danger">Missed</td>
+                              <td class="text-dark font-weight-bold table-danger"><%= I18n.t(:missed) %></td>
                               <td class="text-right table-danger"><%= @missednumout %></td>
                             </tr>
                             <tr>
@@ -68,11 +68,11 @@
 
 
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">Total Duration</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:totalduration) %></td>
                               <td class="text-right table-info"><%= @totaltimeout %></td>
                             </tr>
                             <tr>
-                              <td class="text-dark font-weight-bold table-info">Average Call Duration</td>
+                              <td class="text-dark font-weight-bold table-info"><%= I18n.t(:averagecallduration) %></td>
                               <td class="text-right table-info"><%= @avgtimeout %></td>
                             </tr>
                           </tbody>

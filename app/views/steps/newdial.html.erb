@@ -1,9 +1,9 @@
-<h1>New Dial step</h1>
+<h4><%= I18n.t(:newdialstep) %></h4>
 
 <%= render "formdial", step: @step , locals: {:btitle => "Add Dial Step", :formmethod => :post, :url => add_stepdial_path(@step.route_id)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to steps", steps_path %>
+  <%= link_to I18n.t(:backtosteps), steps_path %>
 </div>

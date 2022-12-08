@@ -5,6 +5,9 @@
 <% dialoptions= {:hotline_id => 0,:dialoptions => "Tt"} %>
 <% if locals[:btitle] == "Update Queue Step" %>
 <% dialoptions=getStepQueue(@step) %>
+<% locals[:btitle] = I18n.t(:updatequeuestep) %>
+<% else %>
+<% locals[:btitle] = I18n.t(:addqueuestep)  %>
 <% end %>
 
 
@@ -21,18 +24,18 @@
   <% end %>
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['Queue'] ,  {prompt: "Select Event", :selected => 'Queue'} , {class: "col-2 form-control rounded-pill"} %>
   </div>
 
   <div>
-    <%= form.label :queue, style: "display: block" %>
+    <%= form.label I18n.t(:queue), style: "display: block" %>
     <%= form.collection_select :hotline,  Hotline.all.where(account_id: current_user.account.id), :id, :title,  {prompt: "Select Queue", selected: dialoptions[:queue_id]}, {class: "col-2 form-control rounded-pill"} %>
   </div>
 
 
   <div>
-    <%= form.label :options, style: "display: block" %>
+    <%= form.label I18n.t(:options), style: "display: block" %>
     <%= form.text_field :options, class: "col-2 form-control rounded-pill", value: dialoptions[:dialoptions] %>
   </div>
 

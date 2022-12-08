@@ -1,6 +1,6 @@
-<h4>Queue Statistics</h4>
+<h4><%= I18n.t(:queuestatistics) %></h4>
 
-<%= render "search", locals: {:btitle => "Get Queue Statistics", :startdate => Date.today, :stopdate => Date.today, :queue_id => 0}  %>
+<%= render "search", locals: {:btitle => I18n.t(:getqueuestatistics), :startdate => Date.today, :stopdate => Date.today, :queue_id => 0}  %>
 
 
 
@@ -13,7 +13,7 @@
       <h2 class="mb-0">
         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBorderOne"
           aria-expanded="true" aria-controls="collapseBorderOne">
-          Agent Statistics
+          <%= I18n.t(:agentstatistics) %>
         </button>
       </h2>
     </div>
@@ -34,7 +34,7 @@
       <h2 class="mb-0">
         <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseBorderTwo"
           aria-expanded="false" aria-controls="collapseBorderTwo">
-          Detailed Calls
+          <%= I18n.t(:detailedcalls) %>
         </button>
       </h2>
     </div>

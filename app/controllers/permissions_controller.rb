@@ -54,13 +54,18 @@ allpermissions.each do |id, value|
 end
 
 @user.permission = userpermissions.to_json
-
+respond_to do |format|
  if @user.save
     Log.create(account: current_user.account, user: current_user, event: "createuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   redirect_to users_path
  else
-  render :new, status: :unprocessable_entity
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+
+#  render :new, status: :unprocessable_entity
  end
+end
+
 end
 
 
@@ -89,28 +94,28 @@ end
 if(params.require(:user)[:password].blank?)
 
  if @user.update(user_params_update)
-    Log.create(account: current_user.account, user: current_user, event: "updateuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
+  Log.create(account: current_user.account, user: current_user, event: "updateuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
   flash[:notice] = 'User has been updated'
   redirect_to users_path
  else
-
-
-setuserpermissions
-flash[:alert] = 'User not updated'
-
+  setuserpermissions
+  flash[:alert] = 'User not updated'
   render :edit, status: :unprocessable_entity
  end
 
  else
+
  if @user.update(user_params2)
     Log.create(account: current_user.account, user: current_user, event: "updateuser", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
-if @user == current_user
-  bypass_sign_in(@user)
-end
+    if @user == current_user
+      bypass_sign_in(@user)
+    end
   flash[:notice] = 'User has been updated'
   redirect_to users_path
-
  else
+#  render :edit, status: :unprocessable_entity
+  setuserpermissions
+  flash[:alert] = 'User not updated'
   render :edit, status: :unprocessable_entity
  end
 

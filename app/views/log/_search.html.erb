@@ -5,7 +5,7 @@
 
 
   <div>
-    <%= form.label :startdate, style: "display: block" %>
+    <%= form.label I18n.t(:startdate), style: "display: block" %>
     <%= form.date_field :startdate, class: "col-9 form-control rounded-pill", value: locals[:startdate] %>
   </div>
 
@@ -16,7 +16,7 @@
 <div class="form-group">
 
   <div>
-    <%= form.label :stopdate, style: "display: block" %>
+    <%= form.label I18n.t(:stopdate), style: "display: block" %>
     <%= form.date_field :stopdate, class: "col-9 form-control rounded-pill", value: locals[:stopdate] %>
   </div>
 
@@ -29,7 +29,7 @@
 
 
   <div>
-    <%= form.label :event, style: "display: block" %>
+    <%= form.label I18n.t(:event), style: "display: block" %>
     <%= form.select :event, ['All','createstepplayback','destroystep','updatestepmenu','updatestepplayback','updatestepdial','createsound','destroysound','createsip','updatesip','destroysip','createroute','updateroute','destroyroute','createqueue','updatequeue','destroyqueue','createexten','updateexten','destroyexten','createagent','updateagent','destroyagent'] , {prompt: "Choose Event", selected: locals[:event]} , {class: "col-9 form-control rounded-pill"} %>
   </div>
 

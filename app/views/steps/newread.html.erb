@@ -1,9 +1,9 @@
-<h1>New Read step</h1>
+<h4><%= I18n.t(:newreadstep) %></h4>
 
 <%= render "formread", step: @step , locals: {:btitle => "Add Read Step", :formmethod => :post, :url => add_stepread_path(@step.route_id)} %>
 
 <br>
 
 <div>
-  <%= link_to "Back to steps", steps_path %>
+  <%= link_to I18n.t(:backtosteps), steps_path %>
 </div>

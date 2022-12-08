@@ -20,7 +20,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :firstname, style: "display: block" %>
+    <%= form.label I18n.t(:firstname), style: "display: block" %>
     <%= form.text_field :firstname, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -31,7 +31,7 @@
 
 
   <div>
-    <%= form.label :lastname, style: "display: block" %>
+    <%= form.label I18n.t(:lastname), style: "display: block" %>
     <%= form.text_field :lastname, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -45,7 +45,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :phone_1, style: "display: block" %>
+    <%= form.label I18n.t(:phone)+ " 1", style: "display: block" %>
     <%= form.text_field :phone1, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -55,7 +55,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :phone_2, style: "display: block" %>
+    <%= form.label I18n.t(:phone)+ " 2", style: "display: block" %>
     <%= form.text_field :phone2, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -66,7 +66,7 @@
 
 
   <div>
-    <%= form.label :phone_3, style: "display: block" %>
+    <%= form.label I18n.t(:phone)+ " 3", style: "display: block" %>
     <%= form.text_field :phone3, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -102,7 +102,7 @@
 
 
   <div>
-    <%= form.label :birthday, style: "display: block" %>
+    <%= form.label I18n.t(:birthday), style: "display: block" %>
     <%= form.date_field :birthday, class: "col-10 form-control rounded-pill" %>
   </div>
 
@@ -117,7 +117,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :country, style: "display: block" %>
+    <%= form.label I18n.t(:country), style: "display: block" %>
     <%= form.text_field :country, class: "col-8 form-control rounded-pill" %>
   </div>
 
@@ -127,7 +127,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :city, style: "display: block" %>
+    <%= form.label I18n.t(:city), style: "display: block" %>
     <%= form.text_field :city, class: "col-8 form-control rounded-pill" %>
   </div>
 
@@ -137,7 +137,7 @@
  <div class="form-group">
 
   <div>
-    <%= form.label :address, style: "display: block" %>
+    <%= form.label I18n.t(:address), style: "display: block" %>
     <%= form.text_field :address, class: "col-11 form-control rounded-pill" %>
   </div>
 
@@ -149,7 +149,7 @@
 
   <div>
     <br>
-<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="updateClientInfo('<%= client.id.to_s %>');">Update Client Info</button>
+<button type="button" class="btn btn-sm btn-success btn-pill"  onClick="updateClientInfo('<%= client.id.to_s %>');"><%= I18n.t(:updateclientinfo) %></button>
   </div>
 
 

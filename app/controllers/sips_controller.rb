@@ -7,8 +7,19 @@ before_action :authenticate_user!
 
   # GET /sips or /sips.json
   def index
+
+    uri = URI.parse("http://localhost:8088/ari/endpoints/SIP")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    request.basic_auth("sasha", "qscesz")
+    res = http.request(request)
+    sips =  JSON.parse(res.body)
+    @sipsonline={}
+    sips.each do |value|
+        @sipsonline[value["resource"]] = value["state"]
+    end
     @sips = Sip.all.where(account_id: current_user.account.id)
-  end
+end
 
   # GET /sips/1 or /sips/1.json
   def show
