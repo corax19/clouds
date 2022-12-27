@@ -15,10 +15,14 @@ http = Net::HTTP.new(uri.host, uri.port)
 request = Net::HTTP::Get.new(uri.request_uri)
 request.basic_auth("sasha", "qscesz")
 res = http.request(request)
-sips =  JSON.parse(res.body)
 @sipsonline={}
+
+if res.body != nil
+sips =  JSON.parse(res.body)
 sips.each do |value|
 @sipsonline[value["resource"]] = value["state"]
+end
+
 end
 
 
@@ -119,7 +123,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def agent_params
-      params.require(:agent).permit(:account_id, :hotline_id, :exten_id, :priority)
+      params.require(:agent).permit(:account_id, :hotline_id, :exten_id, :penalty)
     end
 
 

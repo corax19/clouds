@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_06_112612) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_27_080033) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -21,13 +21,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_112612) do
     t.string "image"
     t.text "sipips"
     t.text "webips"
+    t.string "token", default: ""
+    t.string "apiips", default: ""
+    t.index ["token"], name: "index_accounts_on_token"
   end
 
   create_table "agents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "hotline_id", null: false
     t.bigint "exten_id", null: false
-    t.integer "priority"
+    t.integer "penalty"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
@@ -96,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_112612) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "account_id", null: false
+    t.string "blacklist", default: "No"
     t.index ["account_id", "phone1"], name: "index_clients_on_account_id_and_phone1"
     t.index ["account_id", "phone2"], name: "index_clients_on_account_id_and_phone2"
     t.index ["account_id", "phone3"], name: "index_clients_on_account_id_and_phone3"
@@ -252,6 +256,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_112612) do
     t.string "data4"
     t.string "data5"
     t.integer "created", default: 1666857261
+    t.index ["callid"], name: "index_queuelogs_on_callid"
     t.index ["time", "agent"], name: "index_queuelogs_on_time_and_agent"
     t.index ["time", "queuename"], name: "index_queuelogs_on_time_and_queuename"
     t.index ["time"], name: "index_queuelogs_on_time"

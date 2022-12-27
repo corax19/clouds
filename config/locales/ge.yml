@@ -308,5 +308,9 @@ ge:
   backtoaccounts: "Back to Accounts"
   sip_ips: "SIP დაშვება"
   web_ips: "Web დაშვება"
-
+  api_ips: "API დაშვება"
+  blacklisted: "დაბლოკილია"
+  apitoken: "API Token"
+  generate: "Generate"
+  toclipboard: "To Clipboard"
 

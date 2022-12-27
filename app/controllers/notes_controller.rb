@@ -29,6 +29,7 @@ class NotesController < ApplicationController
     @note.user_id = current_user.id
     respond_to do |format|
       if @note.save
+        Log.create(account: current_user.account, user: current_user, event: "createnote", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to notes_path, notice: "Note was successfully created." }
         format.json { render :show, status: :created, location: @note }
       else
@@ -42,6 +43,7 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
+        Log.create(account: current_user.account, user: current_user, event: "updatenote", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to notes_path, notice: "Note was successfully updated." }
         format.json { render :show, status: :ok, location: @note }
       else
@@ -53,8 +55,8 @@ class NotesController < ApplicationController
 
   # DELETE /notes/1 or /notes/1.json
   def destroy
+    Log.create(account: current_user.account, user: current_user, event: "destroynote", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     @note.destroy
-
     respond_to do |format|
       format.html { redirect_to notes_url, notice: "Note was successfully destroyed." }
       format.json { head :no_content }

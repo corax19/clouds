@@ -39,7 +39,7 @@
 
   <div class="field">
     <%= f.label I18n.t(:language) %><br />
-    <%= f.select :lang, options_for_select([['English', :en], ['ქართული', :ge],['Русский', :ru]]) , {prompt: "Language"} , {class: "col-2 form-control"}%>
+    <%= f.select :lang, options_for_select([['English', :en], ['ქართული', :ge],['Русский', :ru]], :selected => current_user.lang) , {prompt: "Language"} , {class: "col-2 form-control"}%>
 
   </div>
 

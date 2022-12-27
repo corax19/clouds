@@ -41,6 +41,7 @@ end
 
     respond_to do |format|
       if @client.save
+        Log.create(account: current_user.account, user: current_user, event: "createclient", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to clients_path, notice: "Client was successfully created." }
         format.json { render :show, status: :created, location: @client }
       else
@@ -54,6 +55,7 @@ end
   def update
     respond_to do |format|
       if @client.update(client_params)
+        Log.create(account: current_user.account, user: current_user, event: "updateclient", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
         format.html { redirect_to clients_path, notice: "Client was successfully updated." }
         format.json { render :show, status: :ok, location: @client }
       else
@@ -65,8 +67,8 @@ end
 
   # DELETE /clients/1 or /clients/1.json
   def destroy
+    Log.create(account: current_user.account, user: current_user, event: "destroyclient", data: params.to_json,url: request.fullpath, ipaddr: request.remote_ip)
     @client.destroy
-
     respond_to do |format|
       format.html { redirect_to clients_url, notice: "Client was successfully destroyed." }
       format.json { head :no_content }
@@ -81,7 +83,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.require(:client).permit(:firstname, :lastname, :phone1, :phone2, :phone3, :idnum, :country, :city, :address, :email, :birthday)
+      params.require(:client).permit(:firstname, :lastname, :phone1, :phone2, :phone3, :idnum, :country, :city, :address, :email, :birthday, :blacklist)
     end
 
 

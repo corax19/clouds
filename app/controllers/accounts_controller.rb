@@ -13,6 +13,11 @@ def new
     @account =  Account.new
 end
 
+def gettoken
+newtoken = SecureRandom.hex + SecureRandom.hex
+render plain: newtoken
+end
+
 
 def create
 @account = Account.new(account_params)
@@ -136,7 +141,7 @@ end
   private
     # Only allow a list of trusted parameters through.
     def myaccount_params
-      params.require(:account).permit(:name, :phone, :address, :image)
+      params.require(:account).permit(:name, :phone, :address, :image, :token, :apiips)
     end
 
 

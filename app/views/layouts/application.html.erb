@@ -225,6 +225,16 @@ catch (e) { }
 
 
 <script>
+
+function toClipboard(textElement) {
+  // Get the text field
+  var copyText = textElement;
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+  navigator.clipboard.writeText(copyText.value);
+}
+
+
 function confirmDestroy(message) {
 $('#delModal').modal('show');
 <!--  if (!confirm(message)) {    return false;  }-->
@@ -338,6 +348,37 @@ document.getElementById("collapseBorderOne").className = "collapse";
 updateOnline2();
 }
 }
+
+
+function getToken(){
+var url1;
+url1='/gettoken';
+if(window.XMLHttpRequest){
+request = new XMLHttpRequest();
+request.onreadystatechange = StateGetToken;
+request.open("GET", url1, true);
+request.send(null);
+} else {
+request = new ActiveXObject("Microsoft.XMLHTTP");
+if (request) {
+request.onreadystatechange = StateGetToken;
+request.open("GET", url1, true);
+request.send();
+
+}
+}
+}
+
+
+function StateGetToken(){
+if (request.readyState == 4){
+document.getElementById('account_token').value=request.responseText;
+}
+}
+
+
+
+
 
 
 

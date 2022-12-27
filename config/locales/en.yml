@@ -299,5 +299,10 @@ en:
   backtoaccounts: "Back to Accounts"
   sip_ips: "SIP Whitelist"
   web_ips: "Web Whitelist"
+  api_ips: "API Whitelist"
+  blacklisted: "Blacklisted"
+  apitoken: "API Token"
+  generate: "Generate"
+  toclipboard: "To Clipboard"
 
 

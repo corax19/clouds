@@ -7,7 +7,6 @@ include Pagy::Backend
 
 require 'i18n'
 
-
   protected
 
   def configure_permitted_parameters

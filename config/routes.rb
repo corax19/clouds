@@ -61,6 +61,9 @@ post "/livemonitor", to: "monitor#search", as: :search_monitor
 get "/livemonitor", to: "monitor#livemonitor", as: :livemonitor
 
 
+
+get "/gettoken", to: "accounts#gettoken"
+
 get "/logs", to: "log#index"
 post "/logs", to: "log#search", as: :search_logs
 
@@ -183,6 +186,47 @@ end
 scope '/sips/:sipid/' do
 get "/siproutes", to: "routes#siproutes", as: :siproutes
 end
+
+
+
+#API
+namespace :api do
+scope 'v1/' do
+get "/clients", to: "clients#index", as: :clients
+delete "/clients/:id", to: "clients#destroy", as: :clientdel
+put "/clients/:id", to: "clients#update", as: :updateclient
+post "/clients", to: "clients#create", as: :createclient
+
+get "/clients/:clientid/notes", to: "clientnotes#index", as: :clientnotes
+delete "/clients/:clientid/notes/:id", to: "clientnotes#destroy", as: :clientnotedel
+put "/clients/:clientid/notes/:id", to: "clientnotes#update", as: :updateclientnote
+post "/clients/:clientid/notes", to: "clientnotes#create", as: :createclientnote
+
+post "/cdrs", to: "cdrs#index", as: :cdrs
+post "/queuelogs", to: "queuelogs#index", as: :queuelogs
+
+post "/comments", to: "comments#index", as: :comments
+post "/comment", to: "comments#show", as: :comment
+delete "/comments/:id", to: "comments#destroy", as: :commentsdel
+post "/comments/create", to: "comments#create", as: :createcomment
+put "/comments/:id", to: "comments#update", as: :updatecomment
+
+
+get "/categories", to: "categories#index", as: :categories
+post "/categories", to: "categories#create", as: :createcategory
+put "/categories/:id", to: "categories#update", as: :updatecategory
+delete "/categories/:id", to: "categories#destroy", as: :categorydel
+
+
+get "/queues", to: "queues#index", as: :queues
+get "/queues/:queueid/agents", to: "queueagents#index", as: :queueagents
+post "/queues/:queueid/agents", to: "queueagents#create", as: :createqueueagents
+delete "/queues/:queueid/agents/:id", to: "queueagents#destroy", as: :queueagentdel
+
+end
+end
+
+#End of API
 
 
 end

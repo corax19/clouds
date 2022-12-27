@@ -301,4 +301,8 @@ ru:
   backtoaccounts: "Вернуться к Абонентам"
   sip_ips: "SIP Доступ"
   web_ips: "Web Доступ"
-
+  api_ips: "API Доступ"
+  blacklisted: "Запрещен"
+  apitoken: "API токен"
+  generate: "Генерировать"
+  toclipboard: "В Буфер"

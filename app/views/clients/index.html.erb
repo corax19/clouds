@@ -1,11 +1,9 @@
-<p style="color: green"><%= notice %></p>
-
 <h4><%= I18n.t(:clients) %></h4>
 <%= link_to "Excel", clients_path(format: "xlsx"), class: "btn btn-xs btn-info btn-pill col-1"%>
 <%== pagy_bootstrap_nav(@pagy) %>
-<table  id="productsTable01" class="table table-hover table-product" style="width:98%">
+<table  id="productsTable01" class="table table-hover table-product" style="width:98%;font-size:14px">
     <tr>
-    <td>ID NUM</td><td><%= I18n.t(:name) %></td><td>E-mail</td><td><%= I18n.t(:phones) %></td><td><%= I18n.t(:address) %></td><td><%= I18n.t(:birthday) %></td>
+    <td>ID NUM</td><td><%= I18n.t(:name) %></td><td>E-mail</td><td><%= I18n.t(:phones) %></td><td><%= I18n.t(:address) %></td><td><%= I18n.t(:birthday) %></td><td><%= I18n.t(:blacklisted) %></td>
     <td style="width:55px" align="right"><a class="dropdown-item" href="../clients/new"><button type="button" class="mb-1 btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i><%= I18n.t(:new) %></button></a></td>
 
 
@@ -15,7 +13,7 @@
     <tr>
 
 
-<td> <%= client.idnum %></td><td><%= client.firstname %> <%= client.firstname %></td><td><%= client.email %></td><td><%= client.phone1 %> <%= client.phone2 %> <%= client.phone3 %></td><td><%= client.country %> <%= client.city %> <%= client.address %></td><td><%= client.birthday %></td>
+<td> <%= client.idnum %></td><td><%= client.firstname %> <%= client.lastname %></td><td><%= client.email %></td><td><%= client.phone1 %> <%= client.phone2 %> <%= client.phone3 %></td><td><%= client.country %> <%= client.city %> <%= client.address %></td><td><%= client.birthday %></td><td><%= client.blacklist %></td>
           <td style="width:50px" align="right">
             <div class="dropdown" style="width:50px">
               <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink<%= client.id %>"

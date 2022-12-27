@@ -36,6 +36,26 @@
     <%= form.file_field :image %>
   </div>
 
+  <div>
+    <%= form.label I18n.t(:apitoken) %>
+    <%= form.text_field :token, class: "col-6 form-control rounded-pill" %>
+<button type="button" class="mb-1 btn btn-sm btn-info btn-pill" onClick="getToken()">
+  <i class="fa fa-refresh"></i>
+  <%= I18n.t(:generate) %>
+</button>
+
+<button type="button" class="mb-1 btn btn-sm btn-info btn-pill" onClick="toClipboard(document.getElementById('account_token'))">
+  <i class="fa fa-clipboard"></i>
+  <%= I18n.t(:toclipboard) %>
+</button>
+
+  </div>
+
+  <div>
+    <%= form.label I18n.t(:sip_ips), style: "display: block" %>
+    <%= form.text_area :apiips, size: "10x3", class: "col-4 form-control pill" %>
+  </div>
+
 
   <div>
    <br><%= form.submit I18n.t(:update), :class => 'btn btn-sm btn-success btn-pill'%>

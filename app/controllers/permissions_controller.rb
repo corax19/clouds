@@ -190,6 +190,7 @@ allpermissions = {
   "permission_messages" => "No"
 }
 @edituserpermission = allpermissions
+if @user.permission != nil
 edituserpermissions = JSON.parse(@user.permission)
 #edituserpermissions = allpermissions
 edituserpermissions.each do |id, value|
@@ -198,6 +199,8 @@ if value == "Yes"
 else
 @edituserpermission[id]= 0
 end
+end
+
 end
 
 end

@@ -107,7 +107,6 @@
 </div>
 </div>
 
-
  <div class="row">
  <div class="col-sm-4">
  <div class="form-group">
@@ -140,6 +139,11 @@
 </div>
 </div>
 </div>
+
+  <div>
+    <%= form.label I18n.t(:blacklisted), style: "display: block" %>
+    <%= form.select :blacklist, ['Yes', 'No'] , {prompt: "Blacklisted?"} , {class: "col-2 form-control rounded-pill"}%>
+  </div>
 
 
 
